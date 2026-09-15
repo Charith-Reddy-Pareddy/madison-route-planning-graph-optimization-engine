@@ -90,7 +90,12 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         const pos = positions.get(node.id);
         if (!pos) return null;
         const isOnPath = pathSet.has(node.id);
-        const isEndpoint = pathIds.length > 0 && (node.id === pathIds[0] || node.id === pathIds[pathIds.length - 1]);
+        // Origin and destination are marked distinctly (start red, end green)
+        // rather than as one generic "endpoint" color, so the map reads like
+        // a trip -- not just a highlighted subgraph.
+        const isStart = pathIds.length > 0 && node.id === pathIds[0];
+        const isEnd = pathIds.length > 0 && node.id === pathIds[pathIds.length - 1];
+        const isEndpoint = isStart || isEnd;
         // 1-based position of this stop along the route, so the map itself
         // shows the same step order as the turn-by-turn list beside it.
         const stepNumber = isOnPath ? pathIds.indexOf(node.id) + 1 : null;
@@ -101,7 +106,7 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         return (
           <g
             key={node.id}
-            className={`map-node${isOnPath ? ' on-path' : ''}${isEndpoint ? ' endpoint' : ''}${onNodeClick ? ' clickable' : ''}`}
+            className={`map-node${isOnPath ? ' on-path' : ''}${isEndpoint ? ' endpoint' : ''}${isStart ? ' start' : ''}${isEnd ? ' end' : ''}${onNodeClick ? ' clickable' : ''}`}
             onClick={onNodeClick ? () => onNodeClick(node.id) : undefined}
             role={onNodeClick ? 'button' : undefined}
             tabIndex={onNodeClick ? 0 : undefined}

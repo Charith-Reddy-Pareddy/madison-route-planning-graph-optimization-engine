@@ -166,7 +166,10 @@ public class PathFinderServer {
           String nextId = path.get(i + 1);
           RoadNetwork.Road road = network.roadBetween(id, nextId);
           double legMiles = round2(road.miles());
-          int minutes = RoadNetwork.estimatedMinutes(road.miles(), road.busRoute());
+          // Walking pace regardless of whether a bus also covers this leg --
+          // this is the on-foot time; the frontend estimates bus-trip time
+          // separately for the legs it groups into an actual bus ride.
+          int minutes = RoadNetwork.estimatedMinutes(road.miles(), null);
           totalMinutes += minutes;
           segmentEntries.add("{\"from\":" + Json.string(id)
               + ",\"to\":" + Json.string(nextId)
