@@ -29,6 +29,11 @@ public final class Json {
     return sb.append('"').toString();
   }
 
+  /** Like {@link #string}, but emits a JSON null for a null Java string. */
+  public static String stringOrNull(String s) {
+    return s == null ? "null" : string(s);
+  }
+
   public static String number(double d) {
     if (d == Math.rint(d) && !Double.isInfinite(d)) {
       return Long.toString((long) d);

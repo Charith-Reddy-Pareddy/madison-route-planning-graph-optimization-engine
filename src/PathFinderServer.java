@@ -122,6 +122,7 @@ public class PathFinderServer {
       edgesJson.append("{\"from\":").append(Json.string(r.from()))
           .append(",\"to\":").append(Json.string(r.to()))
           .append(",\"miles\":").append(Json.number(r.miles()))
+          .append(",\"busRoute\":").append(Json.stringOrNull(r.busRoute()))
           .append("}");
       if (i < roads.size() - 1) edgesJson.append(",");
     }
@@ -157,20 +158,28 @@ public class PathFinderServer {
 
       List<String> pathEntries = new ArrayList<>();
       List<String> segmentEntries = new ArrayList<>();
+      int totalMinutes = 0;
       for (int i = 0; i < path.size(); i++) {
         String id = path.get(i);
         pathEntries.add("{\"id\":" + Json.string(id) + ",\"name\":" + Json.string(network.nameOf(id)) + "}");
         if (i < path.size() - 1) {
-          double legMiles = round2(network.graph().getEdge(id, path.get(i + 1)));
+          String nextId = path.get(i + 1);
+          RoadNetwork.Road road = network.roadBetween(id, nextId);
+          double legMiles = round2(road.miles());
+          int minutes = RoadNetwork.estimatedMinutes(road.miles(), road.busRoute());
+          totalMinutes += minutes;
           segmentEntries.add("{\"from\":" + Json.string(id)
-              + ",\"to\":" + Json.string(path.get(i + 1))
-              + ",\"miles\":" + Json.number(legMiles) + "}");
+              + ",\"to\":" + Json.string(nextId)
+              + ",\"miles\":" + Json.number(legMiles)
+              + ",\"minutes\":" + minutes
+              + ",\"busRoute\":" + Json.stringOrNull(road.busRoute()) + "}");
         }
       }
 
       String body = "{\"path\":[" + String.join(",", pathEntries) + "]"
           + ",\"segments\":[" + String.join(",", segmentEntries) + "]"
-          + ",\"totalMiles\":" + Json.number(cost) + "}";
+          + ",\"totalMiles\":" + Json.number(cost)
+          + ",\"totalMinutes\":" + totalMinutes + "}";
       sendJson(exchange, 200, body);
     } catch (NoSuchElementException e) {
       sendJson(exchange, 404, Json.error("no route found between those intersections"));

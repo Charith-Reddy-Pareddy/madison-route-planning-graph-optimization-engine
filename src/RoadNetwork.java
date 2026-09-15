@@ -16,12 +16,18 @@ public class RoadNetwork {
   /** A named intersection, with coordinates for map rendering. */
   public record Intersection(String id, String name, double lat, double lon) {}
 
-  /** A directed road segment between two intersections, weighted by miles. */
-  public record Road(String from, String to, double miles) {}
+  /**
+   * A directed road segment between two intersections, weighted by miles.
+   * {@code busRoute} is the real Madison Metro Transit route (per
+   * cityofmadison.com/metro) that runs this corridor, or null for a
+   * walk-only segment; used to estimate travel time and to suggest a bus.
+   */
+  public record Road(String from, String to, double miles, String busRoute) {}
 
   private final DijkstraGraph<String, Double> graph = new DijkstraGraph<>();
   private final Map<String, Intersection> intersections = new LinkedHashMap<>();
   private final List<Road> roads = new ArrayList<>();
+  private final Map<String, Road> roadIndex = new LinkedHashMap<>();
 
   public RoadNetwork() {
     addIntersection("capitol", "Capitol Square", 43.0747, -89.3844);
@@ -45,17 +51,20 @@ public class RoadNetwork {
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
-    addRoad("capitol", "state_frances", 0.35);
-    addRoad("state_frances", "capitol", 0.35);
+    // State St from the Square to Library Mall: served by Metro Transit's
+    // Route A (the State St corridor).
+    addRoad("capitol", "state_frances", 0.35, "Route A");
+    addRoad("state_frances", "capitol", 0.35, "Route A");
     addRoad("capitol", "john_nolen", 0.60);
-    addRoad("king_st", "willy_st", 0.50);
-    addRoad("willy_st", "king_st", 0.50);
+    // Williamson St ("Willy St"): served by Route C.
+    addRoad("king_st", "willy_st", 0.50, "Route C");
+    addRoad("willy_st", "king_st", 0.50, "Route C");
     // One-way: no direct return leg from Williamson St to the square.
     addRoad("willy_st", "capitol", 0.55);
-    addRoad("state_frances", "state_gilman", 0.35);
-    addRoad("state_gilman", "state_frances", 0.35);
-    addRoad("state_gilman", "library_mall", 0.30);
-    addRoad("library_mall", "state_gilman", 0.30);
+    addRoad("state_frances", "state_gilman", 0.35, "Route A");
+    addRoad("state_gilman", "state_frances", 0.35, "Route A");
+    addRoad("state_gilman", "library_mall", 0.30, "Route A");
+    addRoad("library_mall", "state_gilman", 0.30, "Route A");
     addRoad("library_mall", "memorial_union", 0.25);
     addRoad("memorial_union", "library_mall", 0.25);
     addRoad("library_mall", "regent_park", 0.50);
@@ -66,16 +75,18 @@ public class RoadNetwork {
     addRoad("bascom_hill", "camp_randall", 0.80);
     addRoad("camp_randall", "regent_park", 0.60);
     addRoad("regent_park", "camp_randall", 0.60);
-    addRoad("camp_randall", "monroe_edgewood", 0.70);
-    addRoad("monroe_edgewood", "camp_randall", 0.70);
+    // Monroe St runs past Camp Randall: served by Route D.
+    addRoad("camp_randall", "monroe_edgewood", 0.70, "Route D");
+    addRoad("monroe_edgewood", "camp_randall", 0.70, "Route D");
     addRoad("regent_park", "monroe_edgewood", 0.60);
     addRoad("monroe_edgewood", "regent_park", 0.60);
     addRoad("regent_park", "john_nolen", 0.90);
     addRoad("john_nolen", "regent_park", 0.90);
     addRoad("john_nolen", "capitol", 0.60);
 
-    addRoad("king_st", "east_wash", 0.45);
-    addRoad("east_wash", "king_st", 0.45);
+    // East Washington Ave: served by Route L.
+    addRoad("king_st", "east_wash", 0.45, "Route L");
+    addRoad("east_wash", "king_st", 0.45, "Route L");
     addRoad("east_wash", "tenney_park", 0.55);
     addRoad("tenney_park", "east_wash", 0.55);
     addRoad("willy_st", "tenney_park", 0.50);
@@ -83,9 +94,10 @@ public class RoadNetwork {
     // One-way: this stretch of East Wash only runs outbound toward Atwood.
     // The way back to the rest of the network is via Olbrich -> Tenney Park
     // instead, not a straight reversal -- same pattern as the other one-ways.
-    addRoad("east_wash", "atwood_schenks", 0.65);
-    addRoad("atwood_schenks", "olbrich_gardens", 0.50);
-    addRoad("olbrich_gardens", "atwood_schenks", 0.50);
+    addRoad("east_wash", "atwood_schenks", 0.65, "Route L");
+    // Atwood Ave: served by Route 38.
+    addRoad("atwood_schenks", "olbrich_gardens", 0.50, "Route 38");
+    addRoad("olbrich_gardens", "atwood_schenks", 0.50, "Route 38");
     addRoad("olbrich_gardens", "tenney_park", 0.75);
     addRoad("monroe_edgewood", "arboretum", 0.90);
     addRoad("arboretum", "monroe_edgewood", 0.90);
@@ -99,8 +111,31 @@ public class RoadNetwork {
   }
 
   private void addRoad(String from, String to, double miles) {
-    roads.add(new Road(from, to, miles));
+    addRoad(from, to, miles, null);
+  }
+
+  private void addRoad(String from, String to, double miles, String busRoute) {
+    Road road = new Road(from, to, miles, busRoute);
+    roads.add(road);
+    roadIndex.put(from + "->" + to, road);
     graph.insertEdge(from, to, miles);
+  }
+
+  /** The Road record for a direct leg from `from` to `to`, or null if there isn't one. */
+  public Road roadBetween(String from, String to) {
+    return roadIndex.get(from + "->" + to);
+  }
+
+  // Rough average speeds used to turn a leg's distance into an estimated
+  // travel time: a city bus (including stops) is faster than walking, but
+  // nowhere near highway speed.
+  private static final double WALK_MPH = 3.0;
+  private static final double BUS_MPH = 12.0;
+
+  /** Estimated minutes to cover `miles`, walking or riding `busRoute` if given. */
+  public static int estimatedMinutes(double miles, String busRoute) {
+    double mph = busRoute == null ? WALK_MPH : BUS_MPH;
+    return (int) Math.max(1, Math.round(miles / mph * 60));
   }
 
   public DijkstraGraph<String, Double> graph() {

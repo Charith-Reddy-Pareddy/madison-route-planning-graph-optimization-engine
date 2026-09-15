@@ -11,12 +11,26 @@ export default function RouteResult({ statusType, statusMessage, route, nodesByI
             const to = nodesById.get(segment.to)?.name ?? segment.to;
             return (
               <li key={`${segment.from}-${segment.to}-${i}`}>
-                {from} &rarr; {to} ({segment.miles} mi)
+                <span className={segment.busRoute ? 'mode-tag bus' : 'mode-tag walk'}>
+                  {segment.busRoute ?? 'Walk'}
+                </span>{' '}
+                {from} &rarr; {to} ({segment.miles} mi, {segment.minutes} min)
               </li>
             );
           })}
-          <li className="total">Total distance: {route.totalMiles} mi</li>
+          <li className="total">
+            Total: {route.totalMiles} mi, ~{route.totalMinutes} min
+          </li>
         </ol>
+      )}
+      {route && (
+        <p className="transit-disclaimer">
+          Bus suggestions are illustrative, based on Metro Transit's published routes -- check{' '}
+          <a href="https://www.cityofmadison.com/metro/routes-schedules" target="_blank" rel="noreferrer">
+            Metro Transit
+          </a>{' '}
+          for live times.
+        </p>
       )}
     </>
   );
