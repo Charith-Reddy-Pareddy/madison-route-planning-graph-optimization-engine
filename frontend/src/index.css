@@ -1,15 +1,17 @@
 :root {
-  color-scheme: light dark;
-  --bg: #0f1420;
-  --panel-bg: #1a2233;
-  --panel-bg-soft: rgba(26, 34, 51, 0.72);
-  --border: #2c3548;
-  --text: #e6e9ef;
-  --muted: #9aa4b8;
-  --accent: #5b8cff;
-  --accent-strong: #8cb0ff;
-  --edge: #33405a;
-  --shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.55);
+  color-scheme: light;
+  --bg: #f4f6fb;
+  --panel-bg: #ffffff;
+  --panel-bg-soft: rgba(255, 255, 255, 0.86);
+  --border: #e2e8f0;
+  --text: #1a2233;
+  --muted: #64748b;
+  --accent: #3b66d6;
+  --accent-strong: #2648b0;
+  --edge: #cbd5e1;
+  --success: #16a34a;
+  --error: #dc2626;
+  --shadow: 0 12px 30px -16px rgba(15, 23, 42, 0.22);
   --radius: 14px;
 }
 
@@ -20,8 +22,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(1100px 520px at 12% -10%, rgba(91, 140, 255, 0.16), transparent 60%),
-    radial-gradient(900px 480px at 100% 0%, rgba(91, 255, 176, 0.08), transparent 55%),
+    radial-gradient(1100px 520px at 12% -10%, rgba(59, 102, 214, 0.1), transparent 60%),
+    radial-gradient(900px 480px at 100% 0%, rgba(22, 163, 74, 0.07), transparent 55%),
     var(--bg);
   background-attachment: fixed;
 }
@@ -106,20 +108,20 @@ select:hover { border-color: var(--muted); }
 select:focus-visible,
 button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(59, 102, 214, 0.28);
   border-color: var(--accent);
 }
 
 button {
-  background: linear-gradient(135deg, var(--accent), #4a6fe0);
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   border: none;
   color: white;
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 6px 16px -6px rgba(91, 140, 255, 0.55);
+  box-shadow: 0 6px 16px -6px rgba(59, 102, 214, 0.45);
 }
 
-button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 20px -8px rgba(91, 140, 255, 0.65); }
+button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 20px -8px rgba(59, 102, 214, 0.55); }
 
 button:active:not(:disabled) { transform: translateY(0); }
 
@@ -140,7 +142,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
   opacity: 1;
   color: var(--text);
   border-color: var(--muted);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(15, 23, 42, 0.04);
   transform: none;
 }
 
@@ -151,7 +153,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
   min-height: 1.2em;
 }
 
-.status.error { color: #ff8080; }
+.status.error { color: var(--error); }
 
 .steps {
   margin: 0.75rem 0 0;
@@ -171,11 +173,32 @@ button:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
   margin-top: 0.25rem;
 }
 
+.mode-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 5px;
+  vertical-align: middle;
+}
+
+.mode-tag.bus { background: rgba(59, 102, 214, 0.12); color: var(--accent-strong); }
+.mode-tag.walk { background: rgba(100, 116, 139, 0.12); color: var(--muted); }
+
+.transit-disclaimer {
+  margin: 0.9rem 0 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.transit-disclaimer a { color: var(--accent-strong); }
+
 svg.map {
   width: 100%;
   height: auto;
   background:
-    radial-gradient(500px 320px at 30% 20%, rgba(91, 140, 255, 0.08), transparent 60%),
+    radial-gradient(500px 320px at 30% 20%, rgba(59, 102, 214, 0.06), transparent 60%),
     var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -202,7 +225,7 @@ svg.map {
 
 .map-node circle { fill: var(--panel-bg); stroke: var(--muted); stroke-width: 1.5; transition: fill 0.2s ease, stroke 0.2s ease, r 0.2s ease; }
 .map-node.on-path circle { fill: var(--accent); stroke: var(--accent-strong); }
-.map-node.endpoint circle { fill: #5bffb0; stroke: #5bffb0; filter: drop-shadow(0 0 6px rgba(91, 255, 176, 0.65)); }
+.map-node.endpoint circle { fill: var(--success); stroke: var(--success); filter: drop-shadow(0 0 5px rgba(22, 163, 74, 0.5)); }
 .map-node.clickable { cursor: pointer; }
 .map-node.clickable:hover circle,
 .map-node.clickable:focus-visible circle { stroke: var(--accent-strong); stroke-width: 2.5; }
@@ -259,7 +282,7 @@ svg.map {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #5bffb0;
+  background: var(--success);
 }
 
 .legend-arrow { color: var(--muted); font-weight: 600; }
