@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
-const VIEW_WIDTH = 640;
-const VIEW_HEIGHT = 520;
-const PADDING = 40;
+const VIEW_WIDTH = 720;
+const VIEW_HEIGHT = 580;
+const PADDING = 46;
 
 function computeBounds(nodes) {
   const lats = nodes.map((n) => n.lat);
@@ -69,6 +69,10 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         if (!from || !to) return null;
         const onPath =
           pathEdgeSet.has(`${edge.from}->${edge.to}`) || (!edge.oneWay && pathEdgeSet.has(`${edge.to}->${edge.from}`));
+        // Drives the "draw the route" animation: a straight line's own length,
+        // used as its dash length so a full dash-offset hides it and animating
+        // the offset to 0 reveals it end-to-end (see .map-edge.on-path in CSS).
+        const length = Math.hypot(to.x - from.x, to.y - from.y);
         return (
           <line
             key={`${edge.from}->${edge.to}`}
@@ -78,6 +82,7 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
             y2={to.y}
             className={onPath ? 'map-edge on-path' : 'map-edge'}
             markerEnd={edge.oneWay ? `url(#${onPath ? 'arrow-on-path' : 'arrow'})` : undefined}
+            style={onPath ? { '--road-length': length } : undefined}
           />
         );
       })}
@@ -87,6 +92,8 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         const isOnPath = pathSet.has(node.id);
         const isEndpoint = pathIds.length > 0 && (node.id === pathIds[0] || node.id === pathIds[pathIds.length - 1]);
         const nearRightEdge = pos.x > VIEW_WIDTH - 110;
+        // Keep labels for nodes near the top/bottom edge from clipping out of the viewBox.
+        const labelY = Math.min(Math.max(pos.y + 4, 12), VIEW_HEIGHT - 6);
         return (
           <g
             key={node.id}
@@ -106,7 +113,7 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
             }
           >
             <circle cx={pos.x} cy={pos.y} r={isEndpoint ? 8 : 6} />
-            <text x={pos.x + (nearRightEdge ? -10 : 10)} y={pos.y + 4} textAnchor={nearRightEdge ? 'end' : 'start'}>
+            <text x={pos.x + (nearRightEdge ? -10 : 10)} y={labelY} textAnchor={nearRightEdge ? 'end' : 'start'}>
               {node.name}
             </text>
             <title>{node.name}</title>
