@@ -38,13 +38,37 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     pathEdgeSet.add(`${pathIds[i]}->${pathIds[i + 1]}`);
   }
 
+  // A road with no return leg in the opposite direction is one-way; draw it
+  // once with a direction arrow instead of twice (there's only one edge
+  // object for it anyway) or as an overlapping duplicate pair (two-way
+  // roads have both directions as separate edges covering the same line).
+  const edgeKeys = new Set(edges.map((e) => `${e.from}->${e.to}`));
+  const seenPairs = new Set();
+  const roadSegments = [];
+  for (const edge of edges) {
+    const pairKey = [edge.from, edge.to].sort().join('|');
+    if (seenPairs.has(pairKey)) continue;
+    seenPairs.add(pairKey);
+    const oneWay = !edgeKeys.has(`${edge.to}->${edge.from}`);
+    roadSegments.push({ ...edge, oneWay });
+  }
+
   return (
     <svg className="map" viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} role="img" aria-label="Road network map">
-      {edges.map((edge) => {
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" className="map-arrow" />
+        </marker>
+        <marker id="arrow-on-path" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" className="map-arrow on-path" />
+        </marker>
+      </defs>
+      {roadSegments.map((edge) => {
         const from = positions.get(edge.from);
         const to = positions.get(edge.to);
         if (!from || !to) return null;
-        const onPath = pathEdgeSet.has(`${edge.from}->${edge.to}`);
+        const onPath =
+          pathEdgeSet.has(`${edge.from}->${edge.to}`) || (!edge.oneWay && pathEdgeSet.has(`${edge.to}->${edge.from}`));
         return (
           <line
             key={`${edge.from}->${edge.to}`}
@@ -53,6 +77,7 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
             x2={to.x}
             y2={to.y}
             className={onPath ? 'map-edge on-path' : 'map-edge'}
+            markerEnd={edge.oneWay ? `url(#${onPath ? 'arrow-on-path' : 'arrow'})` : undefined}
           />
         );
       })}

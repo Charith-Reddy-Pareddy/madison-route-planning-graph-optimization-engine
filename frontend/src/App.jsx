@@ -132,6 +132,7 @@ export default function App() {
             <li><span className="legend-swatch road" /> Road</li>
             <li><span className="legend-swatch route" /> Shortest route</li>
             <li><span className="legend-swatch endpoint" /> Start / end</li>
+            <li><span className="legend-arrow">&#8594;</span> One-way (arrow points the allowed direction)</li>
           </ul>
         </section>
       </main>

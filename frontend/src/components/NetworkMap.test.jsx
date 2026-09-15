@@ -62,4 +62,21 @@ describe('NetworkMap', () => {
     fireEvent.keyDown(firstNode, { key: 'Enter' });
     expect(onNodeClick).toHaveBeenCalledWith('a');
   });
+
+  it('draws a two-way road once, not as two overlapping lines', () => {
+    const twoWayEdges = [
+      { from: 'a', to: 'b', miles: 1 },
+      { from: 'b', to: 'a', miles: 1 },
+    ];
+    const { container } = render(<NetworkMap nodes={nodes} edges={twoWayEdges} path={null} />);
+    expect(container.querySelectorAll('line')).toHaveLength(1);
+    expect(container.querySelector('line').getAttribute('marker-end')).toBeNull();
+  });
+
+  it('marks a one-way road with a direction arrow', () => {
+    const oneWayEdges = [{ from: 'a', to: 'b', miles: 1 }];
+    const { container } = render(<NetworkMap nodes={nodes} edges={oneWayEdges} path={null} />);
+    const line = container.querySelector('line');
+    expect(line.getAttribute('marker-end')).toBe('url(#arrow)');
+  });
 });

@@ -139,6 +139,8 @@ svg.map {
 
 .map-edge { stroke: var(--edge); stroke-width: 2; }
 .map-edge.on-path { stroke: var(--accent); stroke-width: 4; }
+.map-arrow { fill: var(--edge); }
+.map-arrow.on-path { fill: var(--accent); }
 .map-node circle { fill: var(--panel-bg); stroke: var(--muted); stroke-width: 1.5; }
 .map-node.on-path circle { fill: var(--accent); stroke: var(--accent-strong); }
 .map-node.endpoint circle { fill: #5bffb0; stroke: #5bffb0; }
@@ -192,6 +194,8 @@ svg.map {
   border-radius: 50%;
   background: #5bffb0;
 }
+
+.legend-arrow { color: var(--muted); font-weight: 600; }
 
 footer {
   padding: 1.5rem 2rem 2.5rem;
