@@ -48,6 +48,14 @@ public class RoadNetwork {
     addIntersection("olbrich_gardens", "Olbrich Gardens", 43.0794, -89.3428);
     addIntersection("arboretum", "UW Arboretum", 43.0489, -89.4257);
     addIntersection("hilldale", "Hilldale", 43.0759, -89.4536);
+    addIntersection("morgridge_hall", "Morgridge Hall", 43.0728, -89.4033);
+    addIntersection("union_south", "Union South", 43.0703, -89.4104);
+    addIntersection("kohl_center", "Kohl Center", 43.0704, -89.4133);
+    addIntersection("engineering_hall", "Engineering Mall", 43.0718, -89.4083);
+    addIntersection("grainger_hall", "Grainger Hall", 43.0757, -89.4008);
+    addIntersection("chazen_museum", "Chazen Museum of Art", 43.0745, -89.3925);
+    addIntersection("college_library", "College Library (Helen C. White Hall)", 43.0762, -89.3979);
+    addIntersection("lakeshore_dorms", "Witte & Sellery Residence Halls", 43.0778, -89.4083);
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
@@ -103,6 +111,24 @@ public class RoadNetwork {
     addRoad("arboretum", "monroe_edgewood", 0.90);
     addRoad("bascom_hill", "hilldale", 0.85);
     addRoad("hilldale", "bascom_hill", 0.85);
+
+    addRoad("bascom_hill", "morgridge_hall", 0.25);
+    addRoad("morgridge_hall", "bascom_hill", 0.25);
+    addRoad("camp_randall", "union_south", 0.45);
+    addRoad("union_south", "camp_randall", 0.45);
+    addRoad("camp_randall", "kohl_center", 0.20);
+    addRoad("kohl_center", "camp_randall", 0.20);
+    addRoad("union_south", "engineering_hall", 0.30);
+    addRoad("engineering_hall", "union_south", 0.30);
+    // University Ave, like State St, is a Route A corridor.
+    addRoad("state_frances", "grainger_hall", 0.30, "Route A");
+    addRoad("grainger_hall", "state_frances", 0.30, "Route A");
+    addRoad("state_gilman", "chazen_museum", 0.35, "Route A");
+    addRoad("chazen_museum", "state_gilman", 0.35, "Route A");
+    addRoad("memorial_union", "college_library", 0.30);
+    addRoad("college_library", "memorial_union", 0.30);
+    addRoad("memorial_union", "lakeshore_dorms", 0.50);
+    addRoad("lakeshore_dorms", "memorial_union", 0.50);
   }
 
   private void addIntersection(String id, String name, double lat, double lon) {
