@@ -36,6 +36,12 @@ public class RoadNetwork {
     addIntersection("camp_randall", "Camp Randall Stadium", 43.0697, -89.4126);
     addIntersection("regent_park", "Regent St & Park St", 43.0672, -89.3993);
     addIntersection("monroe_edgewood", "Monroe St & Edgewood Ave", 43.0619, -89.4176);
+    addIntersection("east_wash", "East Washington Ave & Blair St", 43.0762, -89.3695);
+    addIntersection("tenney_park", "Tenney Park", 43.0862, -89.3661);
+    addIntersection("atwood_schenks", "Atwood Ave & Schenk's Corners", 43.0782, -89.3562);
+    addIntersection("olbrich_gardens", "Olbrich Gardens", 43.0794, -89.3428);
+    addIntersection("arboretum", "UW Arboretum", 43.0489, -89.4257);
+    addIntersection("hilldale", "Hilldale", 43.0759, -89.4536);
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
@@ -67,6 +73,24 @@ public class RoadNetwork {
     addRoad("regent_park", "john_nolen", 0.90);
     addRoad("john_nolen", "regent_park", 0.90);
     addRoad("john_nolen", "capitol", 0.60);
+
+    addRoad("king_st", "east_wash", 0.45);
+    addRoad("east_wash", "king_st", 0.45);
+    addRoad("east_wash", "tenney_park", 0.55);
+    addRoad("tenney_park", "east_wash", 0.55);
+    addRoad("willy_st", "tenney_park", 0.50);
+    addRoad("tenney_park", "willy_st", 0.50);
+    // One-way: this stretch of East Wash only runs outbound toward Atwood.
+    // The way back to the rest of the network is via Olbrich -> Tenney Park
+    // instead, not a straight reversal -- same pattern as the other one-ways.
+    addRoad("east_wash", "atwood_schenks", 0.65);
+    addRoad("atwood_schenks", "olbrich_gardens", 0.50);
+    addRoad("olbrich_gardens", "atwood_schenks", 0.50);
+    addRoad("olbrich_gardens", "tenney_park", 0.75);
+    addRoad("monroe_edgewood", "arboretum", 0.90);
+    addRoad("arboretum", "monroe_edgewood", 0.90);
+    addRoad("bascom_hill", "hilldale", 0.85);
+    addRoad("hilldale", "bascom_hill", 0.85);
   }
 
   private void addIntersection(String id, String name, double lat, double lon) {
