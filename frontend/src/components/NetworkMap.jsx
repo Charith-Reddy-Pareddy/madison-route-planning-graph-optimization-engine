@@ -91,6 +91,10 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         if (!pos) return null;
         const isOnPath = pathSet.has(node.id);
         const isEndpoint = pathIds.length > 0 && (node.id === pathIds[0] || node.id === pathIds[pathIds.length - 1]);
+        // 1-based position of this stop along the route, so the map itself
+        // shows the same step order as the turn-by-turn list beside it.
+        const stepNumber = isOnPath ? pathIds.indexOf(node.id) + 1 : null;
+        const radius = isEndpoint ? 10 : isOnPath ? 9 : 6;
         const nearRightEdge = pos.x > VIEW_WIDTH - 110;
         // Keep labels for nodes near the top/bottom edge from clipping out of the viewBox.
         const labelY = Math.min(Math.max(pos.y + 4, 12), VIEW_HEIGHT - 6);
@@ -112,11 +116,21 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
                 : undefined
             }
           >
-            <circle cx={pos.x} cy={pos.y} r={isEndpoint ? 8 : 6} />
-            <text x={pos.x + (nearRightEdge ? -10 : 10)} y={labelY} textAnchor={nearRightEdge ? 'end' : 'start'}>
+            <circle cx={pos.x} cy={pos.y} r={radius} />
+            {stepNumber && (
+              <text x={pos.x} y={pos.y} textAnchor="middle" dominantBaseline="central" className="map-step">
+                {stepNumber}
+              </text>
+            )}
+            <text
+              className="map-node-label"
+              x={pos.x + (nearRightEdge ? -10 : 10)}
+              y={labelY}
+              textAnchor={nearRightEdge ? 'end' : 'start'}
+            >
               {node.name}
             </text>
-            <title>{node.name}</title>
+            <title>{stepNumber ? `${node.name} — stop ${stepNumber} of ${pathIds.length}` : node.name}</title>
           </g>
         );
       })}

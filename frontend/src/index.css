@@ -221,6 +221,14 @@ svg.map {
   stroke-width: 3px;
 }
 
+.map-step {
+  fill: white !important;
+  stroke: none !important;
+  font-size: 9px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
 .legend {
   list-style: none;
   display: flex;
@@ -255,6 +263,19 @@ svg.map {
 }
 
 .legend-arrow { color: var(--muted); font-weight: 600; }
+
+.legend-step {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
 footer {
   padding: 1.5rem 2rem 2.5rem;

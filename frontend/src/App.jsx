@@ -85,7 +85,9 @@ export default function App() {
     <>
       <header>
         <h1>Path Finder</h1>
-        <p className="subtitle">Shortest-route planning over a small road network, powered by Dijkstra's algorithm.</p>
+        <p className="subtitle">
+          Shortest-route planning over a real Madison, Wisconsin road network, powered by Dijkstra's algorithm.
+        </p>
       </header>
 
       <main>
@@ -133,6 +135,7 @@ export default function App() {
             <li><span className="legend-swatch route" /> Shortest route</li>
             <li><span className="legend-swatch endpoint" /> Start / end</li>
             <li><span className="legend-arrow">&#8594;</span> One-way (arrow points the allowed direction)</li>
+            <li><span className="legend-step">1</span> Stop order along the route</li>
           </ul>
         </section>
       </main>

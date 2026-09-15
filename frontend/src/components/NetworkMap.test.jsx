@@ -25,13 +25,13 @@ describe('NetworkMap', () => {
     expect(container.querySelectorAll('g.map-node.on-path')).toHaveLength(2);
     // b->c isn't part of the path, so it should render as a plain road.
     const offPath = container.querySelector('g.map-node:not(.on-path)');
-    expect(offPath.querySelector('text').textContent).toBe('C');
+    expect(offPath.querySelector('text.map-node-label').textContent).toBe('C');
   });
 
   it('marks the first and last path node as endpoints, not intermediate stops', () => {
     const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={['a', 'b', 'c']} />);
     const endpoints = [...container.querySelectorAll('g.map-node.endpoint')]
-      .map((g) => g.querySelector('text').textContent)
+      .map((g) => g.querySelector('text.map-node-label').textContent)
       .sort();
     expect(endpoints).toEqual(['A', 'C']);
   });
