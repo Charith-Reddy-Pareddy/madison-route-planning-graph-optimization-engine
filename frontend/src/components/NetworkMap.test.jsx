@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { render, fireEvent } from '@testing-library/react';
 import NetworkMap from './NetworkMap';
 
 const nodes = [
@@ -39,5 +39,27 @@ describe('NetworkMap', () => {
   it('renders nothing crash-worthy with an empty network', () => {
     const { container } = render(<NetworkMap nodes={[]} edges={[]} path={null} />);
     expect(container.querySelector('svg.map')).toBeInTheDocument();
+  });
+
+  it('calls onNodeClick with the node id when a node is clicked, not otherwise', () => {
+    const onNodeClick = vi.fn();
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} onNodeClick={onNodeClick} />);
+    expect(container.querySelectorAll('g.map-node.clickable')).toHaveLength(nodes.length);
+    fireEvent.click(container.querySelector('g.map-node'));
+    expect(onNodeClick).toHaveBeenCalledWith('a');
+  });
+
+  it('is not clickable when no onNodeClick handler is given', () => {
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} />);
+    expect(container.querySelectorAll('g.map-node.clickable')).toHaveLength(0);
+    expect(container.querySelector('g.map-node[role="button"]')).toBeNull();
+  });
+
+  it('triggers onNodeClick on Enter/Space for keyboard users', () => {
+    const onNodeClick = vi.fn();
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} onNodeClick={onNodeClick} />);
+    const firstNode = container.querySelector('g.map-node');
+    fireEvent.keyDown(firstNode, { key: 'Enter' });
+    expect(onNodeClick).toHaveBeenCalledWith('a');
   });
 });

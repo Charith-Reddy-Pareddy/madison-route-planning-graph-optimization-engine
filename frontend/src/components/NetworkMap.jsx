@@ -24,7 +24,7 @@ function project(lat, lon, bounds) {
 }
 
 /** Renders the road network as an SVG map, highlighting `path` (a list of node ids) if given. */
-export default function NetworkMap({ nodes, edges, path }) {
+export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
   const positions = useMemo(() => {
     if (nodes.length === 0) return new Map();
     const bounds = computeBounds(nodes);
@@ -65,7 +65,20 @@ export default function NetworkMap({ nodes, edges, path }) {
         return (
           <g
             key={node.id}
-            className={`map-node${isOnPath ? ' on-path' : ''}${isEndpoint ? ' endpoint' : ''}`}
+            className={`map-node${isOnPath ? ' on-path' : ''}${isEndpoint ? ' endpoint' : ''}${onNodeClick ? ' clickable' : ''}`}
+            onClick={onNodeClick ? () => onNodeClick(node.id) : undefined}
+            role={onNodeClick ? 'button' : undefined}
+            tabIndex={onNodeClick ? 0 : undefined}
+            onKeyDown={
+              onNodeClick
+                ? (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onNodeClick(node.id);
+                    }
+                  }
+                : undefined
+            }
           >
             <circle cx={pos.x} cy={pos.y} r={isEndpoint ? 8 : 6} />
             <text x={pos.x + (nearRightEdge ? -10 : 10)} y={pos.y + 4} textAnchor={nearRightEdge ? 'end' : 'start'}>

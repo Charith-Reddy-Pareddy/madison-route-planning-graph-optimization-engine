@@ -142,6 +142,16 @@ svg.map {
 .map-node circle { fill: var(--panel-bg); stroke: var(--muted); stroke-width: 1.5; }
 .map-node.on-path circle { fill: var(--accent); stroke: var(--accent-strong); }
 .map-node.endpoint circle { fill: #5bffb0; stroke: #5bffb0; }
+.map-node.clickable { cursor: pointer; }
+.map-node.clickable:hover circle,
+.map-node.clickable:focus-visible circle { stroke: var(--accent-strong); stroke-width: 2.5; }
+.map-node.clickable:focus-visible { outline: none; }
+
+.map-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
 .map-node text {
   fill: var(--muted);
   font-size: 10px;

@@ -11,6 +11,8 @@ export default function App() {
   const [endId, setEndId] = useState('');
   const [route, setRoute] = useState(null);
   const [status, setStatus] = useState({ type: 'idle', message: '' });
+  // Which field a map click sets next: click one node for start, the next for end.
+  const [pickTarget, setPickTarget] = useState('start');
 
   const nodesById = useMemo(() => new Map(graph.nodes.map((n) => [n.id, n])), [graph.nodes]);
 
@@ -66,6 +68,17 @@ export default function App() {
     findRoute(endId, startId);
   }
 
+  function handleNodeClick(id) {
+    if (pickTarget === 'start') {
+      setStartId(id);
+      setPickTarget('end');
+    } else {
+      setEndId(id);
+      setPickTarget('start');
+      findRoute(startId, id);
+    }
+  }
+
   const networkLoaded = graph.nodes.length > 0;
 
   return (
@@ -104,7 +117,17 @@ export default function App() {
 
         <section className="panel map-panel">
           <h2>Network map</h2>
-          <NetworkMap nodes={graph.nodes} edges={graph.edges} path={route?.path.map((p) => p.id) ?? null} />
+          {networkLoaded && (
+            <p className="map-hint">
+              Or click a node: set the {pickTarget === 'start' ? 'start' : 'end'}.
+            </p>
+          )}
+          <NetworkMap
+            nodes={graph.nodes}
+            edges={graph.edges}
+            path={route?.path.map((p) => p.id) ?? null}
+            onNodeClick={networkLoaded ? handleNodeClick : undefined}
+          />
           <ul className="legend">
             <li><span className="legend-swatch road" /> Road</li>
             <li><span className="legend-swatch route" /> Shortest route</li>
