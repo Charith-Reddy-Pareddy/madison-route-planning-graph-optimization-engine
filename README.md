@@ -6,9 +6,10 @@
 
 A route-planning web app: pick a start and end location around UW-Madison
 and downtown Madison, WI (dorms, academic buildings, popular apartments,
-State St. food spots, and regular intersections — 49 in all) and get the
-shortest route, computed with Dijkstra's algorithm, with estimated walk
-time and which Madison Metro Transit bus (if any) covers each leg.
+State St. food spots, and regular intersections — 58 in all, each at its
+real, geocoded lat/lon — see "Where the coordinates come from" below) and
+get the shortest route, computed with Dijkstra's algorithm, with estimated
+walk time and which Madison Metro Transit bus (if any) covers each leg.
 Originally a UW-Madison CS400 (data structures) assignment implementing a
 generic weighted directed graph — this repo wraps that graph engine in a
 real Java HTTP backend and a browser frontend so it actually behaves like
@@ -23,6 +24,25 @@ a route planner instead of just a test fixture.
 | Frontend | React 19 + Vite — no map library; the network map is a hand-built inline SVG component ([frontend/src/components/NetworkMap.jsx](frontend/src/components/NetworkMap.jsx), see below) |
 | Testing | JUnit 5 (backend) + Vitest/React Testing Library (frontend) |
 | Build | `make` — compiles Java, builds the React frontend, downloads the JUnit console launcher, runs tests, runs the app |
+
+## Where the coordinates come from
+
+Every location's lat/lon is a real geocoded point, not hand-estimated --
+each was looked up individually via [OpenStreetMap's Nominatim](https://nominatim.openstreetmap.org/)
+(free, no API key) against its actual name or street address, and each
+road's `miles` is the real great-circle distance between those two points,
+not a guess. An earlier pass of this data was hand-estimated from memory
+and got some relative distances wrong (e.g. placing Dejope Residence Hall,
+which is actually out near Eagle Heights on the far west side, close to
+X01 near Kohl Center on the other side of campus) -- geocoding caught and
+fixed that, and also caught a wrong assumption that Witte/Sellery/Ogg were
+Lakeshore dorms (they're actually the Southeast dorms, on W Johnson/Dayton
+St; the real Lakeshore corridor along Observatory Dr that Route 80 runs is
+Elizabeth Waters/Slichter/Kronshage/Bradley/Dejope). Nominatim doesn't
+always resolve a street *intersection* precisely (e.g. "State St & Gilman
+St" can land at some other point along State St rather than exactly that
+corner), so a few points are approximate to a block or so -- but every
+point is real data, not invented, and every distance is computed from it.
 
 ## The network map
 
@@ -103,7 +123,7 @@ separately-running backend), see [frontend/README.md](frontend/README.md).
 make test
 ```
 
-Runs both suites (45+ tests). Backend: `javac`s the Java sources,
+Runs both suites (55+ tests). Backend: `javac`s the Java sources,
 downloads the JUnit Platform Console Standalone launcher into `lib/` on
 first run (cached after that), and runs unit tests for `DijkstraGraph`,
 a `RoadNetworkTest` that checks every location can reach every other one
@@ -125,7 +145,7 @@ src/
   MapADT.java, PlaceholderMap.java   generic key/value map ADT (hash map backed)
   GraphADT.java, BaseGraph.java      generic directed weighted graph
   DijkstraGraph.java                 shortest-path algorithm (priority-queue Dijkstra)
-  RoadNetwork.java                   the 49-location network: intersections, roads, bus routes, one-ways
+  RoadNetwork.java                   the 58-location network: intersections, roads, bus routes, one-ways
   PathFinderServer.java              HTTP API + static file server
   Json.java                          minimal hand-rolled JSON response writer
   Main.java                          entry point
