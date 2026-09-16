@@ -78,17 +78,85 @@ function project(lat, lon, bounds) {
   return { x, y };
 }
 
+// A straight lat/lon projection squashes a dense real-world cluster (~20
+// campus buildings within a few blocks of each other) into a handful of
+// screen pixels -- no amount of label cleverness fixes circles that
+// literally overlap. This nudges any two nodes closer than MIN_SEPARATION
+// apart away from each other, a few passes at a time, while leaving nodes
+// that are already far apart untouched (like real force-directed graph
+// layouts do for decluttering, e.g. subway-map-style distortion).
+const MIN_SEPARATION = 46;
+const REPULSION_PASSES = 200;
+
+function declump(rawPositions) {
+  const ids = [...rawPositions.keys()];
+  const pos = new Map(ids.map((id) => [id, { ...rawPositions.get(id) }]));
+  for (let pass = 0; pass < REPULSION_PASSES; pass++) {
+    let moved = false;
+    for (let i = 0; i < ids.length; i++) {
+      for (let j = i + 1; j < ids.length; j++) {
+        const a = pos.get(ids[i]);
+        const b = pos.get(ids[j]);
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.hypot(dx, dy) || 0.01;
+        if (dist >= MIN_SEPARATION) continue;
+        moved = true;
+        const push = (MIN_SEPARATION - dist) / 2;
+        const ux = dx / dist;
+        const uy = dy / dist;
+        a.x -= ux * push;
+        a.y -= uy * push;
+        b.x += ux * push;
+        b.y += uy * push;
+      }
+    }
+    if (!moved) break;
+  }
+  return pos;
+}
+
+// Rough outlines (not survey-accurate, just recognizable) of the two lakes
+// that frame the isthmus Madison and this network sit on -- Mendota to the
+// north (its south shore runs along the Memorial Union / lakeshore dorms
+// path), Monona to the southeast (John Nolen Dr runs along its shore).
+// Drawn from the same lat/lon projection as everything else so they sit in
+// the right place relative to the real streets, even though node positions
+// themselves get decluttered afterward.
+const LAKE_MENDOTA = [
+  [43.101, -89.462], [43.118, -89.448], [43.127, -89.42], [43.125, -89.39],
+  [43.112, -89.368], [43.094, -89.36], [43.079, -89.368], [43.073, -89.392],
+  [43.078, -89.42], [43.086, -89.445],
+];
+const LAKE_MONONA = [
+  [43.077, -89.366], [43.075, -89.345], [43.062, -89.325], [43.043, -89.322],
+  [43.033, -89.338], [43.035, -89.362], [43.05, -89.378], [43.066, -89.378],
+];
+
+function screenTextProps(screen) {
+  return { x: screen.x, y: screen.y, textAnchor: 'middle' };
+}
+
+function polygonPath(points, project, bounds) {
+  return points.map(([lat, lon], i) => {
+    const { x, y } = project(lat, lon, bounds);
+    return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ') + ' Z';
+}
+
 /** Renders the road network as an SVG map, highlighting `path` (a list of node ids) if given. */
 export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
   const svgRef = useRef(null);
   const dragState = useRef(null);
   const [view, setView] = useState({ zoom: 1, pan: { x: 0, y: 0 } });
 
+  const bounds = useMemo(() => (nodes.length === 0 ? null : computeBounds(nodes)), [nodes]);
+
   const positions = useMemo(() => {
     if (nodes.length === 0) return new Map();
-    const bounds = computeBounds(nodes);
-    return new Map(nodes.map((n) => [n.id, project(n.lat, n.lon, bounds)]));
-  }, [nodes]);
+    const raw = new Map(nodes.map((n) => [n.id, project(n.lat, n.lon, bounds)]));
+    return declump(raw);
+  }, [nodes, bounds]);
 
   // Zooms so the world point under (screenX, screenY) stays fixed on screen --
   // otherwise every zoom step would recenter on the viewBox origin instead of
@@ -194,6 +262,12 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
           </marker>
         </defs>
         <g transform={`translate(${view.pan.x} ${view.pan.y}) scale(${view.zoom})`}>
+          {bounds && (
+            <g className="map-water">
+              <path d={polygonPath(LAKE_MENDOTA, project, bounds)} />
+              <path d={polygonPath(LAKE_MONONA, project, bounds)} />
+            </g>
+          )}
           {roadSegments.map((edge) => {
             const from = positions.get(edge.from);
             const to = positions.get(edge.to);
@@ -266,6 +340,16 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
             zooming spreads the nodes apart -- growing that spacing is what lets
             layoutLabels place more of them without collisions. */}
         <g className="map-labels">
+          {bounds && (
+            <>
+              <text className="map-water-label" {...screenTextProps(toScreen(project(43.1, -89.405, bounds)))}>
+                Lake Mendota
+              </text>
+              <text className="map-water-label" {...screenTextProps(toScreen(project(43.052, -89.35, bounds)))}>
+                Lake Monona
+              </text>
+            </>
+          )}
           {labels.map((label) => (
             <text key={label.id} className="map-node-label" x={label.x} y={label.y} textAnchor={label.textAnchor}>
               {label.name}

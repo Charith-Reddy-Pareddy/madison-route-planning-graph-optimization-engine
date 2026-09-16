@@ -256,6 +256,20 @@ svg.map {
   user-select: none;
 }
 
+.map-water path {
+  fill: rgba(59, 102, 214, 0.16);
+  stroke: rgba(59, 102, 214, 0.3);
+  stroke-width: 1;
+}
+
+.map-water-label {
+  fill: rgba(59, 102, 214, 0.55);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 600;
+  pointer-events: none;
+}
+
 svg.map:active { cursor: grabbing; }
 
 .map-controls {

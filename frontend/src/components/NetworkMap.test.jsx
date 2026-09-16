@@ -41,7 +41,7 @@ describe('NetworkMap', () => {
     // collides and every label shows -- this is the common case for the real
     // map too: most of its 40+ locations are far enough apart to always show.
     const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} />);
-    const labels = [...container.querySelectorAll('.map-labels text')].map((t) => t.textContent).sort();
+    const labels = [...container.querySelectorAll('.map-labels text.map-node-label')].map((t) => t.textContent).sort();
     expect(labels).toEqual(['A', 'B', 'C']);
   });
 
@@ -54,7 +54,7 @@ describe('NetworkMap', () => {
       { id: 'y', name: 'On-path Building', lat: 43.07, lon: -89.4 },
     ];
     const { container } = render(<NetworkMap nodes={overlapping} edges={[]} path={['y']} />);
-    const labels = [...container.querySelectorAll('.map-labels text')].map((t) => t.textContent);
+    const labels = [...container.querySelectorAll('.map-labels text.map-node-label')].map((t) => t.textContent);
     expect(labels).toEqual(['On-path Building']);
   });
 
