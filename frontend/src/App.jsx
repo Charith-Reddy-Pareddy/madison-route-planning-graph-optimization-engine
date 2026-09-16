@@ -86,13 +86,13 @@ export default function App() {
       <header>
         <h1>Path Finder</h1>
         <p className="subtitle">
-          Shortest-route planning over a Madison, Wisconsin road network, powered by Dijkstra's algorithm.
+          Find the shortest route across a Madison, Wisconsin road network, powered by Dijkstra's algorithm.
         </p>
       </header>
 
       <main>
         <section className="panel controls-panel">
-          <h2>Plan a route</h2>
+          <h2>Get directions</h2>
           {graphError && <div className="status error">Failed to load network: {graphError}</div>}
           {!graphError && !networkLoaded && <div className="status">Loading network...</div>}
           {!graphError && networkLoaded && (

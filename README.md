@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/Charith-Reddy-Pareddy/path-finder/actions/workflows/ci.yml/badge.svg)](https://github.com/Charith-Reddy-Pareddy/path-finder/actions/workflows/ci.yml)
 
+**Live:** [GitHub Pages](https://charith-reddy-pareddy.github.io/path-finder/) · [Render](https://path-finder-nbjl.onrender.com) (full Java backend; free-tier instance may take ~30-50s to wake up if idle)
+
 A route-planning web app: pick a start and end intersection in a small
 sample road network and get the shortest route, computed with Dijkstra's
 algorithm. Originally a UW-Madison CS400 (data structures) assignment
