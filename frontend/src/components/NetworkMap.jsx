@@ -159,24 +159,25 @@ function pointInPolygon(x, y, poly) {
   return inside;
 }
 
-// For any node that lands inside a lake polygon, step it directly away from
-// the polygon's centroid until it's clear, plus a small buffer past that so
-// it doesn't just graze the shoreline.
+// For any node that lands inside a lake polygon, step it toward land --
+// straight down (south) out of Mendota, straight up (north) out of Monona
+// -- plus a small buffer past that so it doesn't just graze the shoreline.
+// Pushing "away from the polygon's centroid" was the first thing tried
+// here, but for a wide, roughly horizontal lake that direction is close to
+// arbitrary depending on where in the shape the node landed: a node near
+// the shore (i.e. barely inside, right where a crowded cluster would push
+// it) could get shoved sideways or even deeper in, landing it far from its
+// neighbors instead of just back on land. A fixed cardinal direction per
+// lake is predictable and always the shortest way back to the cluster.
 function pushOutOfWater(positions, waterPolygons) {
   const STEP = 12;
   const CLEAR_BUFFER_STEPS = 3;
   for (const pos of positions.values()) {
-    for (const poly of waterPolygons) {
+    for (const { poly, dy } of waterPolygons) {
       if (!pointInPolygon(pos.x, pos.y, poly)) continue;
-      const cx = poly.reduce((s, p) => s + p.x, 0) / poly.length;
-      const cy = poly.reduce((s, p) => s + p.y, 0) / poly.length;
-      const dist = Math.hypot(pos.x - cx, pos.y - cy) || 1;
-      const ux = (pos.x - cx) / dist;
-      const uy = (pos.y - cy) / dist;
       let extraSteps = 0;
       for (let i = 0; i < 80; i++) {
-        pos.x += ux * STEP;
-        pos.y += uy * STEP;
+        pos.y += dy * STEP;
         if (!pointInPolygon(pos.x, pos.y, poly)) {
           extraSteps += 1;
           if (extraSteps >= CLEAR_BUFFER_STEPS) break;
@@ -213,9 +214,13 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     if (nodes.length === 0) return new Map();
     const raw = new Map(nodes.map((n) => [n.id, project(n.lat, n.lon, bounds)]));
     const declumped = declump(raw);
-    const waterPolygons = [LAKE_MENDOTA, LAKE_MONONA].map((pts) =>
-      pts.map(([lat, lon]) => project(lat, lon, bounds)),
-    );
+    // dy: +1 pushes a trapped node south (down, out of Mendota, toward the
+    // cluster below it); -1 pushes north (up, out of Monona, toward the
+    // cluster above it).
+    const waterPolygons = [
+      { pts: LAKE_MENDOTA, dy: 1 },
+      { pts: LAKE_MONONA, dy: -1 },
+    ].map(({ pts, dy }) => ({ poly: pts.map(([lat, lon]) => project(lat, lon, bounds)), dy }));
     pushOutOfWater(declumped, waterPolygons);
     return declumped;
   }, [nodes, bounds]);
