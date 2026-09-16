@@ -67,7 +67,7 @@ function layoutLabels(nodes, positions, toScreen, pathSet, viewWidth, viewHeight
 // water, at the cost of compressing the nodes slightly further toward the
 // middle (negligible next to what declump() already does to them).
 const NORTH_WATER_MARGIN = 0.022;
-const SOUTH_WATER_MARGIN = 0.018;
+const SOUTH_WATER_MARGIN = 0.033;
 
 function computeBounds(nodes) {
   const lats = nodes.map((n) => n.lat);
@@ -133,15 +133,58 @@ function declump(rawPositions) {
 // above/below the actual node range) -- these are hand-picked to match that
 // margin for the current node set, not derived from it, so if the network's
 // lat/lon range changes meaningfully, recheck these still land on-canvas
-// (e.g. temporarily log project(lat, lon, bounds) for each point).
+// (e.g. temporarily log project(lat, lon, bounds) for each point). A safe
+// distance from the *unshifted* projection isn't enough on its own, though
+// -- declump() can push a crowded node an arbitrary distance to resolve
+// overlaps, occasionally straight into what reads as water. pushOutOfWater()
+// below is the actual guarantee: it runs after declump and physically
+// relocates any node that still ends up inside either shape.
 const LAKE_MENDOTA = [
   [43.091, -89.46], [43.097, -89.43], [43.103, -89.4], [43.105, -89.37],
   [43.101, -89.345], [43.094, -89.35], [43.09, -89.38], [43.089, -89.42],
 ];
 const LAKE_MONONA = [
-  [43.045, -89.38], [43.041, -89.355], [43.034, -89.345], [43.032, -89.36],
-  [43.034, -89.375], [43.039, -89.385],
+  [43.048, -89.395], [43.045, -89.36], [43.038, -89.33], [43.028, -89.318],
+  [43.02, -89.335], [43.019, -89.365], [43.026, -89.39], [43.037, -89.4],
 ];
+
+// Ray-casting point-in-polygon test.
+function pointInPolygon(x, y, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const { x: xi, y: yi } = poly[i];
+    const { x: xj, y: yj } = poly[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+
+// For any node that lands inside a lake polygon, step it directly away from
+// the polygon's centroid until it's clear, plus a small buffer past that so
+// it doesn't just graze the shoreline.
+function pushOutOfWater(positions, waterPolygons) {
+  const STEP = 12;
+  const CLEAR_BUFFER_STEPS = 3;
+  for (const pos of positions.values()) {
+    for (const poly of waterPolygons) {
+      if (!pointInPolygon(pos.x, pos.y, poly)) continue;
+      const cx = poly.reduce((s, p) => s + p.x, 0) / poly.length;
+      const cy = poly.reduce((s, p) => s + p.y, 0) / poly.length;
+      const dist = Math.hypot(pos.x - cx, pos.y - cy) || 1;
+      const ux = (pos.x - cx) / dist;
+      const uy = (pos.y - cy) / dist;
+      let extraSteps = 0;
+      for (let i = 0; i < 80; i++) {
+        pos.x += ux * STEP;
+        pos.y += uy * STEP;
+        if (!pointInPolygon(pos.x, pos.y, poly)) {
+          extraSteps += 1;
+          if (extraSteps >= CLEAR_BUFFER_STEPS) break;
+        }
+      }
+    }
+  }
+}
 
 function screenTextProps(screen) {
   return { x: screen.x, y: screen.y, textAnchor: 'middle' };
@@ -169,7 +212,12 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
   const positions = useMemo(() => {
     if (nodes.length === 0) return new Map();
     const raw = new Map(nodes.map((n) => [n.id, project(n.lat, n.lon, bounds)]));
-    return declump(raw);
+    const declumped = declump(raw);
+    const waterPolygons = [LAKE_MENDOTA, LAKE_MONONA].map((pts) =>
+      pts.map(([lat, lon]) => project(lat, lon, bounds)),
+    );
+    pushOutOfWater(declumped, waterPolygons);
+    return declumped;
   }, [nodes, bounds]);
 
   // Zooms so the world point under (screenX, screenY) stays fixed on screen --
