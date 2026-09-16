@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: path-finder
+    name: madison-route-planning
     runtime: docker
     dockerfilePath: ./Dockerfile
     plan: free

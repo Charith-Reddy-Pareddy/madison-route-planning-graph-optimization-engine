@@ -84,7 +84,7 @@ export default function App() {
   return (
     <>
       <header>
-        <h1>Path Finder</h1>
+        <h1>Madison Route Planning</h1>
         <p className="subtitle">
           Find the shortest route across a Madison, Wisconsin road network, powered by Dijkstra's algorithm.
         </p>

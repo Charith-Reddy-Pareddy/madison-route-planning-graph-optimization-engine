@@ -14,7 +14,7 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    console.error('Path Finder crashed:', error, info.componentStack);
+    console.error('Madison Route Planning crashed:', error, info.componentStack);
   }
 
   render() {

@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Path;
 
-/** Entry point: starts the Path Finder HTTP server on $PORT (default 8080). */
+/** Entry point: starts the Madison Route Planning HTTP server on $PORT (default 8080). */
 public class Main {
   public static void main(String[] args) throws IOException {
     int port = 8080;
@@ -13,6 +13,6 @@ public class Main {
     RoadNetwork network = new RoadNetwork();
     PathFinderServer server = new PathFinderServer(network, Path.of("web"));
     server.start(port);
-    System.out.println("Path Finder running at http://localhost:" + port);
+    System.out.println("Madison Route Planning running at http://localhost:" + port);
   }
 }

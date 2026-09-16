@@ -1,6 +1,6 @@
-# Path Finder frontend
+# Madison Route Planning frontend
 
-React (Vite) frontend for Path Finder. Fetches the road network and
+React (Vite) frontend for Madison Route Planning. Fetches the road network and
 shortest-route results from the Java backend's JSON API and renders an
 interactive SVG map.
 
