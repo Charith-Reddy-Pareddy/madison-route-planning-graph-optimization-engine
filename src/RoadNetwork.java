@@ -73,6 +73,14 @@ public class RoadNetwork {
     addIntersection("atmosphere_apts", "Atmosphere Madison", 43.0680, -89.4090);
     addIntersection("x01_apts", "X01", 43.0722, -89.4090);
     addIntersection("lucky_apts", "Lucky Apartments", 43.0748, -89.3985);
+    addIntersection("business_school", "Wisconsin School of Business", 43.0752, -89.4020);
+    addIntersection("red_gym", "Red Gym", 43.0759, -89.3985);
+    addIntersection("vilas_hall", "Vilas Hall", 43.0740, -89.4013);
+    // Popular State St food and retail, real block addresses.
+    addIntersection("target_state_st", "Target (State St)", 43.0743, -89.3900);
+    addIntersection("chipotle_state_st", "Chipotle (State St)", 43.0743, -89.3898);
+    addIntersection("popeyes_state_st", "Popeyes (State St)", 43.0743, -89.3896);
+    addIntersection("ians_pizza", "Ian's Pizza (State St)", 43.0749, -89.3850);
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
@@ -188,6 +196,23 @@ public class RoadNetwork {
     addRoad("x01_apts", "kohl_center", 0.25);
     addRoad("grainger_hall", "lucky_apts", 0.25);
     addRoad("lucky_apts", "grainger_hall", 0.25);
+
+    addRoad("grainger_hall", "business_school", 0.10);
+    addRoad("business_school", "grainger_hall", 0.10);
+    addRoad("library_mall", "red_gym", 0.15);
+    addRoad("red_gym", "library_mall", 0.15);
+    addRoad("grainger_hall", "vilas_hall", 0.20);
+    addRoad("vilas_hall", "grainger_hall", 0.20);
+
+    // State St food/retail, all on the Route A corridor.
+    addRoad("state_frances", "target_state_st", 0.05, "Route A");
+    addRoad("target_state_st", "state_frances", 0.05, "Route A");
+    addRoad("state_frances", "chipotle_state_st", 0.05, "Route A");
+    addRoad("chipotle_state_st", "state_frances", 0.05, "Route A");
+    addRoad("state_frances", "popeyes_state_st", 0.05, "Route A");
+    addRoad("popeyes_state_st", "state_frances", 0.05, "Route A");
+    addRoad("capitol", "ians_pizza", 0.05, "Route A");
+    addRoad("ians_pizza", "capitol", 0.05, "Route A");
   }
 
   private void addIntersection(String id, String name, double lat, double lon) {

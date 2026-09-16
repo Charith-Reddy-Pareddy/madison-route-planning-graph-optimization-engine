@@ -251,6 +251,48 @@
             "name": "Lucky Apartments",
             "lat": 43.0748,
             "lon": -89.3985
+        },
+        {
+            "id": "business_school",
+            "name": "Wisconsin School of Business",
+            "lat": 43.0752,
+            "lon": -89.402
+        },
+        {
+            "id": "red_gym",
+            "name": "Red Gym",
+            "lat": 43.0759,
+            "lon": -89.3985
+        },
+        {
+            "id": "vilas_hall",
+            "name": "Vilas Hall",
+            "lat": 43.074,
+            "lon": -89.4013
+        },
+        {
+            "id": "target_state_st",
+            "name": "Target (State St)",
+            "lat": 43.0743,
+            "lon": -89.39
+        },
+        {
+            "id": "chipotle_state_st",
+            "name": "Chipotle (State St)",
+            "lat": 43.0743,
+            "lon": -89.3898
+        },
+        {
+            "id": "popeyes_state_st",
+            "name": "Popeyes (State St)",
+            "lat": 43.0743,
+            "lon": -89.3896
+        },
+        {
+            "id": "ians_pizza",
+            "name": "Ian's Pizza (State St)",
+            "lat": 43.0749,
+            "lon": -89.385
         }
     ],
     "edges": [
@@ -793,6 +835,90 @@
             "to": "grainger_hall",
             "miles": 0.25,
             "busRoute": null
+        },
+        {
+            "from": "grainger_hall",
+            "to": "business_school",
+            "miles": 0.1,
+            "busRoute": null
+        },
+        {
+            "from": "business_school",
+            "to": "grainger_hall",
+            "miles": 0.1,
+            "busRoute": null
+        },
+        {
+            "from": "library_mall",
+            "to": "red_gym",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "red_gym",
+            "to": "library_mall",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "grainger_hall",
+            "to": "vilas_hall",
+            "miles": 0.2,
+            "busRoute": null
+        },
+        {
+            "from": "vilas_hall",
+            "to": "grainger_hall",
+            "miles": 0.2,
+            "busRoute": null
+        },
+        {
+            "from": "state_frances",
+            "to": "target_state_st",
+            "miles": 0.05,
+            "busRoute": "Route A"
+        },
+        {
+            "from": "target_state_st",
+            "to": "state_frances",
+            "miles": 0.05,
+            "busRoute": "Route A"
+        },
+        {
+            "from": "state_frances",
+            "to": "chipotle_state_st",
+            "miles": 0.05,
+            "busRoute": "Route A"
+        },
+        {
+            "from": "chipotle_state_st",
+            "to": "state_frances",
+            "miles": 0.05,
+            "busRoute": "Route A"
+        },
+        {
+            "from": "state_frances",
+            "to": "popeyes_state_st",
+            "miles": 0.05,
+            "busRoute": "Route A"
+        },
+        {
+            "from": "popeyes_state_st",
+            "to": "state_frances",
+            "miles": 0.05,
+            "busRoute": "Route A"
+        },
+        {
+            "from": "capitol",
+            "to": "ians_pizza",
+            "miles": 0.05,
+            "busRoute": "Route A"
+        },
+        {
+            "from": "ians_pizza",
+            "to": "capitol",
+            "miles": 0.05,
+            "busRoute": "Route A"
         }
     ]
 }
