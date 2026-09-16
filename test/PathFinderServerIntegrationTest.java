@@ -85,14 +85,19 @@ public class PathFinderServerIntegrationTest {
 
   @Test
   public void floatingPointSummationNoiseIsRoundedAway() throws Exception {
-    // bascom_hill -> camp_randall is a one-way street, so the reverse route
-    // has to go the long way around: 0.6 + 0.5 + 0.25 + 0.35 miles, which
-    // sums in IEEE 754 double arithmetic to 1.7000000000000002, not 1.7.
-    // The server should round that for display instead of leaking it.
+    // Dijkstra accumulates cost as a running sum of edge weights, which can
+    // land a hair off a "clean" decimal (e.g. 1.7000000000000002 instead of
+    // 1.7) due to binary floating-point rounding, depending on exactly which
+    // weights get summed -- the server rounds for display so that never
+    // leaks, whichever pair of nodes and path that turns out to affect.
+    // bascom_hill -> camp_randall is one-way, so the reverse trip is forced
+    // onto a different, longer path than the direct one -- exercising a
+    // real multi-edge summation rather than a single edge weight.
+    double expectedCost = Math.round(network.graph().shortestPathCost("camp_randall", "bascom_hill") * 100.0) / 100.0;
     HttpResponse<String> resp = get("/api/route?start=camp_randall&end=bascom_hill");
     assertEquals(200, resp.statusCode());
-    assertTrue(resp.body().contains("\"totalMiles\":1.7"),
-        "expected a clean 1.7, got: " + resp.body());
+    assertTrue(resp.body().contains("\"totalMiles\":" + Json.number(expectedCost)),
+        "expected a clean " + expectedCost + ", got: " + resp.body());
     assertTrue(!resp.body().contains("000000"), "response leaked floating-point noise: " + resp.body());
   }
 

@@ -4,920 +4,902 @@
             "id": "capitol",
             "name": "Capitol Square",
             "lat": 43.0747,
-            "lon": -89.3844
+            "lon": -89.3842
         },
         {
             "id": "king_st",
             "name": "King St & Main St",
-            "lat": 43.0721,
-            "lon": -89.3812
+            "lat": 43.0747,
+            "lon": -89.381
         },
         {
             "id": "willy_st",
             "name": "Williamson St",
-            "lat": 43.0782,
+            "lat": 43.0767,
             "lon": -89.3739
         },
         {
             "id": "john_nolen",
             "name": "John Nolen Dr & Broom St",
-            "lat": 43.0679,
-            "lon": -89.3852
+            "lat": 43.0528,
+            "lon": -89.3787
         },
         {
             "id": "state_frances",
             "name": "State St & Frances St",
-            "lat": 43.0745,
-            "lon": -89.3891
+            "lat": 43.0751,
+            "lon": -89.3957
         },
         {
             "id": "state_gilman",
             "name": "State St & Gilman St",
-            "lat": 43.0752,
-            "lon": -89.3936
+            "lat": 43.0748,
+            "lon": -89.3908
         },
         {
             "id": "library_mall",
             "name": "Library Mall",
-            "lat": 43.0736,
-            "lon": -89.3988
+            "lat": 43.0753,
+            "lon": -89.3991
         },
         {
             "id": "memorial_union",
             "name": "Memorial Union",
-            "lat": 43.076,
-            "lon": -89.4013
+            "lat": 43.0765,
+            "lon": -89.4003
         },
         {
             "id": "bascom_hill",
             "name": "Bascom Hill",
-            "lat": 43.0755,
-            "lon": -89.4062
+            "lat": 43.0753,
+            "lon": -89.4038
         },
         {
             "id": "camp_randall",
             "name": "Camp Randall Stadium",
-            "lat": 43.0697,
-            "lon": -89.4126
+            "lat": 43.0701,
+            "lon": -89.4127
         },
         {
             "id": "regent_park",
             "name": "Regent St & Park St",
-            "lat": 43.0672,
-            "lon": -89.3993
+            "lat": 43.0679,
+            "lon": -89.4014
         },
         {
             "id": "monroe_edgewood",
             "name": "Monroe St & Edgewood Ave",
-            "lat": 43.0619,
-            "lon": -89.4176
+            "lat": 43.0564,
+            "lon": -89.4301
         },
         {
             "id": "east_wash",
             "name": "East Washington Ave & Blair St",
-            "lat": 43.0762,
-            "lon": -89.3695
+            "lat": 43.0805,
+            "lon": -89.3761
         },
         {
             "id": "tenney_park",
             "name": "Tenney Park",
-            "lat": 43.0862,
-            "lon": -89.3661
+            "lat": 43.0932,
+            "lon": -89.3698
         },
         {
             "id": "atwood_schenks",
             "name": "Atwood Ave & Schenk's Corners",
-            "lat": 43.0782,
-            "lon": -89.3562
+            "lat": 43.0923,
+            "lon": -89.3551
         },
         {
             "id": "olbrich_gardens",
             "name": "Olbrich Gardens",
-            "lat": 43.0794,
-            "lon": -89.3428
+            "lat": 43.0926,
+            "lon": -89.3346
         },
         {
             "id": "arboretum",
             "name": "UW Arboretum",
-            "lat": 43.0489,
-            "lon": -89.4257
+            "lat": 43.0409,
+            "lon": -89.431
         },
         {
             "id": "hilldale",
             "name": "Hilldale",
-            "lat": 43.0759,
-            "lon": -89.4536
+            "lat": 43.0732,
+            "lon": -89.4531
         },
         {
             "id": "morgridge_hall",
             "name": "Morgridge Hall",
             "lat": 43.0728,
-            "lon": -89.4033
+            "lon": -89.4069
         },
         {
             "id": "union_south",
             "name": "Union South",
-            "lat": 43.0703,
-            "lon": -89.4104
+            "lat": 43.0718,
+            "lon": -89.4081
         },
         {
             "id": "kohl_center",
             "name": "Kohl Center",
-            "lat": 43.0704,
-            "lon": -89.4133
+            "lat": 43.0694,
+            "lon": -89.3969
         },
         {
             "id": "engineering_hall",
             "name": "Engineering Mall",
-            "lat": 43.0718,
-            "lon": -89.4083
+            "lat": 43.0748,
+            "lon": -89.4107
         },
         {
             "id": "grainger_hall",
             "name": "Grainger Hall",
-            "lat": 43.0757,
-            "lon": -89.4008
+            "lat": 43.0727,
+            "lon": -89.4016
         },
         {
             "id": "chazen_museum",
             "name": "Chazen Museum of Art",
-            "lat": 43.0745,
-            "lon": -89.3925
+            "lat": 43.0739,
+            "lon": -89.3987
         },
         {
             "id": "college_library",
             "name": "College Library (Helen C. White Hall)",
-            "lat": 43.0762,
-            "lon": -89.3979
+            "lat": 43.0767,
+            "lon": -89.4013
         },
         {
             "id": "witte_hall",
             "name": "Witte Residence Hall",
-            "lat": 43.0777,
-            "lon": -89.409
+            "lat": 43.0714,
+            "lon": -89.397
         },
         {
             "id": "sellery_hall",
             "name": "Sellery Residence Hall",
-            "lat": 43.0779,
-            "lon": -89.4075
+            "lat": 43.0716,
+            "lon": -89.4002
         },
         {
             "id": "ogg_hall",
             "name": "Ogg Residence Hall",
-            "lat": 43.08,
-            "lon": -89.4145
+            "lat": 43.0706,
+            "lon": -89.3999
         },
         {
             "id": "chadbourne_hall",
             "name": "Chadbourne Residential College",
-            "lat": 43.0729,
-            "lon": -89.402
+            "lat": 43.0738,
+            "lon": -89.4013
         },
         {
             "id": "memorial_library",
             "name": "Memorial Library",
-            "lat": 43.0742,
-            "lon": -89.3969
+            "lat": 43.0754,
+            "lon": -89.398
         },
         {
             "id": "humanities_building",
             "name": "Humanities Building",
             "lat": 43.0742,
-            "lon": -89.3999
+            "lon": -89.4001
         },
         {
             "id": "social_sciences",
             "name": "Social Science Building",
-            "lat": 43.0745,
-            "lon": -89.4056
+            "lat": 43.0766,
+            "lon": -89.4052
         },
         {
             "id": "education_building",
             "name": "Education Building",
-            "lat": 43.0745,
-            "lon": -89.4045
+            "lat": 43.0731,
+            "lon": -89.4074
         },
         {
             "id": "van_hise_hall",
             "name": "Van Hise Hall",
-            "lat": 43.0762,
-            "lon": -89.407
+            "lat": 43.0756,
+            "lon": -89.4069
         },
         {
             "id": "science_hall",
             "name": "Science Hall",
-            "lat": 43.0739,
-            "lon": -89.4009
+            "lat": 43.0759,
+            "lon": -89.4011
         },
         {
             "id": "van_vleck_hall",
             "name": "Van Vleck Hall",
-            "lat": 43.0765,
-            "lon": -89.4037
+            "lat": 43.0748,
+            "lon": -89.4049
         },
         {
             "id": "discovery_building",
             "name": "Wisconsin Institutes for Discovery",
-            "lat": 43.0733,
-            "lon": -89.4114
+            "lat": 43.0728,
+            "lon": -89.4081
         },
         {
             "id": "nicholas_rec",
             "name": "Nicholas Recreation Center",
-            "lat": 43.0743,
-            "lon": -89.4116
+            "lat": 43.0704,
+            "lon": -89.3983
         },
         {
             "id": "dejope_hall",
             "name": "Dejope Residence Hall",
-            "lat": 43.0784,
-            "lon": -89.42
+            "lat": 43.0778,
+            "lon": -89.4178
         },
         {
             "id": "atmosphere_apts",
             "name": "Atmosphere Madison",
-            "lat": 43.068,
-            "lon": -89.409
+            "lat": 43.0684,
+            "lon": -89.3973
         },
         {
             "id": "x01_apts",
             "name": "X01",
-            "lat": 43.0722,
-            "lon": -89.409
+            "lat": 43.0729,
+            "lon": -89.4027
         },
         {
             "id": "lucky_apts",
             "name": "Lucky Apartments",
-            "lat": 43.0748,
-            "lon": -89.3985
+            "lat": 43.073,
+            "lon": -89.398
         },
         {
             "id": "business_school",
             "name": "Wisconsin School of Business",
-            "lat": 43.0752,
-            "lon": -89.402
+            "lat": 43.073,
+            "lon": -89.4019
         },
         {
             "id": "red_gym",
             "name": "Red Gym",
-            "lat": 43.0759,
+            "lat": 43.0763,
             "lon": -89.3985
         },
         {
             "id": "vilas_hall",
             "name": "Vilas Hall",
-            "lat": 43.074,
-            "lon": -89.4013
+            "lat": 43.0727,
+            "lon": -89.3998
         },
         {
             "id": "target_state_st",
             "name": "Target (State St)",
-            "lat": 43.0743,
-            "lon": -89.39
+            "lat": 43.0752,
+            "lon": -89.396
         },
         {
             "id": "chipotle_state_st",
             "name": "Chipotle (State St)",
-            "lat": 43.0743,
-            "lon": -89.3898
+            "lat": 43.0752,
+            "lon": -89.3966
         },
         {
             "id": "popeyes_state_st",
             "name": "Popeyes (State St)",
-            "lat": 43.0743,
-            "lon": -89.3896
+            "lat": 43.0751,
+            "lon": -89.3964
         },
         {
             "id": "ians_pizza",
             "name": "Ian's Pizza (State St)",
             "lat": 43.0749,
-            "lon": -89.385
+            "lon": -89.3871
         },
         {
             "id": "middleton_building",
             "name": "Middleton Building",
-            "lat": 43.0765,
-            "lon": -89.4079
+            "lat": 43.0748,
+            "lon": -89.4082
         },
         {
             "id": "vilas_zoo",
             "name": "Henry Vilas Zoo",
-            "lat": 43.0553,
-            "lon": -89.4113
+            "lat": 43.0598,
+            "lon": -89.4105
         },
         {
             "id": "elizabeth_waters",
             "name": "Elizabeth Waters Residence Hall",
-            "lat": 43.0748,
-            "lon": -89.403
+            "lat": 43.077,
+            "lon": -89.4065
         },
         {
             "id": "slichter_hall",
             "name": "Slichter Residence Hall",
-            "lat": 43.0768,
-            "lon": -89.4075
+            "lat": 43.0771,
+            "lon": -89.4122
         },
         {
             "id": "kronshage_halls",
             "name": "Kronshage Residence Halls",
-            "lat": 43.077,
-            "lon": -89.406
+            "lat": 43.0779,
+            "lon": -89.4159
         },
         {
             "id": "bradley_hall",
             "name": "Bradley Residence Hall",
-            "lat": 43.0795,
-            "lon": -89.416
+            "lat": 43.078,
+            "lon": -89.4164
         },
         {
             "id": "bakke_rec_center",
             "name": "Bakke Recreation & Wellbeing Center",
-            "lat": 43.079,
-            "lon": -89.4148
+            "lat": 43.0769,
+            "lon": -89.4198
         },
         {
             "id": "lakeshore_preserve",
             "name": "Lakeshore Nature Preserve",
-            "lat": 43.081,
-            "lon": -89.428
+            "lat": 43.0833,
+            "lon": -89.4303
+        },
+        {
+            "id": "eagle_heights",
+            "name": "Eagle Heights",
+            "lat": 43.0884,
+            "lon": -89.4364
         }
     ],
     "edges": [
         {
             "from": "capitol",
             "to": "king_st",
-            "miles": 0.3,
+            "miles": 0.16,
             "busRoute": null
         },
         {
             "from": "king_st",
             "to": "capitol",
-            "miles": 0.3,
+            "miles": 0.16,
             "busRoute": null
         },
         {
             "from": "capitol",
             "to": "state_frances",
-            "miles": 0.35,
+            "miles": 0.58,
             "busRoute": "Route A"
         },
         {
             "from": "state_frances",
             "to": "capitol",
-            "miles": 0.35,
+            "miles": 0.58,
             "busRoute": "Route A"
         },
         {
             "from": "capitol",
             "to": "john_nolen",
-            "miles": 0.6,
+            "miles": 1.54,
             "busRoute": null
         },
         {
             "from": "king_st",
             "to": "willy_st",
-            "miles": 0.5,
+            "miles": 0.38,
             "busRoute": "Route C"
         },
         {
             "from": "willy_st",
             "to": "king_st",
-            "miles": 0.5,
+            "miles": 0.38,
             "busRoute": "Route C"
         },
         {
             "from": "willy_st",
             "to": "capitol",
-            "miles": 0.55,
+            "miles": 0.54,
             "busRoute": null
         },
         {
             "from": "state_frances",
             "to": "state_gilman",
-            "miles": 0.35,
+            "miles": 0.25,
             "busRoute": "Route A"
         },
         {
             "from": "state_gilman",
             "to": "state_frances",
-            "miles": 0.35,
+            "miles": 0.25,
             "busRoute": "Route A"
         },
         {
             "from": "state_gilman",
             "to": "library_mall",
-            "miles": 0.3,
+            "miles": 0.42,
             "busRoute": "Route A"
         },
         {
             "from": "library_mall",
             "to": "state_gilman",
-            "miles": 0.3,
+            "miles": 0.42,
             "busRoute": "Route A"
         },
         {
             "from": "library_mall",
             "to": "memorial_union",
-            "miles": 0.25,
+            "miles": 0.1,
             "busRoute": null
         },
         {
             "from": "memorial_union",
             "to": "library_mall",
-            "miles": 0.25,
+            "miles": 0.1,
             "busRoute": null
         },
         {
             "from": "library_mall",
             "to": "regent_park",
-            "miles": 0.5,
+            "miles": 0.52,
             "busRoute": null
         },
         {
             "from": "regent_park",
             "to": "library_mall",
-            "miles": 0.5,
+            "miles": 0.52,
             "busRoute": null
         },
         {
             "from": "memorial_union",
             "to": "bascom_hill",
-            "miles": 0.35,
+            "miles": 0.19,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "memorial_union",
-            "miles": 0.35,
+            "miles": 0.19,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "camp_randall",
-            "miles": 0.8,
+            "miles": 0.57,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "regent_park",
-            "miles": 0.6,
+            "miles": 0.59,
             "busRoute": null
         },
         {
             "from": "regent_park",
             "to": "camp_randall",
-            "miles": 0.6,
+            "miles": 0.59,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "monroe_edgewood",
-            "miles": 0.7,
+            "miles": 1.29,
             "busRoute": "Route D"
         },
         {
             "from": "monroe_edgewood",
             "to": "camp_randall",
-            "miles": 0.7,
+            "miles": 1.29,
             "busRoute": "Route D"
         },
         {
             "from": "regent_park",
             "to": "monroe_edgewood",
-            "miles": 0.6,
+            "miles": 1.65,
             "busRoute": null
         },
         {
             "from": "monroe_edgewood",
             "to": "regent_park",
-            "miles": 0.6,
+            "miles": 1.65,
             "busRoute": null
         },
         {
             "from": "regent_park",
             "to": "john_nolen",
-            "miles": 0.9,
+            "miles": 1.55,
             "busRoute": null
         },
         {
             "from": "john_nolen",
             "to": "regent_park",
-            "miles": 0.9,
+            "miles": 1.55,
             "busRoute": null
         },
         {
             "from": "john_nolen",
             "to": "capitol",
-            "miles": 0.6,
+            "miles": 1.54,
             "busRoute": null
         },
         {
             "from": "king_st",
             "to": "east_wash",
-            "miles": 0.45,
+            "miles": 0.47,
             "busRoute": "Route L"
         },
         {
             "from": "east_wash",
             "to": "king_st",
-            "miles": 0.45,
+            "miles": 0.47,
             "busRoute": "Route L"
         },
         {
             "from": "east_wash",
             "to": "tenney_park",
-            "miles": 0.55,
+            "miles": 0.93,
             "busRoute": null
         },
         {
             "from": "tenney_park",
             "to": "east_wash",
-            "miles": 0.55,
+            "miles": 0.93,
             "busRoute": null
         },
         {
             "from": "willy_st",
             "to": "tenney_park",
-            "miles": 0.5,
+            "miles": 1.16,
             "busRoute": null
         },
         {
             "from": "tenney_park",
             "to": "willy_st",
-            "miles": 0.5,
+            "miles": 1.16,
             "busRoute": null
         },
         {
             "from": "east_wash",
             "to": "atwood_schenks",
-            "miles": 0.65,
+            "miles": 1.34,
             "busRoute": "Route L"
         },
         {
             "from": "atwood_schenks",
             "to": "olbrich_gardens",
-            "miles": 0.5,
+            "miles": 1.03,
             "busRoute": "Route 38"
         },
         {
             "from": "olbrich_gardens",
             "to": "atwood_schenks",
-            "miles": 0.5,
+            "miles": 1.03,
             "busRoute": "Route 38"
         },
         {
             "from": "olbrich_gardens",
             "to": "tenney_park",
-            "miles": 0.75,
+            "miles": 1.77,
             "busRoute": null
         },
         {
             "from": "monroe_edgewood",
             "to": "arboretum",
-            "miles": 0.9,
+            "miles": 1.07,
             "busRoute": null
         },
         {
             "from": "arboretum",
             "to": "monroe_edgewood",
-            "miles": 0.9,
+            "miles": 1.07,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "hilldale",
-            "miles": 0.85,
+            "miles": 2.49,
             "busRoute": null
         },
         {
             "from": "hilldale",
             "to": "bascom_hill",
-            "miles": 0.85,
+            "miles": 2.49,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "morgridge_hall",
-            "miles": 0.25,
+            "miles": 0.23,
             "busRoute": null
         },
         {
             "from": "morgridge_hall",
             "to": "bascom_hill",
-            "miles": 0.25,
+            "miles": 0.23,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "union_south",
-            "miles": 0.45,
+            "miles": 0.26,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "camp_randall",
-            "miles": 0.45,
+            "miles": 0.26,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "kohl_center",
-            "miles": 0.2,
+            "miles": 0.8,
             "busRoute": null
         },
         {
             "from": "kohl_center",
             "to": "camp_randall",
-            "miles": 0.2,
+            "miles": 0.8,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "engineering_hall",
-            "miles": 0.3,
+            "miles": 0.24,
             "busRoute": null
         },
         {
             "from": "engineering_hall",
             "to": "union_south",
-            "miles": 0.3,
+            "miles": 0.24,
             "busRoute": null
         },
         {
             "from": "state_frances",
             "to": "grainger_hall",
-            "miles": 0.3,
+            "miles": 0.34,
             "busRoute": "Route A"
         },
         {
             "from": "grainger_hall",
             "to": "state_frances",
-            "miles": 0.3,
+            "miles": 0.34,
             "busRoute": "Route A"
         },
         {
             "from": "state_gilman",
             "to": "chazen_museum",
-            "miles": 0.35,
+            "miles": 0.4,
             "busRoute": "Route A"
         },
         {
             "from": "chazen_museum",
             "to": "state_gilman",
-            "miles": 0.35,
+            "miles": 0.4,
             "busRoute": "Route A"
         },
         {
             "from": "memorial_union",
             "to": "college_library",
-            "miles": 0.3,
+            "miles": 0.05,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "memorial_union",
-            "miles": 0.3,
+            "miles": 0.05,
             "busRoute": null
-        },
-        {
-            "from": "memorial_union",
-            "to": "witte_hall",
-            "miles": 0.55,
-            "busRoute": "Route 80"
-        },
-        {
-            "from": "witte_hall",
-            "to": "memorial_union",
-            "miles": 0.55,
-            "busRoute": "Route 80"
         },
         {
             "from": "witte_hall",
             "to": "sellery_hall",
-            "miles": 0.15,
-            "busRoute": "Route 80"
+            "miles": 0.16,
+            "busRoute": "Route B"
         },
         {
             "from": "sellery_hall",
             "to": "witte_hall",
-            "miles": 0.15,
-            "busRoute": "Route 80"
+            "miles": 0.16,
+            "busRoute": "Route B"
         },
         {
             "from": "witte_hall",
             "to": "ogg_hall",
-            "miles": 0.3,
-            "busRoute": "Route 80"
+            "miles": 0.16,
+            "busRoute": "Route B"
         },
         {
             "from": "ogg_hall",
             "to": "witte_hall",
-            "miles": 0.3,
-            "busRoute": "Route 80"
-        },
-        {
-            "from": "ogg_hall",
-            "to": "dejope_hall",
-            "miles": 0.5,
-            "busRoute": "Route 80"
-        },
-        {
-            "from": "dejope_hall",
-            "to": "ogg_hall",
-            "miles": 0.5,
-            "busRoute": "Route 80"
+            "miles": 0.16,
+            "busRoute": "Route B"
         },
         {
             "from": "bascom_hill",
             "to": "chadbourne_hall",
-            "miles": 0.35,
+            "miles": 0.16,
             "busRoute": null
         },
         {
             "from": "chadbourne_hall",
             "to": "bascom_hill",
-            "miles": 0.35,
+            "miles": 0.16,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "social_sciences",
-            "miles": 0.3,
+            "miles": 0.11,
             "busRoute": null
         },
         {
             "from": "social_sciences",
             "to": "bascom_hill",
-            "miles": 0.3,
+            "miles": 0.11,
             "busRoute": null
         },
         {
             "from": "morgridge_hall",
             "to": "education_building",
-            "miles": 0.15,
+            "miles": 0.05,
             "busRoute": null
         },
         {
             "from": "education_building",
             "to": "morgridge_hall",
-            "miles": 0.15,
+            "miles": 0.05,
             "busRoute": null
         },
         {
             "from": "state_frances",
             "to": "memorial_library",
-            "miles": 0.2,
+            "miles": 0.12,
             "busRoute": "Route A"
         },
         {
             "from": "memorial_library",
             "to": "state_frances",
-            "miles": 0.2,
+            "miles": 0.12,
             "busRoute": "Route A"
         },
         {
             "from": "memorial_library",
             "to": "humanities_building",
-            "miles": 0.15,
+            "miles": 0.13,
             "busRoute": null
         },
         {
             "from": "humanities_building",
             "to": "memorial_library",
-            "miles": 0.15,
+            "miles": 0.13,
             "busRoute": null
         },
         {
             "from": "memorial_library",
             "to": "science_hall",
-            "miles": 0.1,
+            "miles": 0.16,
             "busRoute": null
         },
         {
             "from": "science_hall",
             "to": "memorial_library",
-            "miles": 0.1,
+            "miles": 0.16,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "van_hise_hall",
-            "miles": 0.4,
+            "miles": 0.29,
             "busRoute": null
         },
         {
             "from": "van_hise_hall",
             "to": "college_library",
-            "miles": 0.4,
+            "miles": 0.29,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "van_vleck_hall",
-            "miles": 0.35,
+            "miles": 0.22,
             "busRoute": null
         },
         {
             "from": "van_vleck_hall",
             "to": "college_library",
-            "miles": 0.35,
+            "miles": 0.22,
             "busRoute": null
         },
         {
             "from": "engineering_hall",
             "to": "discovery_building",
-            "miles": 0.5,
+            "miles": 0.19,
             "busRoute": null
         },
         {
             "from": "discovery_building",
             "to": "engineering_hall",
-            "miles": 0.5,
+            "miles": 0.19,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "nicholas_rec",
-            "miles": 0.25,
+            "miles": 0.5,
             "busRoute": null
         },
         {
             "from": "nicholas_rec",
             "to": "union_south",
-            "miles": 0.25,
+            "miles": 0.5,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "atmosphere_apts",
-            "miles": 0.3,
+            "miles": 0.79,
             "busRoute": null
         },
         {
             "from": "atmosphere_apts",
             "to": "camp_randall",
-            "miles": 0.3,
+            "miles": 0.79,
             "busRoute": null
         },
         {
             "from": "kohl_center",
             "to": "x01_apts",
-            "miles": 0.25,
+            "miles": 0.38,
             "busRoute": null
         },
         {
             "from": "x01_apts",
             "to": "kohl_center",
-            "miles": 0.25,
+            "miles": 0.38,
             "busRoute": null
         },
         {
             "from": "grainger_hall",
             "to": "lucky_apts",
-            "miles": 0.25,
+            "miles": 0.18,
             "busRoute": null
         },
         {
             "from": "lucky_apts",
             "to": "grainger_hall",
-            "miles": 0.25,
+            "miles": 0.18,
             "busRoute": null
         },
         {
             "from": "grainger_hall",
             "to": "business_school",
-            "miles": 0.1,
+            "miles": 0.05,
             "busRoute": null
         },
         {
             "from": "business_school",
             "to": "grainger_hall",
-            "miles": 0.1,
+            "miles": 0.05,
             "busRoute": null
         },
         {
             "from": "library_mall",
             "to": "red_gym",
-            "miles": 0.15,
+            "miles": 0.08,
             "busRoute": null
         },
         {
             "from": "red_gym",
             "to": "library_mall",
-            "miles": 0.15,
+            "miles": 0.08,
             "busRoute": null
         },
         {
             "from": "grainger_hall",
             "to": "vilas_hall",
-            "miles": 0.2,
+            "miles": 0.09,
             "busRoute": null
         },
         {
             "from": "vilas_hall",
             "to": "grainger_hall",
-            "miles": 0.2,
+            "miles": 0.09,
             "busRoute": null
         },
         {
@@ -959,110 +941,158 @@
         {
             "from": "capitol",
             "to": "ians_pizza",
-            "miles": 0.05,
+            "miles": 0.15,
             "busRoute": "Route A"
         },
         {
             "from": "ians_pizza",
             "to": "capitol",
-            "miles": 0.05,
+            "miles": 0.15,
             "busRoute": "Route A"
         },
         {
             "from": "van_hise_hall",
             "to": "middleton_building",
-            "miles": 0.1,
+            "miles": 0.09,
             "busRoute": null
         },
         {
             "from": "middleton_building",
             "to": "van_hise_hall",
-            "miles": 0.1,
+            "miles": 0.09,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "vilas_zoo",
-            "miles": 0.9,
+            "miles": 0.72,
             "busRoute": null
         },
         {
             "from": "vilas_zoo",
             "to": "camp_randall",
-            "miles": 0.9,
+            "miles": 0.72,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "elizabeth_waters",
-            "miles": 0.15,
+            "miles": 0.18,
             "busRoute": null
         },
         {
             "from": "elizabeth_waters",
             "to": "bascom_hill",
-            "miles": 0.15,
+            "miles": 0.18,
             "busRoute": null
         },
         {
+            "from": "library_mall",
+            "to": "witte_hall",
+            "miles": 0.29,
+            "busRoute": "Route B"
+        },
+        {
             "from": "witte_hall",
+            "to": "library_mall",
+            "miles": 0.29,
+            "busRoute": "Route B"
+        },
+        {
+            "from": "memorial_union",
+            "to": "elizabeth_waters",
+            "miles": 0.31,
+            "busRoute": "Route 80"
+        },
+        {
+            "from": "elizabeth_waters",
+            "to": "memorial_union",
+            "miles": 0.31,
+            "busRoute": "Route 80"
+        },
+        {
+            "from": "elizabeth_waters",
             "to": "slichter_hall",
-            "miles": 0.15,
-            "busRoute": null
+            "miles": 0.29,
+            "busRoute": "Route 80"
         },
         {
             "from": "slichter_hall",
-            "to": "witte_hall",
-            "miles": 0.15,
-            "busRoute": null
+            "to": "elizabeth_waters",
+            "miles": 0.29,
+            "busRoute": "Route 80"
         },
         {
-            "from": "witte_hall",
+            "from": "slichter_hall",
             "to": "kronshage_halls",
-            "miles": 0.12,
-            "busRoute": null
+            "miles": 0.19,
+            "busRoute": "Route 80"
         },
         {
             "from": "kronshage_halls",
-            "to": "witte_hall",
-            "miles": 0.12,
-            "busRoute": null
+            "to": "slichter_hall",
+            "miles": 0.19,
+            "busRoute": "Route 80"
         },
         {
-            "from": "ogg_hall",
+            "from": "kronshage_halls",
             "to": "bradley_hall",
-            "miles": 0.2,
+            "miles": 0.05,
             "busRoute": null
         },
         {
             "from": "bradley_hall",
-            "to": "ogg_hall",
-            "miles": 0.2,
+            "to": "kronshage_halls",
+            "miles": 0.05,
             "busRoute": null
         },
         {
-            "from": "ogg_hall",
-            "to": "bakke_rec_center",
-            "miles": 0.15,
-            "busRoute": null
-        },
-        {
-            "from": "bakke_rec_center",
-            "to": "ogg_hall",
-            "miles": 0.15,
+            "from": "kronshage_halls",
+            "to": "dejope_hall",
+            "miles": 0.1,
             "busRoute": null
         },
         {
             "from": "dejope_hall",
-            "to": "lakeshore_preserve",
-            "miles": 0.4,
+            "to": "kronshage_halls",
+            "miles": 0.1,
             "busRoute": null
         },
         {
-            "from": "lakeshore_preserve",
-            "to": "dejope_hall",
-            "miles": 0.4,
+            "from": "dejope_hall",
+            "to": "bakke_rec_center",
+            "miles": 0.12,
             "busRoute": null
+        },
+        {
+            "from": "bakke_rec_center",
+            "to": "dejope_hall",
+            "miles": 0.12,
+            "busRoute": null
+        },
+        {
+            "from": "bakke_rec_center",
+            "to": "lakeshore_preserve",
+            "miles": 0.69,
+            "busRoute": "Route 80"
+        },
+        {
+            "from": "lakeshore_preserve",
+            "to": "bakke_rec_center",
+            "miles": 0.69,
+            "busRoute": "Route 80"
+        },
+        {
+            "from": "lakeshore_preserve",
+            "to": "eagle_heights",
+            "miles": 0.47,
+            "busRoute": "Route 80"
+        },
+        {
+            "from": "eagle_heights",
+            "to": "lakeshore_preserve",
+            "miles": 0.47,
+            "busRoute": "Route 80"
         }
     ]
 }

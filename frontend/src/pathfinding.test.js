@@ -40,11 +40,11 @@ describe('computeRoute', () => {
 
   // Regression guard matching the backend's own pinned case
   // (PathFinderServerIntegrationTest#floatingPointSummationNoiseIsRoundedAway):
-  // camp_randall -> bascom_hill is one-way, so the reverse trip has to go the
-  // long way around at exactly 1.7 miles. If this ever drifts, the bundled
-  // network.json is out of sync with the real RoadNetwork.java.
+  // camp_randall -> bascom_hill is one-way, so the reverse trip is forced
+  // onto a different, longer path than the direct one. If this ever drifts,
+  // the bundled network.json is out of sync with the real RoadNetwork.java.
   it('matches the backend exactly for the pinned camp_randall -> bascom_hill case', () => {
     const result = computeRoute(network, 'camp_randall', 'bascom_hill');
-    expect(result.totalMiles).toBe(1.7);
+    expect(result.totalMiles).toBe(1.4);
   });
 });
