@@ -13,6 +13,13 @@ import java.util.*;
  * This class extends the BaseGraph data structure with additional methods for computing the total
  * cost and list of node data along the shortest path connecting a provided starting to ending
  * nodes. This class makes use of Dijkstra's shortest path algorithm.
+ *
+ * <p>The original CS400 submission (header above) enqueued a new SearchNode for every edge out of
+ * a visited node unconditionally, even when a cheaper path to that same node was already known --
+ * relying on the later visitedSet check to discard the loser once popped. computeShortestPath now
+ * tracks a best-known distance per node and only enqueues strict improvements, so an inferior
+ * candidate is never added to the queue in the first place; see lastEdgesConsidered()/
+ * lastQueueInsertions() and DijkstraGraphTest for a demonstration on a graph with redundant paths.
  */
 public class DijkstraGraph<NodeType, EdgeType extends Number> extends BaseGraph<NodeType, EdgeType>
     implements GraphADT<NodeType, EdgeType> {
@@ -54,6 +61,24 @@ public class DijkstraGraph<NodeType, EdgeType extends Number> extends BaseGraph<
     super(new PlaceholderMap<>());
   }
 
+  // Diagnostics from the most recent computeShortestPath call: how many
+  // edges were looked at vs. how many actually produced a queue insertion.
+  // Exposed for tests/benchmarks to demonstrate that tracking a best-known
+  // distance per node (below) avoids enqueuing SearchNodes that can never
+  // win -- e.g. a later, more expensive path to a node already reached
+  // more cheaply. Without that check, every edge out of every visited node
+  // becomes a queue insertion regardless of whether it's an improvement.
+  private int lastEdgesConsidered;
+  private int lastQueueInsertions;
+
+  public int lastEdgesConsidered() {
+    return lastEdgesConsidered;
+  }
+
+  public int lastQueueInsertions() {
+    return lastQueueInsertions;
+  }
+
   /**
    * This helper method creates a network of SearchNodes while computing the shortest path between
    * the provided start and end locations. The SearchNode that is returned by this method is
@@ -72,14 +97,24 @@ public class DijkstraGraph<NodeType, EdgeType extends Number> extends BaseGraph<
     if (start == null || end == null || !nodes.containsKey(start) || !nodes.containsKey(end)) {
       throw new NoSuchElementException("Either start or end node does not exist in the graph.");
     }
+    lastEdgesConsidered = 0;
+    lastQueueInsertions = 0;
+
     // S1: Initialize priority queue to store nodes based on their cost
     PriorityQueue<SearchNode> priorityQueue = new PriorityQueue<>();
-    // Use PlaceholderMap to track visited nodes
+    // Use PlaceholderMap to track visited (finalized) nodes
     PlaceholderMap<NodeType, SearchNode> visitedSet = new PlaceholderMap<>();
+    // Best path cost found so far to a not-yet-finalized node, so a worse
+    // duplicate SearchNode for the same node never gets enqueued in the
+    // first place, instead of being enqueued and later skipped via
+    // visitedSet once it's popped.
+    Map<NodeType, Double> bestKnownCost = new HashMap<>();
 
     // S2: Initialize the start node with cost 0 and no predecessor, then add to queue
     SearchNode startNode = new SearchNode(nodes.get(start), 0.0, null);
     priorityQueue.add(startNode);
+    lastQueueInsertions++;
+    bestKnownCost.put(start, 0.0);
 
     // S3: Continue processing nodes in the priority queue until it's empty
     while (!priorityQueue.isEmpty()) {
@@ -105,12 +140,20 @@ public class DijkstraGraph<NodeType, EdgeType extends Number> extends BaseGraph<
       for (Edge edge : graphNode.edgesLeaving) {
         Node successorNode = edge.successor;
         NodeType successorData = successorNode.data;
-        double newCost = currentNode.cost + edge.data.doubleValue();
+        if (visitedSet.containsKey(successorData)) {
+          continue;
+        }
+        lastEdgesConsidered++;
 
-        // If successor has not been visited, create a new SearchNode and add it to the queue
-        if (!visitedSet.containsKey(successorData)) {
-          SearchNode newNode = new SearchNode(successorNode, newCost, currentNode);
-          priorityQueue.add(newNode);
+        double newCost = currentNode.cost + edge.data.doubleValue();
+        Double knownCost = bestKnownCost.get(successorData);
+
+        // Only enqueue this path if it's the first one found to this node,
+        // or strictly better than the best one found so far.
+        if (knownCost == null || newCost < knownCost) {
+          bestKnownCost.put(successorData, newCost);
+          priorityQueue.add(new SearchNode(successorNode, newCost, currentNode));
+          lastQueueInsertions++;
         }
       }
     }

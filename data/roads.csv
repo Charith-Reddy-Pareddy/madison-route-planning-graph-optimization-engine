@@ -1,0 +1,125 @@
+from,to,miles,busRoute
+capitol,king_st,0.16,
+king_st,capitol,0.16,
+capitol,state_frances,0.58,Route A
+state_frances,capitol,0.58,Route A
+capitol,john_nolen,1.54,
+king_st,willy_st,0.38,Route C
+willy_st,king_st,0.38,Route C
+willy_st,capitol,0.54,
+state_frances,state_gilman,0.25,Route A
+state_gilman,state_frances,0.25,Route A
+state_gilman,library_mall,0.42,Route A
+library_mall,state_gilman,0.42,Route A
+library_mall,memorial_union,0.1,
+memorial_union,library_mall,0.1,
+library_mall,regent_park,0.52,
+regent_park,library_mall,0.52,
+memorial_union,bascom_hill,0.19,
+bascom_hill,memorial_union,0.19,
+bascom_hill,camp_randall,0.57,
+camp_randall,regent_park,0.59,
+regent_park,camp_randall,0.59,
+camp_randall,monroe_edgewood,1.29,Route D
+monroe_edgewood,camp_randall,1.29,Route D
+regent_park,monroe_edgewood,1.65,
+monroe_edgewood,regent_park,1.65,
+regent_park,john_nolen,1.55,
+john_nolen,regent_park,1.55,
+john_nolen,capitol,1.54,
+king_st,east_wash,0.47,Route L
+east_wash,king_st,0.47,Route L
+east_wash,tenney_park,0.93,
+tenney_park,east_wash,0.93,
+willy_st,tenney_park,1.16,
+tenney_park,willy_st,1.16,
+east_wash,atwood_schenks,1.34,Route L
+atwood_schenks,olbrich_gardens,1.03,Route 38
+olbrich_gardens,atwood_schenks,1.03,Route 38
+olbrich_gardens,tenney_park,1.77,
+monroe_edgewood,arboretum,1.07,
+arboretum,monroe_edgewood,1.07,
+bascom_hill,hilldale,2.49,
+hilldale,bascom_hill,2.49,
+bascom_hill,morgridge_hall,0.23,
+morgridge_hall,bascom_hill,0.23,
+camp_randall,union_south,0.26,
+union_south,camp_randall,0.26,
+camp_randall,kohl_center,0.8,
+kohl_center,camp_randall,0.8,
+union_south,engineering_hall,0.24,
+engineering_hall,union_south,0.24,
+state_frances,grainger_hall,0.34,Route A
+grainger_hall,state_frances,0.34,Route A
+state_gilman,chazen_museum,0.4,Route A
+chazen_museum,state_gilman,0.4,Route A
+memorial_union,college_library,0.05,
+college_library,memorial_union,0.05,
+witte_hall,sellery_hall,0.16,Route B
+sellery_hall,witte_hall,0.16,Route B
+witte_hall,ogg_hall,0.16,Route B
+ogg_hall,witte_hall,0.16,Route B
+bascom_hill,chadbourne_hall,0.16,
+chadbourne_hall,bascom_hill,0.16,
+bascom_hill,social_sciences,0.11,
+social_sciences,bascom_hill,0.11,
+morgridge_hall,education_building,0.05,
+education_building,morgridge_hall,0.05,
+state_frances,memorial_library,0.12,Route A
+memorial_library,state_frances,0.12,Route A
+memorial_library,humanities_building,0.13,
+humanities_building,memorial_library,0.13,
+memorial_library,science_hall,0.16,
+science_hall,memorial_library,0.16,
+college_library,van_hise_hall,0.29,
+van_hise_hall,college_library,0.29,
+college_library,van_vleck_hall,0.22,
+van_vleck_hall,college_library,0.22,
+engineering_hall,discovery_building,0.19,
+discovery_building,engineering_hall,0.19,
+union_south,nicholas_rec,0.5,
+nicholas_rec,union_south,0.5,
+camp_randall,atmosphere_apts,0.79,
+atmosphere_apts,camp_randall,0.79,
+kohl_center,x01_apts,0.38,
+x01_apts,kohl_center,0.38,
+grainger_hall,lucky_apts,0.18,
+lucky_apts,grainger_hall,0.18,
+grainger_hall,business_school,0.05,
+business_school,grainger_hall,0.05,
+library_mall,red_gym,0.08,
+red_gym,library_mall,0.08,
+grainger_hall,vilas_hall,0.09,
+vilas_hall,grainger_hall,0.09,
+state_frances,target_state_st,0.05,Route A
+target_state_st,state_frances,0.05,Route A
+state_frances,chipotle_state_st,0.05,Route A
+chipotle_state_st,state_frances,0.05,Route A
+state_frances,popeyes_state_st,0.05,Route A
+popeyes_state_st,state_frances,0.05,Route A
+capitol,ians_pizza,0.15,Route A
+ians_pizza,capitol,0.15,Route A
+van_hise_hall,middleton_building,0.09,
+middleton_building,van_hise_hall,0.09,
+camp_randall,vilas_zoo,0.72,
+vilas_zoo,camp_randall,0.72,
+bascom_hill,elizabeth_waters,0.18,
+elizabeth_waters,bascom_hill,0.18,
+library_mall,witte_hall,0.29,Route B
+witte_hall,library_mall,0.29,Route B
+memorial_union,elizabeth_waters,0.31,Route 80
+elizabeth_waters,memorial_union,0.31,Route 80
+elizabeth_waters,slichter_hall,0.29,Route 80
+slichter_hall,elizabeth_waters,0.29,Route 80
+slichter_hall,kronshage_halls,0.19,Route 80
+kronshage_halls,slichter_hall,0.19,Route 80
+kronshage_halls,bradley_hall,0.05,
+bradley_hall,kronshage_halls,0.05,
+kronshage_halls,dejope_hall,0.1,
+dejope_hall,kronshage_halls,0.1,
+dejope_hall,bakke_rec_center,0.12,
+bakke_rec_center,dejope_hall,0.12,
+bakke_rec_center,lakeshore_preserve,0.69,Route 80
+lakeshore_preserve,bakke_rec_center,0.69,Route 80
+lakeshore_preserve,eagle_heights,0.47,Route 80
+eagle_heights,lakeshore_preserve,0.47,Route 80

@@ -129,4 +129,56 @@ public class DijkstraGraphTest {
     Assertions.assertEquals(0.0, graph.shortestPathCost("A", "A"));
     Assertions.assertThrows(NoSuchElementException.class, () -> graph.shortestPathData("A", "B"));
   }
+
+  /**
+   * A layered graph (S -> {A1,A2,A3} -> {B1,B2,B3} -> T, every node in one
+   * layer connected to every node in the next, at increasing weights) where
+   * most of those edges arrive at a node someone already reached more
+   * cheaply. S->A1 is strictly the cheapest way into layer A (1 < 2 < 3),
+   * so A1 is always processed before A2/A3 regardless of priority-queue tie
+   * -breaking, and once it establishes B1/B2/B3's best-known costs, every
+   * edge A2/A3 send to those same nodes is strictly worse and should never
+   * be queued. Likewise B1 always reaches T first and cheapest.
+   */
+  private DijkstraGraph<String, Double> layeredGraphWithRedundantPaths() {
+    DijkstraGraph<String, Double> graph = new DijkstraGraph<>();
+    String[][] layers = {{"S"}, {"A1", "A2", "A3"}, {"B1", "B2", "B3"}, {"T"}};
+    for (String[] layer : layers) {
+      for (String node : layer) {
+        graph.insertNode(node);
+      }
+    }
+    for (int l = 0; l < layers.length - 1; l++) {
+      double weight = 1.0;
+      for (String from : layers[l]) {
+        for (String to : layers[l + 1]) {
+          graph.insertEdge(from, to, weight);
+          weight += 1.0;
+        }
+      }
+    }
+    return graph;
+  }
+
+  @Test
+  public void trackingBestKnownDistancePrunesInferiorQueueInsertions() {
+    DijkstraGraph<String, Double> graph = layeredGraphWithRedundantPaths();
+
+    graph.shortestPathData("S", "T");
+
+    // Deterministic regardless of how the priority queue breaks cost ties:
+    // S (1) + S's 3 edges to layer A (4) + A1's 3 edges to layer B (7, A1 is
+    // strictly cheapest into layer A so it's always processed first and
+    // always wins) + B1's 1 edge to T (8, same reasoning one layer down).
+    // A2/A3/B2/B3 never contribute an insertion because every path through
+    // them is strictly more expensive than one already recorded.
+    Assertions.assertEquals(8, graph.lastQueueInsertions());
+    // Every visited node's full edge list gets examined regardless of
+    // whether it leads to an insertion, so edges considered is always
+    // higher than actual insertions here -- that gap is the pruning.
+    Assertions.assertTrue(graph.lastEdgesConsidered() > graph.lastQueueInsertions(),
+        "expected pruning to skip inferior candidates, but edges considered ("
+            + graph.lastEdgesConsidered() + ") was not greater than insertions ("
+            + graph.lastQueueInsertions() + ")");
+  }
 }

@@ -17,5 +17,6 @@ FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=java-build /app/out/classes ./classes
 COPY --from=frontend-build /app/web ./web
+COPY data/ ./data/
 EXPOSE 8080
 CMD ["java", "-cp", "classes", "Main"]

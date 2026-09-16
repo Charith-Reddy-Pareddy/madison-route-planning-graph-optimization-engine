@@ -13,6 +13,63 @@ function estimatedMinutes(miles) {
   return Math.max(1, Math.round((miles / WALK_MPH) * 60));
 }
 
+// Binary min-heap keyed by priority (path cost), used as computeRoute's
+// priority queue below instead of a linear scan over every unvisited node.
+// Ties are broken by insertion order, which doesn't affect correctness.
+// Decrease-key is skipped in favor of lazy deletion: a since-improved
+// entry is just left in the heap and dropped when popped, once `visited`
+// already covers that node -- cheaper to implement than an indexed heap
+// and, since every push is an already-verified improvement, only adds
+// O(1) amortized wasted pops rather than changing the result.
+export class MinHeap {
+  constructor() {
+    this.items = [];
+  }
+
+  get size() {
+    return this.items.length;
+  }
+
+  push(value, priority) {
+    this.items.push({ value, priority });
+    this.#siftUp(this.items.length - 1);
+  }
+
+  pop() {
+    if (this.items.length === 0) return undefined;
+    const top = this.items[0];
+    const last = this.items.pop();
+    if (this.items.length > 0) {
+      this.items[0] = last;
+      this.#siftDown(0);
+    }
+    return top;
+  }
+
+  #siftUp(i) {
+    while (i > 0) {
+      const parent = (i - 1) >> 1;
+      if (this.items[parent].priority <= this.items[i].priority) break;
+      [this.items[parent], this.items[i]] = [this.items[i], this.items[parent]];
+      i = parent;
+    }
+  }
+
+  #siftDown(i) {
+    const n = this.items.length;
+    for (;;) {
+      const left = 2 * i + 1;
+      const right = 2 * i + 2;
+      let smallest = i;
+      if (left < n && this.items[left].priority < this.items[smallest].priority) smallest = left;
+      if (right < n && this.items[right].priority < this.items[smallest].priority) smallest = right;
+      if (smallest === i) break;
+      [this.items[smallest], this.items[i]] = [this.items[i], this.items[smallest]];
+      i = smallest;
+    }
+  }
+}
+
 /**
  * Computes the shortest path between two node ids in `network` ({nodes, edges}),
  * returning the same shape PathFinderServer's /api/route does. Throws an Error
@@ -34,22 +91,20 @@ export function computeRoute(network, startId, endId) {
   const visited = new Set();
   dist.set(startId, 0);
 
-  while (visited.size < nodeIds.length) {
-    let current = null;
-    let currentDist = Infinity;
-    for (const id of nodeIds) {
-      if (!visited.has(id) && dist.get(id) < currentDist) {
-        current = id;
-        currentDist = dist.get(id);
-      }
-    }
-    if (current === null || current === endId) break;
+  const queue = new MinHeap();
+  queue.push(startId, 0);
+
+  while (queue.size > 0) {
+    const { value: current, priority: currentDist } = queue.pop();
+    if (visited.has(current)) continue; // stale entry made obsolete by a cheaper path found since
+    if (current === endId) break;
     visited.add(current);
     for (const edge of adjacency.get(current)) {
       const alt = currentDist + edge.miles;
       if (alt < dist.get(edge.to)) {
         dist.set(edge.to, alt);
         cameVia.set(edge.to, edge);
+        queue.push(edge.to, alt);
       }
     }
   }

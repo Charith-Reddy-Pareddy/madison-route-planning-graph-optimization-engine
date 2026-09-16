@@ -1,19 +1,57 @@
-# Path Finder
+# Madison Route Planning & Graph Optimization Engine
 
-[![CI](https://github.com/Charith-Reddy-Pareddy/path-finder/actions/workflows/ci.yml/badge.svg)](https://github.com/Charith-Reddy-Pareddy/path-finder/actions/workflows/ci.yml)
+[![CI](https://github.com/Charith-Reddy-Pareddy/madison-route-planning-graph-optimization-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/Charith-Reddy-Pareddy/madison-route-planning-graph-optimization-engine/actions/workflows/ci.yml)
 
-**Live:** [GitHub Pages](https://charith-reddy-pareddy.github.io/path-finder/) · [Render](https://path-finder-nbjl.onrender.com) (full Java backend; free-tier instance may take ~30-50s to wake up if idle)
+**Live:** [GitHub Pages](https://charith-reddy-pareddy.github.io/madison-route-planning-graph-optimization-engine/) · [Render](https://path-finder-nbjl.onrender.com) (full Java backend; free-tier instance may take ~30-50s to wake up if idle -- Render URL pending rename, see note below)
 
-A route-planning web app: pick a start and end location around UW-Madison
-and downtown Madison, WI (dorms, academic buildings, popular apartments,
-State St. food spots, and regular intersections — 58 in all, each at its
-real, geocoded lat/lon — see "Where the coordinates come from" below) and
-get the shortest route, computed with Dijkstra's algorithm, with estimated
-walk time and which Madison Metro Transit bus (if any) covers each leg.
-Originally a UW-Madison CS400 (data structures) assignment implementing a
-generic weighted directed graph — this repo wraps that graph engine in a
-real Java HTTP backend and a browser frontend so it actually behaves like
-a route planner instead of just a test fixture.
+A full-stack route-planning app for UW-Madison and downtown Madison, WI:
+pick a start and end location and get the shortest route via Dijkstra's
+algorithm, with estimated walk time and which Madison Metro Transit bus
+(if any) covers each leg.
+
+**Highlights**
+
+- **58 real locations, geocoded, not guessed** — every coordinate comes
+  from [OpenStreetMap's Nominatim](https://nominatim.openstreetmap.org/),
+  and geocoding caught two real placement errors an earlier hand-estimated
+  pass got wrong (see [Where the coordinates come from](#where-the-coordinates-come-from)).
+- **A real Dijkstra implementation, since improved past its coursework
+  form** — the engine started as a UW-Madison CS400 assignment; this repo
+  wraps it in a real backend/frontend and has since fixed a real
+  inefficiency in it (see [Project history](#project-history)).
+- **Two live deployments from one codebase** — a full Java backend
+  (Render) and a static build with a client-side pathfinding fallback
+  (GitHub Pages), so the app works identically with or without a server.
+- **A hand-built SVG map with no mapping library** — pan, zoom, pinch-to-
+  zoom, collision-avoiding labels, and lake-avoiding road routing, all
+  custom (see [The network map](#the-network-map)).
+- **55+ tests across both layers** — JUnit integration tests that drive
+  the real HTTP server, plus Vitest tests including a randomized
+  correctness check between two independent pathfinding implementations.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph Browser
+        UI["React UI<br/>(RouteForm, NetworkMap, RouteResult)"]
+        Fallback["pathfinding.js<br/>(client-side Dijkstra)"]
+    end
+    subgraph Server["Java backend (optional)"]
+        HTTP["PathFinderServer<br/>(com.sun.net.httpserver)"]
+        Graph["DijkstraGraph"]
+        Network["RoadNetwork"]
+    end
+    Data[("data/locations.csv<br/>data/roads.csv")]
+
+    UI -- "GET /api/health" --> HTTP
+    UI -- "has backend? /api/route" --> HTTP
+    UI -- "no backend? compute locally" --> Fallback
+    Fallback -. "bundled snapshot" .-> Snapshot[("network.json")]
+    HTTP --> Graph
+    HTTP --> Network
+    Network -- "RoadNetworkLoader" --> Data
+```
 
 ## Tech stack
 
@@ -24,6 +62,35 @@ a route planner instead of just a test fixture.
 | Frontend | React 19 + Vite — no map library; the network map is a hand-built inline SVG component ([frontend/src/components/NetworkMap.jsx](frontend/src/components/NetworkMap.jsx), see below) |
 | Testing | JUnit 5 (backend) + Vitest/React Testing Library (frontend) |
 | Build | `make` — compiles Java, builds the React frontend, downloads the JUnit console launcher, runs tests, runs the app |
+
+## Project history
+
+`DijkstraGraph.java`'s `computeShortestPath` (the CS400 header at the top
+of that file is the original assignment's required format) started as a
+UW-Madison CS400 (data structures) assignment implementing a generic
+weighted directed graph, based on the course's own lecture pseudocode for
+Dijkstra's algorithm. Everything else — the HTTP backend, the road
+network and its real geocoded data, the React/SVG frontend, both
+deployments, and all 55+ tests — was built afterward, on top of that
+graph engine, to turn it into an actual route planner instead of a test
+fixture.
+
+The algorithm itself has also been improved past its original coursework
+form: the original version enqueued a new search candidate for every edge
+out of a visited node unconditionally, even when a cheaper path to that
+same node was already known, relying on a later visited-set check to
+discard the loser once it was popped back out. It now tracks a best-known
+distance per node and only enqueues strict improvements, so an inferior
+candidate is never queued in the first place — see
+`lastEdgesConsidered()`/`lastQueueInsertions()` on `DijkstraGraph` and
+`DijkstraGraphTest#trackingBestKnownDistancePrunesInferiorQueueInsertions`
+for a test that demonstrates the pruning on a graph engineered to have
+redundant paths. The GitHub Pages client-side fallback (`pathfinding.js`)
+had the same class of fix: its min-selection was a linear scan over every
+unvisited node each round (O(V² + E)); it's now a binary min-heap — see
+`frontend/scripts/benchmark-pathfinding.mjs` for a real timing comparison
+between the two (at 5,000 random nodes, the heap ran ~89x faster, with
+identical path costs).
 
 ## Where the coordinates come from
 
@@ -43,6 +110,7 @@ always resolve a street *intersection* precisely (e.g. "State St & Gilman
 St" can land at some other point along State St rather than exactly that
 corner), so a few points are approximate to a block or so -- but every
 point is real data, not invented, and every distance is computed from it.
+Full provenance, plus the CSV schema, is in [data/sources.md](data/sources.md).
 
 ## The network map
 
@@ -73,6 +141,24 @@ plain SVG, built up in a few layers:
   animates in with a CSS `stroke-dashoffset` transition.
 
 ## Deployment
+
+```mermaid
+flowchart TD
+    Push["git push to main"] --> CI["GitHub Actions"]
+    CI --> Render["Render (render.yaml)<br/>Docker: full Java backend + built frontend"]
+    CI --> Pages["GitHub Pages (pages.yml)<br/>static frontend only"]
+    Render --> RenderLive["madison-route-planning-*.onrender.com<br/>(pending manual rename)"]
+    Pages --> PagesLive["charith-reddy-pareddy.github.io/<br/>madison-route-planning-graph-optimization-engine"]
+```
+
+> **Note:** the repo was renamed from `path-finder` to
+> `madison-route-planning-graph-optimization-engine` and the Render service
+> in [render.yaml](render.yaml) from `path-finder` to
+> `madison-route-planning`. GitHub Pages' URL updates automatically to
+> match the repo name; Render's live URL only updates once the service is
+> also renamed in the Render dashboard (Settings → Name) -- `render.yaml`
+> alone doesn't trigger that on an existing deployment. Until that's done,
+> the live Render link above still points at the old URL.
 
 Ships two ways, from the same frontend build:
 
@@ -136,16 +222,22 @@ graph directly. Frontend: Vitest + React Testing Library, covering
 `RouteForm`, `NetworkMap` (including the label-collision layout and
 pinch/drag pan-zoom math), `api.js` (including its no-backend fallback),
 `pathfinding.js` (the client-side Dijkstra port, incl. a parity check
-against the backend's pinned test case), and the `ErrorBoundary`.
+against the backend's pinned test case and a randomized correctness check
+against a plain linear-scan reference implementation), and the
+`ErrorBoundary`.
 
 ## Project layout
 
 ```
+data/
+  locations.csv, roads.csv          the network's raw data, loaded by RoadNetworkLoader
+  sources.md                        where every coordinate and distance comes from
 src/
   MapADT.java, PlaceholderMap.java   generic key/value map ADT (hash map backed)
   GraphADT.java, BaseGraph.java      generic directed weighted graph
   DijkstraGraph.java                 shortest-path algorithm (priority-queue Dijkstra)
   RoadNetwork.java                   the 58-location network: intersections, roads, bus routes, one-ways
+  RoadNetworkLoader.java             reads data/locations.csv + data/roads.csv into RoadNetwork
   PathFinderServer.java              HTTP API + static file server
   Json.java                          minimal hand-rolled JSON response writer
   Main.java                          entry point
@@ -159,14 +251,16 @@ frontend/
     components/NetworkMap.jsx         the hand-built SVG map (see "The network map" above)
     components/RouteForm.jsx, RouteResult.jsx, ErrorBoundary.jsx
     api.js                            fetches the live backend, or falls back to client-side computation
-    pathfinding.js                    client-side Dijkstra port, used when there's no backend (GitHub Pages)
+    pathfinding.js                    client-side Dijkstra port (binary min-heap), used when there's no backend (GitHub Pages)
     data/network.json                 point-in-time snapshot of /api/graph, powers that fallback
+  scripts/benchmark-pathfinding.mjs   heap vs. linear-scan timing comparison (`node scripts/benchmark-pathfinding.mjs`)
   (see frontend/README.md for frontend-only dev setup)
 web/                                  generated by `make frontend` (gitignored) — Vite's build output, served by PathFinderServer
 .github/workflows/
   ci.yml                              runs `make test` on push/PR
   pages.yml                           builds the frontend and deploys it to GitHub Pages on push to main
 Makefile
+LICENSE                              MIT
 ```
 
 ## API
@@ -193,4 +287,9 @@ expanding the lowest-cost frontier node first and stopping as soon as
 the destination is popped. `RoadNetwork` includes a few one-way streets
 specifically so the shortest path can differ depending on direction of
 travel — a plain undirected shortest-path search wouldn't reproduce it.
+
+It also tracks a best-known distance per node so it only enqueues a
+candidate path when that path is a strict improvement over the best one
+already found to that node — see [Project history](#project-history) for
+why that matters and how it's tested.
 
