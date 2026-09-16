@@ -24,16 +24,31 @@ describe('NetworkMap', () => {
     expect(container.querySelectorAll('line.on-path')).toHaveLength(1);
     expect(container.querySelectorAll('g.map-node.on-path')).toHaveLength(2);
     // b->c isn't part of the path, so it should render as a plain road.
-    const offPath = container.querySelector('g.map-node:not(.on-path)');
-    expect(offPath.querySelector('text.map-node-label').textContent).toBe('C');
+    expect(container.querySelector('g.map-node:not(.on-path)')).not.toBeNull();
   });
 
   it('marks the first and last path node as endpoints, not intermediate stops', () => {
     const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={['a', 'b', 'c']} />);
-    const endpoints = [...container.querySelectorAll('g.map-node.endpoint')]
-      .map((g) => g.querySelector('text.map-node-label').textContent)
+    const endpointTitles = [...container.querySelectorAll('g.map-node.endpoint title')]
+      .map((t) => t.textContent)
       .sort();
-    expect(endpoints).toEqual(['A', 'C']);
+    expect(endpointTitles[0]).toContain('A');
+    expect(endpointTitles[1]).toContain('C');
+  });
+
+  it('only shows labels for on-path nodes at the default zoom level, not the whole crowded map', () => {
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={['a', 'b']} />);
+    const labels = [...container.querySelectorAll('.map-labels text')].map((t) => t.textContent).sort();
+    // C is off-path and stays hidden until the user zooms in.
+    expect(labels).toEqual(['A', 'B']);
+  });
+
+  it('hides all labels at the default zoom when no route is highlighted', () => {
+    // The real map has 40+ locations, so with nothing "on path" to force-show,
+    // every label stays hidden until the user zooms in -- the app always has
+    // a default route active on load, so this is the pre-route/zoomed-out case.
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} />);
+    expect(container.querySelectorAll('.map-labels text')).toHaveLength(0);
   });
 
   it('renders nothing crash-worthy with an empty network', () => {
