@@ -594,49 +594,49 @@
             "from": "memorial_union",
             "to": "witte_hall",
             "miles": 0.55,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "witte_hall",
             "to": "memorial_union",
             "miles": 0.55,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "witte_hall",
             "to": "sellery_hall",
             "miles": 0.15,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "sellery_hall",
             "to": "witte_hall",
             "miles": 0.15,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "witte_hall",
             "to": "ogg_hall",
             "miles": 0.3,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "ogg_hall",
             "to": "witte_hall",
             "miles": 0.3,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "ogg_hall",
             "to": "dejope_hall",
             "miles": 0.5,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "dejope_hall",
             "to": "ogg_hall",
             "miles": 0.5,
-            "busRoute": null
+            "busRoute": "Route 80"
         },
         {
             "from": "bascom_hill",

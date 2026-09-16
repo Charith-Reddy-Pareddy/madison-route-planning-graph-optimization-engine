@@ -2,8 +2,8 @@
 // /api/route exactly (same field names, same rounding, same error
 // messages) so this can stand in for the Java backend when there isn't
 // one to call -- e.g. a static GitHub Pages deploy. Ports the walking-pace
-// estimate from RoadNetwork.estimatedMinutes (WALK_MPH = 3).
-const WALK_MPH = 3;
+// estimate from RoadNetwork.estimatedMinutes (WALK_MPH = 3.5).
+const WALK_MPH = 3.5;
 
 function round2(d) {
   return Math.round(d * 100) / 100;

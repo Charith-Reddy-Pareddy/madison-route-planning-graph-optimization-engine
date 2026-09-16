@@ -145,16 +145,17 @@ public class RoadNetwork {
     addRoad("memorial_union", "college_library", 0.30);
     addRoad("college_library", "memorial_union", 0.30);
 
-    // Lakeshore residence halls, chained off Memorial Union along the
-    // lakeshore path (a pedestrian/bike path in reality, not a bus route).
-    addRoad("memorial_union", "witte_hall", 0.55);
-    addRoad("witte_hall", "memorial_union", 0.55);
-    addRoad("witte_hall", "sellery_hall", 0.15);
-    addRoad("sellery_hall", "witte_hall", 0.15);
-    addRoad("witte_hall", "ogg_hall", 0.30);
-    addRoad("ogg_hall", "witte_hall", 0.30);
-    addRoad("ogg_hall", "dejope_hall", 0.50);
-    addRoad("dejope_hall", "ogg_hall", 0.50);
+    // Lakeshore residence halls, chained off Memorial Union along Observatory
+    // Dr, which the free UW campus Route 80 runs the length of, Memorial
+    // Union to Eagle Heights -- right past Witte, Sellery, and Ogg.
+    addRoad("memorial_union", "witte_hall", 0.55, "Route 80");
+    addRoad("witte_hall", "memorial_union", 0.55, "Route 80");
+    addRoad("witte_hall", "sellery_hall", 0.15, "Route 80");
+    addRoad("sellery_hall", "witte_hall", 0.15, "Route 80");
+    addRoad("witte_hall", "ogg_hall", 0.30, "Route 80");
+    addRoad("ogg_hall", "witte_hall", 0.30, "Route 80");
+    addRoad("ogg_hall", "dejope_hall", 0.50, "Route 80");
+    addRoad("dejope_hall", "ogg_hall", 0.50, "Route 80");
 
     addRoad("bascom_hill", "chadbourne_hall", 0.35);
     addRoad("chadbourne_hall", "bascom_hill", 0.35);
@@ -213,7 +214,7 @@ public class RoadNetwork {
   // Rough average speeds used to turn a leg's distance into an estimated
   // travel time: a city bus (including stops) is faster than walking, but
   // nowhere near highway speed.
-  private static final double WALK_MPH = 3.0;
+  private static final double WALK_MPH = 3.5;
   private static final double BUS_MPH = 12.0;
 
   /** Estimated minutes to cover `miles`, walking or riding `busRoute` if given. */
