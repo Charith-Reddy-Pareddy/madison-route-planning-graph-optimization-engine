@@ -305,6 +305,42 @@
             "name": "Henry Vilas Zoo",
             "lat": 43.0553,
             "lon": -89.4113
+        },
+        {
+            "id": "elizabeth_waters",
+            "name": "Elizabeth Waters Hall",
+            "lat": 43.0748,
+            "lon": -89.403
+        },
+        {
+            "id": "slichter_hall",
+            "name": "Slichter Hall",
+            "lat": 43.0768,
+            "lon": -89.4075
+        },
+        {
+            "id": "kronshage_halls",
+            "name": "Kronshage Residence Halls",
+            "lat": 43.077,
+            "lon": -89.406
+        },
+        {
+            "id": "bradley_hall",
+            "name": "Bradley Residence Hall",
+            "lat": 43.0795,
+            "lon": -89.416
+        },
+        {
+            "id": "bakke_rec_center",
+            "name": "Bakke Recreation & Wellbeing Center",
+            "lat": 43.079,
+            "lon": -89.4148
+        },
+        {
+            "id": "lakeshore_preserve",
+            "name": "Lakeshore Nature Preserve",
+            "lat": 43.081,
+            "lon": -89.428
         }
     ],
     "edges": [
@@ -954,6 +990,78 @@
             "from": "vilas_zoo",
             "to": "camp_randall",
             "miles": 0.9,
+            "busRoute": null
+        },
+        {
+            "from": "bascom_hill",
+            "to": "elizabeth_waters",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "elizabeth_waters",
+            "to": "bascom_hill",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "witte_hall",
+            "to": "slichter_hall",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "slichter_hall",
+            "to": "witte_hall",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "witte_hall",
+            "to": "kronshage_halls",
+            "miles": 0.12,
+            "busRoute": null
+        },
+        {
+            "from": "kronshage_halls",
+            "to": "witte_hall",
+            "miles": 0.12,
+            "busRoute": null
+        },
+        {
+            "from": "ogg_hall",
+            "to": "bradley_hall",
+            "miles": 0.2,
+            "busRoute": null
+        },
+        {
+            "from": "bradley_hall",
+            "to": "ogg_hall",
+            "miles": 0.2,
+            "busRoute": null
+        },
+        {
+            "from": "ogg_hall",
+            "to": "bakke_rec_center",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "bakke_rec_center",
+            "to": "ogg_hall",
+            "miles": 0.15,
+            "busRoute": null
+        },
+        {
+            "from": "dejope_hall",
+            "to": "lakeshore_preserve",
+            "miles": 0.4,
+            "busRoute": null
+        },
+        {
+            "from": "lakeshore_preserve",
+            "to": "dejope_hall",
+            "miles": 0.4,
             "busRoute": null
         }
     ]

@@ -83,6 +83,13 @@ public class RoadNetwork {
     addIntersection("ians_pizza", "Ian's Pizza (State St)", 43.0749, -89.3850);
     addIntersection("middleton_building", "Middleton Building", 43.0765, -89.4079);
     addIntersection("vilas_zoo", "Henry Vilas Zoo", 43.0553, -89.4113);
+    // More Lakeshore-side residence halls and amenities, along Observatory Dr.
+    addIntersection("elizabeth_waters", "Elizabeth Waters Hall", 43.0748, -89.4030);
+    addIntersection("slichter_hall", "Slichter Hall", 43.0768, -89.4075);
+    addIntersection("kronshage_halls", "Kronshage Residence Halls", 43.0770, -89.4060);
+    addIntersection("bradley_hall", "Bradley Residence Hall", 43.0795, -89.4160);
+    addIntersection("bakke_rec_center", "Bakke Recreation & Wellbeing Center", 43.0790, -89.4148);
+    addIntersection("lakeshore_preserve", "Lakeshore Nature Preserve", 43.0810, -89.4280);
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
@@ -220,6 +227,19 @@ public class RoadNetwork {
     addRoad("middleton_building", "van_hise_hall", 0.10);
     addRoad("camp_randall", "vilas_zoo", 0.90);
     addRoad("vilas_zoo", "camp_randall", 0.90);
+
+    addRoad("bascom_hill", "elizabeth_waters", 0.15);
+    addRoad("elizabeth_waters", "bascom_hill", 0.15);
+    addRoad("witte_hall", "slichter_hall", 0.15);
+    addRoad("slichter_hall", "witte_hall", 0.15);
+    addRoad("witte_hall", "kronshage_halls", 0.12);
+    addRoad("kronshage_halls", "witte_hall", 0.12);
+    addRoad("ogg_hall", "bradley_hall", 0.20);
+    addRoad("bradley_hall", "ogg_hall", 0.20);
+    addRoad("ogg_hall", "bakke_rec_center", 0.15);
+    addRoad("bakke_rec_center", "ogg_hall", 0.15);
+    addRoad("dejope_hall", "lakeshore_preserve", 0.40);
+    addRoad("lakeshore_preserve", "dejope_hall", 0.40);
   }
 
   private void addIntersection(String id, String name, double lat, double lon) {
