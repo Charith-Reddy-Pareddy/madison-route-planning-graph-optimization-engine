@@ -187,6 +187,48 @@ function pushOutOfWater(positions, waterPolygons) {
   }
 }
 
+// Two nodes can each individually sit outside a lake and still have the
+// straight *road line* between them cut across it, if they're on either
+// side of an indentation in the shoreline (the lake polygon isn't
+// perfectly convex) or just close enough to a corner. pushOutOfWater only
+// checks node centers, so it can't catch this -- this does the same
+// directional nudge, but on both endpoints of any road whose line actually
+// crosses the water, until it doesn't.
+function segmentsIntersect(p1, p2, p3, p4) {
+  const cross = (o, a, b) => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const d1 = cross(p3, p4, p1);
+  const d2 = cross(p3, p4, p2);
+  const d3 = cross(p1, p2, p3);
+  const d4 = cross(p1, p2, p4);
+  return (d1 > 0) !== (d2 > 0) && (d3 > 0) !== (d4 > 0);
+}
+
+function segmentIntersectsPolygon(a, b, poly) {
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    if (segmentsIntersect(a, b, poly[j], poly[i])) return true;
+  }
+  return false;
+}
+
+function pushRoadsOutOfWater(positions, edges, waterPolygons) {
+  const STEP = 10;
+  for (let iter = 0; iter < 40; iter++) {
+    let moved = false;
+    for (const edge of edges) {
+      const a = positions.get(edge.from);
+      const b = positions.get(edge.to);
+      if (!a || !b) continue;
+      for (const { poly, dy } of waterPolygons) {
+        if (!segmentIntersectsPolygon(a, b, poly)) continue;
+        a.y += dy * STEP;
+        b.y += dy * STEP;
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+}
+
 function screenTextProps(screen) {
   return { x: screen.x, y: screen.y, textAnchor: 'middle' };
 }
@@ -222,8 +264,9 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
       { pts: LAKE_MONONA, dy: -1 },
     ].map(({ pts, dy }) => ({ poly: pts.map(([lat, lon]) => project(lat, lon, bounds)), dy }));
     pushOutOfWater(declumped, waterPolygons);
+    pushRoadsOutOfWater(declumped, edges, waterPolygons);
     return declumped;
-  }, [nodes, bounds]);
+  }, [nodes, edges, bounds]);
 
   // Zooms so the world point under (screenX, screenY) stays fixed on screen --
   // otherwise every zoom step would recenter on the viewBox origin instead of
