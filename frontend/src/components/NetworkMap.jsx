@@ -95,7 +95,7 @@ function project(lat, lon, bounds) {
 // apart away from each other, a few passes at a time, while leaving nodes
 // that are already far apart untouched (like real force-directed graph
 // layouts do for decluttering, e.g. subway-map-style distortion).
-const MIN_SEPARATION = 46;
+const MIN_SEPARATION = 62;
 const REPULSION_PASSES = 200;
 
 function declump(rawPositions) {
@@ -263,8 +263,15 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
       { pts: LAKE_MENDOTA, dy: 1 },
       { pts: LAKE_MONONA, dy: -1 },
     ].map(({ pts, dy }) => ({ poly: pts.map(([lat, lon]) => project(lat, lon, bounds)), dy }));
-    pushOutOfWater(declumped, waterPolygons);
-    pushRoadsOutOfWater(declumped, edges, waterPolygons);
+    // pushRoadsOutOfWater moves both endpoints of any road that crosses the
+    // water, without checking whether that motion pushes either endpoint's
+    // own center back into a lake as a side effect -- so a single pass of
+    // "fix nodes, then fix roads" isn't actually a guarantee. Alternate
+    // both until neither has anything left to do.
+    for (let i = 0; i < 5; i++) {
+      pushOutOfWater(declumped, waterPolygons);
+      pushRoadsOutOfWater(declumped, edges, waterPolygons);
+    }
     return declumped;
   }, [nodes, edges, bounds]);
 
@@ -443,6 +450,14 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
             // used as its dash length so a full dash-offset hides it and animating
             // the offset to 0 reveals it end-to-end (see .map-edge.on-path in CSS).
             const length = Math.hypot(to.x - from.x, to.y - from.y);
+            // With 120+ roads packed into a dense campus core, many
+            // semi-transparent lines stacked on each other compound into a
+            // solid gray mass regardless of how faint any one of them is --
+            // a flat opacity can't fix that, only fewer visible lines at
+            // once can. So off-path roads start almost invisible at the
+            // default overview zoom and fade in as the user zooms into a
+            // region, where decluttering has already spread them apart.
+            const offPathOpacity = clamp(0.05 + (view.zoom - 1) * 0.09, 0.05, 0.4);
             return (
               <line
                 key={`${edge.from}->${edge.to}`}
@@ -452,7 +467,7 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
                 y2={to.y}
                 className={onPath ? 'map-edge on-path' : 'map-edge'}
                 markerEnd={edge.oneWay ? `url(#${onPath ? 'arrow-on-path' : 'arrow'})` : undefined}
-                style={onPath ? { '--road-length': length } : undefined}
+                style={onPath ? { '--road-length': length } : { opacity: offPathOpacity }}
               />
             );
           })}
