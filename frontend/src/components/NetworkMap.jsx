@@ -148,6 +148,10 @@ function polygonPath(points, project, bounds) {
 export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
   const svgRef = useRef(null);
   const dragState = useRef(null);
+  // Active touches, by pointer id -> last known SVG-unit position. Two of
+  // these at once means a pinch, not a drag.
+  const activePointers = useRef(new Map());
+  const pinchState = useRef(null);
   const [view, setView] = useState({ zoom: 1, pan: { x: 0, y: 0 } });
 
   const bounds = useMemo(() => (nodes.length === 0 ? null : computeBounds(nodes)), [nodes]);
@@ -195,16 +199,53 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     return { x: view.pan.x + pos.x * view.zoom, y: view.pan.y + pos.y * view.zoom };
   }
 
+  // Client (browser) pixels -> SVG viewBox units, accounting for the SVG
+  // being scaled down to fit its container (width: 100% in CSS).
+  function toSvgUnits(clientX, clientY) {
+    const rect = svgRef.current.getBoundingClientRect();
+    const scale = VIEW_WIDTH / rect.width;
+    return { x: (clientX - rect.left) * scale, y: (clientY - rect.top) * scale };
+  }
+
+  function pinchMidpointAndDistance() {
+    const pts = [...activePointers.current.values()];
+    const [a, b] = pts;
+    return {
+      mid: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
+      dist: Math.hypot(b.x - a.x, b.y - a.y) || 0.01,
+    };
+  }
+
   function handlePointerDown(e) {
-    // Panning starts only from empty map background, so node clicks (and
-    // their own drag-to-scroll on touch) keep working normally.
+    // Panning/pinching starts only from empty map background, so node
+    // clicks keep working normally.
     if (e.target.closest('.map-node')) return;
-    dragState.current = { startX: e.clientX, startY: e.clientY, pan: view.pan };
-    svgRef.current?.setPointerCapture(e.pointerId);
+    svgRef.current?.setPointerCapture?.(e.pointerId);
+    activePointers.current.set(e.pointerId, toSvgUnits(e.clientX, e.clientY));
+
+    if (activePointers.current.size === 2) {
+      dragState.current = null;
+      pinchState.current = { lastDist: pinchMidpointAndDistance().dist };
+    } else if (activePointers.current.size === 1) {
+      dragState.current = { pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, pan: view.pan };
+    }
   }
 
   function handlePointerMove(e) {
-    if (!dragState.current) return;
+    if (activePointers.current.has(e.pointerId)) {
+      activePointers.current.set(e.pointerId, toSvgUnits(e.clientX, e.clientY));
+    }
+
+    if (activePointers.current.size === 2 && pinchState.current) {
+      const { mid, dist } = pinchMidpointAndDistance();
+      zoomAt(mid.x, mid.y, dist / pinchState.current.lastDist);
+      pinchState.current.lastDist = dist;
+      return;
+    }
+
+    // Only the single finger that actually started this drag should move it
+    // -- a second, unrelated pointer (e.g. tapping a node) must not.
+    if (!dragState.current || dragState.current.pointerId !== e.pointerId) return;
     const rect = svgRef.current.getBoundingClientRect();
     const scale = VIEW_WIDTH / rect.width;
     const dx = (e.clientX - dragState.current.startX) * scale;
@@ -212,8 +253,25 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     setView((v) => ({ ...v, pan: { x: dragState.current.pan.x + dx, y: dragState.current.pan.y + dy } }));
   }
 
-  function handlePointerUp() {
-    dragState.current = null;
+  function handlePointerUp(e) {
+    activePointers.current.delete(e.pointerId);
+    pinchState.current = null;
+    // If one finger lifts out of a pinch, resume panning with whichever
+    // finger is still down, from its own last known (not the lifted
+    // finger's) position.
+    if (activePointers.current.size === 1) {
+      const [[remainingId, remainingPos]] = activePointers.current.entries();
+      const rect = svgRef.current.getBoundingClientRect();
+      const scale = rect.width / VIEW_WIDTH;
+      dragState.current = {
+        pointerId: remainingId,
+        startX: rect.left + remainingPos.x * scale,
+        startY: rect.top + remainingPos.y * scale,
+        pan: view.pan,
+      };
+    } else {
+      dragState.current = null;
+    }
   }
 
   const pathIds = path ?? [];
@@ -369,7 +427,7 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         </button>
       </div>
       <p className="map-zoom-hint">
-        Scroll to zoom (or use the +/&minus; buttons), drag to pan &mdash; labels appear as you zoom in.
+        Scroll, pinch, or use the +/&minus; buttons to zoom, drag to pan &mdash; labels appear as you zoom in.
       </p>
     </div>
   );

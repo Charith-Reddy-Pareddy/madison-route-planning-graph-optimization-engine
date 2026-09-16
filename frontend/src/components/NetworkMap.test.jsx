@@ -101,4 +101,45 @@ describe('NetworkMap', () => {
     const line = container.querySelector('line');
     expect(line.getAttribute('marker-end')).toBe('url(#arrow)');
   });
+
+  // jsdom doesn't lay elements out, so getBoundingClientRect/setPointerCapture
+  // need stubbing for these two to exercise the real client-pixel math.
+  function stubSvgGeometry(svg) {
+    svg.getBoundingClientRect = () => ({ left: 0, top: 0, right: 800, bottom: 640, width: 800, height: 640 });
+    svg.setPointerCapture = vi.fn();
+  }
+
+  function zoomOf(container) {
+    const scaled = container.querySelector('g[transform*="scale"]');
+    return Number(scaled.getAttribute('transform').match(/scale\(([\d.]+)\)/)[1]);
+  }
+
+  it('zooms in when two touches spread apart (pinch)', () => {
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} />);
+    const svg = container.querySelector('svg.map');
+    stubSvgGeometry(svg);
+
+    fireEvent.pointerDown(svg, { pointerId: 1, clientX: 380, clientY: 320 });
+    fireEvent.pointerDown(svg, { pointerId: 2, clientX: 420, clientY: 320 });
+    expect(zoomOf(container)).toBe(1);
+
+    fireEvent.pointerMove(svg, { pointerId: 1, clientX: 340, clientY: 320 });
+    fireEvent.pointerMove(svg, { pointerId: 2, clientX: 460, clientY: 320 });
+
+    expect(zoomOf(container)).toBeGreaterThan(1);
+  });
+
+  it('pans with a single finger without changing zoom', () => {
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} />);
+    const svg = container.querySelector('svg.map');
+    stubSvgGeometry(svg);
+
+    const before = container.querySelector('g[transform*="scale"]').getAttribute('transform');
+    fireEvent.pointerDown(svg, { pointerId: 1, clientX: 400, clientY: 300 });
+    fireEvent.pointerMove(svg, { pointerId: 1, clientX: 450, clientY: 320 });
+    const after = container.querySelector('g[transform*="scale"]').getAttribute('transform');
+
+    expect(after).not.toBe(before);
+    expect(zoomOf(container)).toBe(1);
+  });
 });
