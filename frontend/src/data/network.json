@@ -293,6 +293,18 @@
             "name": "Ian's Pizza (State St)",
             "lat": 43.0749,
             "lon": -89.385
+        },
+        {
+            "id": "middleton_building",
+            "name": "Middleton Building",
+            "lat": 43.0765,
+            "lon": -89.4079
+        },
+        {
+            "id": "vilas_zoo",
+            "name": "Henry Vilas Zoo",
+            "lat": 43.0553,
+            "lon": -89.4113
         }
     ],
     "edges": [
@@ -919,6 +931,30 @@
             "to": "capitol",
             "miles": 0.05,
             "busRoute": "Route A"
+        },
+        {
+            "from": "van_hise_hall",
+            "to": "middleton_building",
+            "miles": 0.1,
+            "busRoute": null
+        },
+        {
+            "from": "middleton_building",
+            "to": "van_hise_hall",
+            "miles": 0.1,
+            "busRoute": null
+        },
+        {
+            "from": "camp_randall",
+            "to": "vilas_zoo",
+            "miles": 0.9,
+            "busRoute": null
+        },
+        {
+            "from": "vilas_zoo",
+            "to": "camp_randall",
+            "miles": 0.9,
+            "busRoute": null
         }
     ]
 }

@@ -81,6 +81,8 @@ public class RoadNetwork {
     addIntersection("chipotle_state_st", "Chipotle (State St)", 43.0743, -89.3898);
     addIntersection("popeyes_state_st", "Popeyes (State St)", 43.0743, -89.3896);
     addIntersection("ians_pizza", "Ian's Pizza (State St)", 43.0749, -89.3850);
+    addIntersection("middleton_building", "Middleton Building", 43.0765, -89.4079);
+    addIntersection("vilas_zoo", "Henry Vilas Zoo", 43.0553, -89.4113);
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
@@ -213,6 +215,11 @@ public class RoadNetwork {
     addRoad("popeyes_state_st", "state_frances", 0.05, "Route A");
     addRoad("capitol", "ians_pizza", 0.05, "Route A");
     addRoad("ians_pizza", "capitol", 0.05, "Route A");
+
+    addRoad("van_hise_hall", "middleton_building", 0.10);
+    addRoad("middleton_building", "van_hise_hall", 0.10);
+    addRoad("camp_randall", "vilas_zoo", 0.90);
+    addRoad("vilas_zoo", "camp_randall", 0.90);
   }
 
   private void addIntersection(String id, String name, double lat, double lon) {
