@@ -59,12 +59,22 @@ function layoutLabels(nodes, positions, toScreen, pathSet, viewWidth, viewHeight
   return labels;
 }
 
+// The node cluster alone spans a narrow latitude range, so a lake shape
+// drawn north/south of it in real degrees lands almost entirely outside
+// that range -- and outside the canvas, since project() maps the node
+// bounds straight onto the viewBox with no margin to spare. Padding the
+// bounds reserves real on-canvas room at the north and south edges for
+// water, at the cost of compressing the nodes slightly further toward the
+// middle (negligible next to what declump() already does to them).
+const NORTH_WATER_MARGIN = 0.022;
+const SOUTH_WATER_MARGIN = 0.018;
+
 function computeBounds(nodes) {
   const lats = nodes.map((n) => n.lat);
   const lons = nodes.map((n) => n.lon);
   return {
-    latMin: Math.min(...lats),
-    latMax: Math.max(...lats),
+    latMin: Math.min(...lats) - SOUTH_WATER_MARGIN,
+    latMax: Math.max(...lats) + NORTH_WATER_MARGIN,
     lonMin: Math.min(...lons),
     lonMax: Math.max(...lons),
   };
@@ -118,19 +128,19 @@ function declump(rawPositions) {
 
 // Rough outlines (not survey-accurate, just recognizable) of the two lakes
 // that frame the isthmus Madison and this network sit on -- Mendota to the
-// north (its south shore runs along the Memorial Union / lakeshore dorms
-// path), Monona to the southeast (John Nolen Dr runs along its shore).
-// Drawn from the same lat/lon projection as everything else so they sit in
-// the right place relative to the real streets, even though node positions
-// themselves get decluttered afterward.
+// north, Monona to the southeast. Sized to fit inside the north/south canvas
+// margin computeBounds() reserves (NORTH_WATER_MARGIN / SOUTH_WATER_MARGIN
+// above/below the actual node range) -- these are hand-picked to match that
+// margin for the current node set, not derived from it, so if the network's
+// lat/lon range changes meaningfully, recheck these still land on-canvas
+// (e.g. temporarily log project(lat, lon, bounds) for each point).
 const LAKE_MENDOTA = [
-  [43.101, -89.462], [43.118, -89.448], [43.127, -89.42], [43.125, -89.39],
-  [43.112, -89.368], [43.094, -89.36], [43.079, -89.368], [43.073, -89.392],
-  [43.078, -89.42], [43.086, -89.445],
+  [43.091, -89.46], [43.097, -89.43], [43.103, -89.4], [43.105, -89.37],
+  [43.101, -89.345], [43.094, -89.35], [43.09, -89.38], [43.089, -89.42],
 ];
 const LAKE_MONONA = [
-  [43.077, -89.366], [43.075, -89.345], [43.062, -89.325], [43.043, -89.322],
-  [43.033, -89.338], [43.035, -89.362], [43.05, -89.378], [43.066, -89.378],
+  [43.045, -89.38], [43.041, -89.355], [43.034, -89.345], [43.032, -89.36],
+  [43.034, -89.375], [43.039, -89.385],
 ];
 
 function screenTextProps(screen) {
@@ -400,10 +410,10 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         <g className="map-labels">
           {bounds && (
             <>
-              <text className="map-water-label" {...screenTextProps(toScreen(project(43.1, -89.405, bounds)))}>
+              <text className="map-water-label" {...screenTextProps(toScreen(project(43.097, -89.4, bounds)))}>
                 Lake Mendota
               </text>
-              <text className="map-water-label" {...screenTextProps(toScreen(project(43.052, -89.35, bounds)))}>
+              <text className="map-water-label" {...screenTextProps(toScreen(project(43.038, -89.363, bounds)))}>
                 Lake Monona
               </text>
             </>

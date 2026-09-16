@@ -263,11 +263,14 @@ svg.map {
 }
 
 .map-water-label {
-  fill: rgba(59, 102, 214, 0.55);
+  fill: rgba(37, 70, 160, 0.75);
   font-size: 13px;
   font-style: italic;
   font-weight: 600;
   pointer-events: none;
+  paint-order: stroke;
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 3px;
 }
 
 svg.map:active { cursor: grabbing; }
