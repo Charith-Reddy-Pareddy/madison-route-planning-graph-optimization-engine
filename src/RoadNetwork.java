@@ -55,7 +55,20 @@ public class RoadNetwork {
     addIntersection("grainger_hall", "Grainger Hall", 43.0757, -89.4008);
     addIntersection("chazen_museum", "Chazen Museum of Art", 43.0745, -89.3925);
     addIntersection("college_library", "College Library (Helen C. White Hall)", 43.0762, -89.3979);
-    addIntersection("lakeshore_dorms", "Witte & Sellery Residence Halls", 43.0778, -89.4083);
+    addIntersection("witte_hall", "Witte Hall", 43.0777, -89.4090);
+    addIntersection("sellery_hall", "Sellery Hall", 43.0779, -89.4075);
+    addIntersection("ogg_hall", "Ogg Hall", 43.0800, -89.4145);
+    addIntersection("chadbourne_hall", "Chadbourne Residential College", 43.0729, -89.4020);
+    addIntersection("memorial_library", "Memorial Library", 43.0742, -89.3969);
+    addIntersection("humanities_building", "Humanities Building", 43.0742, -89.3999);
+    addIntersection("social_sciences", "Social Science Building", 43.0745, -89.4056);
+    addIntersection("education_building", "Education Building", 43.0745, -89.4045);
+    addIntersection("van_hise_hall", "Van Hise Hall", 43.0762, -89.4070);
+    addIntersection("science_hall", "Science Hall", 43.0739, -89.4009);
+    addIntersection("van_vleck_hall", "Van Vleck Hall", 43.0765, -89.4037);
+    addIntersection("discovery_building", "Wisconsin Institutes for Discovery", 43.0733, -89.4114);
+    addIntersection("nicholas_rec", "Nicholas Recreation Center", 43.0743, -89.4116);
+    addIntersection("dejope_hall", "Dejope Residence Hall", 43.0784, -89.4200);
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
@@ -127,8 +140,41 @@ public class RoadNetwork {
     addRoad("chazen_museum", "state_gilman", 0.35, "Route A");
     addRoad("memorial_union", "college_library", 0.30);
     addRoad("college_library", "memorial_union", 0.30);
-    addRoad("memorial_union", "lakeshore_dorms", 0.50);
-    addRoad("lakeshore_dorms", "memorial_union", 0.50);
+
+    // Lakeshore residence halls, chained off Memorial Union along the
+    // lakeshore path (a pedestrian/bike path in reality, not a bus route).
+    addRoad("memorial_union", "witte_hall", 0.55);
+    addRoad("witte_hall", "memorial_union", 0.55);
+    addRoad("witte_hall", "sellery_hall", 0.15);
+    addRoad("sellery_hall", "witte_hall", 0.15);
+    addRoad("witte_hall", "ogg_hall", 0.30);
+    addRoad("ogg_hall", "witte_hall", 0.30);
+    addRoad("ogg_hall", "dejope_hall", 0.50);
+    addRoad("dejope_hall", "ogg_hall", 0.50);
+
+    addRoad("bascom_hill", "chadbourne_hall", 0.35);
+    addRoad("chadbourne_hall", "bascom_hill", 0.35);
+    addRoad("bascom_hill", "social_sciences", 0.30);
+    addRoad("social_sciences", "bascom_hill", 0.30);
+    addRoad("morgridge_hall", "education_building", 0.15);
+    addRoad("education_building", "morgridge_hall", 0.15);
+
+    // Memorial Library fronts State St itself: also a Route A stop.
+    addRoad("state_frances", "memorial_library", 0.20, "Route A");
+    addRoad("memorial_library", "state_frances", 0.20, "Route A");
+    addRoad("memorial_library", "humanities_building", 0.15);
+    addRoad("humanities_building", "memorial_library", 0.15);
+    addRoad("memorial_library", "science_hall", 0.10);
+    addRoad("science_hall", "memorial_library", 0.10);
+
+    addRoad("college_library", "van_hise_hall", 0.40);
+    addRoad("van_hise_hall", "college_library", 0.40);
+    addRoad("college_library", "van_vleck_hall", 0.35);
+    addRoad("van_vleck_hall", "college_library", 0.35);
+    addRoad("engineering_hall", "discovery_building", 0.50);
+    addRoad("discovery_building", "engineering_hall", 0.50);
+    addRoad("union_south", "nicholas_rec", 0.25);
+    addRoad("nicholas_rec", "union_south", 0.25);
   }
 
   private void addIntersection(String id, String name, double lat, double lon) {
