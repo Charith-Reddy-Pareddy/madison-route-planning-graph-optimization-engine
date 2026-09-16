@@ -314,10 +314,15 @@ svg.map:active { cursor: grabbing; }
   color: var(--muted);
 }
 
-.map-edge { stroke: var(--edge); stroke-width: 2; transition: stroke 0.2s ease, stroke-width 0.2s ease; }
+/* With 120+ roads packed into a dense campus core, full-weight background
+   lines read as spaghetti and make real crossings hard to tell apart from
+   incidental ones. Thinner and more transparent lets the highlighted route
+   (full opacity, thicker, colored) stay the one thing the eye latches onto. */
+.map-edge { stroke: var(--edge); stroke-width: 1; opacity: 0.32; transition: stroke 0.2s ease, stroke-width 0.2s ease, opacity 0.2s ease; }
 .map-edge.on-path {
   stroke: var(--accent);
   stroke-width: 4;
+  opacity: 1;
   stroke-dasharray: var(--road-length);
   stroke-dashoffset: var(--road-length);
   animation: draw-route 0.5s ease-out forwards;
@@ -391,7 +396,7 @@ svg.map:active { cursor: grabbing; }
   display: inline-block;
 }
 
-.legend-swatch.road { background: var(--edge); }
+.legend-swatch.road { background: var(--edge); opacity: 0.32; }
 .legend-swatch.route { background: var(--accent); height: 4px; }
 .legend-swatch.start,
 .legend-swatch.end {
