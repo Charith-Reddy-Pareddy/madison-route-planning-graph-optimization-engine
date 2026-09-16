@@ -11,6 +11,10 @@
   --edge: #cbd5e1;
   --success: #16a34a;
   --error: #dc2626;
+  /* A separate color from --error: red on a start pin reads as "danger,"
+     which isn't the right signal for "this is where you begin." Amber
+     pairs cleanly with the blue route and green end without clashing. */
+  --start: #d97706;
   --shadow: 0 12px 30px -16px rgba(15, 23, 42, 0.22);
   --radius: 14px;
 }
@@ -171,7 +175,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
   border-radius: 999px;
 }
 
-.endpoint-tag.start { background: rgba(220, 38, 38, 0.1); color: var(--error); }
+.endpoint-tag.start { background: rgba(217, 119, 6, 0.12); color: var(--start); }
 .endpoint-tag.end { background: rgba(22, 163, 74, 0.1); color: var(--success); }
 
 .section-label {
@@ -333,7 +337,7 @@ svg.map:active { cursor: grabbing; }
 .map-node.on-path circle { fill: var(--accent); stroke: var(--accent-strong); }
 /* Start and end are colored distinctly (not a shared "endpoint" color) so
    the map reads as a trip -- where you're going from, and to. */
-.map-node.start circle { fill: var(--error); stroke: var(--error); filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.5)); }
+.map-node.start circle { fill: var(--start); stroke: var(--start); filter: drop-shadow(0 0 5px rgba(217, 119, 6, 0.5)); }
 .map-node.end circle { fill: var(--success); stroke: var(--success); filter: drop-shadow(0 0 5px rgba(22, 163, 74, 0.5)); }
 .map-node.clickable { cursor: pointer; }
 .map-node.clickable:hover circle,
@@ -395,7 +399,7 @@ svg.map:active { cursor: grabbing; }
   height: 10px;
   border-radius: 50%;
 }
-.legend-swatch.start { background: var(--error); }
+.legend-swatch.start { background: var(--start); }
 .legend-swatch.end { background: var(--success); }
 
 .legend-arrow { color: var(--muted); font-weight: 600; }
