@@ -21,14 +21,27 @@ actually behaves like a route planner instead of just a test fixture.
 
 ## Deployment
 
-Ships as a single Docker image (multi-stage: builds the React frontend,
-compiles the Java backend, then a slim JRE runtime) that reads its port
-from the `PORT` environment variable, so it runs as-is on Render, Cloud
-Run, Fly, or any container platform.
+Ships two ways, from the same frontend build:
 
-Deployed on [Render](https://render.com) via [render.yaml](render.yaml)
-(a Blueprint — Render reads it automatically and builds straight from
-the `Dockerfile`, redeploying on every push to `main`).
+- **Render** ([render.yaml](render.yaml), a Blueprint): the full app —
+  Docker image (multi-stage: builds the React frontend, compiles the Java
+  backend, then a slim JRE runtime) reading its port from `PORT`, so it
+  also runs as-is on Cloud Run, Fly, or any container platform. Redeploys
+  on every push to `main`.
+- **GitHub Pages** ([.github/workflows/pages.yml](.github/workflows/pages.yml)):
+  the frontend alone, with no Java backend at all. `frontend/src/api.js`
+  probes for a live backend on load and, when there isn't one, falls back
+  to a bundled snapshot of the network ([frontend/src/data/network.json](frontend/src/data/network.json))
+  plus a client-side Dijkstra port ([frontend/src/pathfinding.js](frontend/src/pathfinding.js)) —
+  same shortest-path results, same bus/time estimates, entirely in the
+  browser. Also redeploys on every push to `main`.
+
+`network.json` is a point-in-time snapshot of `/api/graph`, not generated
+at build time — if `RoadNetwork.java` changes, re-export it (`curl
+localhost:8080/api/graph | python3 -m json.tool > frontend/src/data/network.json`
+with `make run` going) so the two stay in sync. A test
+(`pathfinding.test.js`) pins one known route's cost against the snapshot
+to catch drift.
 
 ## Running it
 
@@ -65,7 +78,9 @@ drive it over real HTTP with `java.net.http.HttpClient` — status codes,
 response shape, cache headers, that a burst of concurrent requests
 doesn't serialize, and that the HTTP layer's answer matches calling the
 graph directly. Frontend: Vitest + React Testing Library, covering
-`RouteForm`, `NetworkMap`, `api.js`, and the `ErrorBoundary`.
+`RouteForm`, `NetworkMap`, `api.js` (including its no-backend fallback),
+`pathfinding.js` (the client-side Dijkstra port, incl. a parity check
+against the backend's pinned test case), and the `ErrorBoundary`.
 
 ## Project layout
 

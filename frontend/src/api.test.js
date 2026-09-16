@@ -35,4 +35,20 @@ describe('api', () => {
     mockFetch(500, {});
     await expect(getGraph()).rejects.toThrow('request failed (500)');
   });
+
+  it('falls back to the bundled network and local Dijkstra when there is no backend (GitHub Pages)', async () => {
+    vi.resetModules();
+    global.fetch = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'));
+    const { getGraph: freshGetGraph, getRoute: freshGetRoute } = await import('./api');
+
+    const graph = await freshGetGraph();
+    expect(graph.nodes.length).toBeGreaterThan(0);
+    // Only the health probe should have hit the network -- getGraph and
+    // getRoute below must both resolve locally without calling fetch again.
+    expect(fetch).toHaveBeenCalledTimes(1);
+
+    const route = await freshGetRoute(graph.nodes[0].id, graph.nodes[0].id);
+    expect(route.totalMiles).toBe(0);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
 });
