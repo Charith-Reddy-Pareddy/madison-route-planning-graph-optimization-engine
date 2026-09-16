@@ -152,19 +152,19 @@
         },
         {
             "id": "witte_hall",
-            "name": "Witte Hall",
+            "name": "Witte Residence Hall",
             "lat": 43.0777,
             "lon": -89.409
         },
         {
             "id": "sellery_hall",
-            "name": "Sellery Hall",
+            "name": "Sellery Residence Hall",
             "lat": 43.0779,
             "lon": -89.4075
         },
         {
             "id": "ogg_hall",
-            "name": "Ogg Hall",
+            "name": "Ogg Residence Hall",
             "lat": 43.08,
             "lon": -89.4145
         },
@@ -308,13 +308,13 @@
         },
         {
             "id": "elizabeth_waters",
-            "name": "Elizabeth Waters Hall",
+            "name": "Elizabeth Waters Residence Hall",
             "lat": 43.0748,
             "lon": -89.403
         },
         {
             "id": "slichter_hall",
-            "name": "Slichter Hall",
+            "name": "Slichter Residence Hall",
             "lat": 43.0768,
             "lon": -89.4075
         },

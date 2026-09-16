@@ -55,9 +55,9 @@ public class RoadNetwork {
     addIntersection("grainger_hall", "Grainger Hall", 43.0757, -89.4008);
     addIntersection("chazen_museum", "Chazen Museum of Art", 43.0745, -89.3925);
     addIntersection("college_library", "College Library (Helen C. White Hall)", 43.0762, -89.3979);
-    addIntersection("witte_hall", "Witte Hall", 43.0777, -89.4090);
-    addIntersection("sellery_hall", "Sellery Hall", 43.0779, -89.4075);
-    addIntersection("ogg_hall", "Ogg Hall", 43.0800, -89.4145);
+    addIntersection("witte_hall", "Witte Residence Hall", 43.0777, -89.4090);
+    addIntersection("sellery_hall", "Sellery Residence Hall", 43.0779, -89.4075);
+    addIntersection("ogg_hall", "Ogg Residence Hall", 43.0800, -89.4145);
     addIntersection("chadbourne_hall", "Chadbourne Residential College", 43.0729, -89.4020);
     addIntersection("memorial_library", "Memorial Library", 43.0742, -89.3969);
     addIntersection("humanities_building", "Humanities Building", 43.0742, -89.3999);
@@ -84,8 +84,8 @@ public class RoadNetwork {
     addIntersection("middleton_building", "Middleton Building", 43.0765, -89.4079);
     addIntersection("vilas_zoo", "Henry Vilas Zoo", 43.0553, -89.4113);
     // More Lakeshore-side residence halls and amenities, along Observatory Dr.
-    addIntersection("elizabeth_waters", "Elizabeth Waters Hall", 43.0748, -89.4030);
-    addIntersection("slichter_hall", "Slichter Hall", 43.0768, -89.4075);
+    addIntersection("elizabeth_waters", "Elizabeth Waters Residence Hall", 43.0748, -89.4030);
+    addIntersection("slichter_hall", "Slichter Residence Hall", 43.0768, -89.4075);
     addIntersection("kronshage_halls", "Kronshage Residence Halls", 43.0770, -89.4060);
     addIntersection("bradley_hall", "Bradley Residence Hall", 43.0795, -89.4160);
     addIntersection("bakke_rec_center", "Bakke Recreation & Wellbeing Center", 43.0790, -89.4148);
