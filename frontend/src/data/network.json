@@ -233,6 +233,24 @@
             "name": "Dejope Residence Hall",
             "lat": 43.0784,
             "lon": -89.42
+        },
+        {
+            "id": "atmosphere_apts",
+            "name": "Atmosphere Madison",
+            "lat": 43.068,
+            "lon": -89.409
+        },
+        {
+            "id": "x01_apts",
+            "name": "X01",
+            "lat": 43.0722,
+            "lon": -89.409
+        },
+        {
+            "id": "lucky_apts",
+            "name": "Lucky Apartments",
+            "lat": 43.0748,
+            "lon": -89.3985
         }
     ],
     "edges": [
@@ -737,6 +755,42 @@
         {
             "from": "nicholas_rec",
             "to": "union_south",
+            "miles": 0.25,
+            "busRoute": null
+        },
+        {
+            "from": "camp_randall",
+            "to": "atmosphere_apts",
+            "miles": 0.3,
+            "busRoute": null
+        },
+        {
+            "from": "atmosphere_apts",
+            "to": "camp_randall",
+            "miles": 0.3,
+            "busRoute": null
+        },
+        {
+            "from": "kohl_center",
+            "to": "x01_apts",
+            "miles": 0.25,
+            "busRoute": null
+        },
+        {
+            "from": "x01_apts",
+            "to": "kohl_center",
+            "miles": 0.25,
+            "busRoute": null
+        },
+        {
+            "from": "grainger_hall",
+            "to": "lucky_apts",
+            "miles": 0.25,
+            "busRoute": null
+        },
+        {
+            "from": "lucky_apts",
+            "to": "grainger_hall",
             "miles": 0.25,
             "busRoute": null
         }

@@ -69,6 +69,10 @@ public class RoadNetwork {
     addIntersection("discovery_building", "Wisconsin Institutes for Discovery", 43.0733, -89.4114);
     addIntersection("nicholas_rec", "Nicholas Recreation Center", 43.0743, -89.4116);
     addIntersection("dejope_hall", "Dejope Residence Hall", 43.0784, -89.4200);
+    // Popular off-campus student apartments.
+    addIntersection("atmosphere_apts", "Atmosphere Madison", 43.0680, -89.4090);
+    addIntersection("x01_apts", "X01", 43.0722, -89.4090);
+    addIntersection("lucky_apts", "Lucky Apartments", 43.0748, -89.3985);
 
     addRoad("capitol", "king_st", 0.30);
     addRoad("king_st", "capitol", 0.30);
@@ -175,6 +179,14 @@ public class RoadNetwork {
     addRoad("discovery_building", "engineering_hall", 0.50);
     addRoad("union_south", "nicholas_rec", 0.25);
     addRoad("nicholas_rec", "union_south", 0.25);
+
+    // Popular off-campus apartments, each a short walk from a nearby hub.
+    addRoad("camp_randall", "atmosphere_apts", 0.30);
+    addRoad("atmosphere_apts", "camp_randall", 0.30);
+    addRoad("kohl_center", "x01_apts", 0.25);
+    addRoad("x01_apts", "kohl_center", 0.25);
+    addRoad("grainger_hall", "lucky_apts", 0.25);
+    addRoad("lucky_apts", "grainger_hall", 0.25);
   }
 
   private void addIntersection(String id, String name, double lat, double lon) {
