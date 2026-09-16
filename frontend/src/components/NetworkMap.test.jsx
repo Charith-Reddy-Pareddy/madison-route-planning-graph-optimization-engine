@@ -36,19 +36,26 @@ describe('NetworkMap', () => {
     expect(endpointTitles[1]).toContain('C');
   });
 
-  it('only shows labels for on-path nodes at the default zoom level, not the whole crowded map', () => {
-    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={['a', 'b']} />);
+  it('labels every node when none of them are close enough to overlap', () => {
+    // a/b/c are spread across the whole viewBox in this fixture, so nothing
+    // collides and every label shows -- this is the common case for the real
+    // map too: most of its 40+ locations are far enough apart to always show.
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} />);
     const labels = [...container.querySelectorAll('.map-labels text')].map((t) => t.textContent).sort();
-    // C is off-path and stays hidden until the user zooms in.
-    expect(labels).toEqual(['A', 'B']);
+    expect(labels).toEqual(['A', 'B', 'C']);
   });
 
-  it('hides all labels at the default zoom when no route is highlighted', () => {
-    // The real map has 40+ locations, so with nothing "on path" to force-show,
-    // every label stays hidden until the user zooms in -- the app always has
-    // a default route active on load, so this is the pre-route/zoomed-out case.
-    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={null} />);
-    expect(container.querySelectorAll('.map-labels text')).toHaveLength(0);
+  it('drops an overlapping label in favor of the on-path node sharing its spot', () => {
+    // Two nodes placed on top of each other guarantee a label collision --
+    // the on-path one should win and the other should be dropped, not just
+    // whichever happened to be processed first.
+    const overlapping = [
+      { id: 'x', name: 'Off-path Building', lat: 43.07, lon: -89.4 },
+      { id: 'y', name: 'On-path Building', lat: 43.07, lon: -89.4 },
+    ];
+    const { container } = render(<NetworkMap nodes={overlapping} edges={[]} path={['y']} />);
+    const labels = [...container.querySelectorAll('.map-labels text')].map((t) => t.textContent);
+    expect(labels).toEqual(['On-path Building']);
   });
 
   it('renders nothing crash-worthy with an empty network', () => {

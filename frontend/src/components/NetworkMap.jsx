@@ -6,14 +6,57 @@ const PADDING = 46;
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
-// Below this zoom, off-path labels are hidden entirely -- with 40+ campus
-// buildings clustered close together, showing every name at once is just
-// unreadable overlap. Zooming in (wheel/pinch or the +/- buttons) reveals
-// them, since node spacing grows with zoom while label text does not.
-const LABEL_REVEAL_ZOOM = 1.6;
+// Rough px-per-character at the label font size, for estimating how wide a
+// name's bounding box is without a real DOM measurement.
+const CHAR_WIDTH = 6.3;
+const LABEL_HEIGHT = 13;
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
+}
+
+function rectsOverlap(a, b, pad) {
+  return !(a.x1 + pad < b.x0 || a.x0 - pad > b.x1 || a.y1 + pad < b.y0 || a.y0 - pad > b.y1);
+}
+
+/**
+ * Greedy label placement: on-path stops always get a label (those are what
+ * the user is actually looking at); everything else gets one only if it
+ * doesn't collide with an already-placed label. This is why isolated nodes
+ * (most of the map) stay labeled at any zoom, while only the genuinely
+ * crowded campus-core cluster thins out -- a flat "hide until zoomed in"
+ * rule would've hidden far-apart names too, for no reason.
+ */
+function layoutLabels(nodes, positions, toScreen, pathSet, viewWidth, viewHeight) {
+  const ordered = [...nodes].sort((a, b) => {
+    const aFirst = pathSet.has(a.id) ? 0 : 1;
+    const bFirst = pathSet.has(b.id) ? 0 : 1;
+    return aFirst - bFirst;
+  });
+
+  const placedRects = [];
+  const labels = [];
+  for (const node of ordered) {
+    const pos = positions.get(node.id);
+    if (!pos) continue;
+    const screen = toScreen(pos);
+    if (screen.x < -20 || screen.x > viewWidth + 20 || screen.y < -20 || screen.y > viewHeight + 20) continue;
+
+    const isOnPath = pathSet.has(node.id);
+    const nearRightEdge = screen.x > viewWidth - 120;
+    const anchorX = screen.x + (nearRightEdge ? -10 : 10);
+    const y = clamp(screen.y + 4, 12, viewHeight - 6);
+    const width = node.name.length * CHAR_WIDTH;
+    const rect = nearRightEdge
+      ? { x0: anchorX - width, x1: anchorX, y0: y - LABEL_HEIGHT, y1: y + 3 }
+      : { x0: anchorX, x1: anchorX + width, y0: y - LABEL_HEIGHT, y1: y + 3 };
+
+    if (!isOnPath && placedRects.some((r) => rectsOverlap(rect, r, 2))) continue;
+
+    placedRects.push(rect);
+    labels.push({ id: node.id, name: node.name, x: anchorX, y, textAnchor: nearRightEdge ? 'end' : 'start' });
+  }
+  return labels;
 }
 
 function computeBounds(nodes) {
@@ -127,6 +170,8 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     roadSegments.push({ ...edge, oneWay });
   }
 
+  const labels = layoutLabels(nodes, positions, toScreen, pathSet, VIEW_WIDTH, VIEW_HEIGHT);
+
   return (
     <div className="map-wrap">
       <svg
@@ -218,32 +263,14 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         </g>
         {/* Labels live outside the pan/zoom group and are positioned by hand from
             the same transform, so their text stays a constant on-screen size while
-            zooming spreads the nodes apart -- that's what actually declutters
-            crowded areas, not just making everything bigger together. */}
+            zooming spreads the nodes apart -- growing that spacing is what lets
+            layoutLabels place more of them without collisions. */}
         <g className="map-labels">
-          {nodes.map((node) => {
-            const pos = positions.get(node.id);
-            if (!pos) return null;
-            const isOnPath = pathSet.has(node.id);
-            if (!isOnPath && view.zoom < LABEL_REVEAL_ZOOM) return null;
-            const screen = toScreen(pos);
-            if (screen.x < -20 || screen.x > VIEW_WIDTH + 20 || screen.y < -20 || screen.y > VIEW_HEIGHT + 20) {
-              return null;
-            }
-            const nearRightEdge = screen.x > VIEW_WIDTH - 110;
-            const labelY = clamp(screen.y + 4, 12, VIEW_HEIGHT - 6);
-            return (
-              <text
-                key={node.id}
-                className="map-node-label"
-                x={screen.x + (nearRightEdge ? -10 : 10)}
-                y={labelY}
-                textAnchor={nearRightEdge ? 'end' : 'start'}
-              >
-                {node.name}
-              </text>
-            );
-          })}
+          {labels.map((label) => (
+            <text key={label.id} className="map-node-label" x={label.x} y={label.y} textAnchor={label.textAnchor}>
+              {label.name}
+            </text>
+          ))}
         </g>
       </svg>
       <div className="map-controls">
