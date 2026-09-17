@@ -262,6 +262,55 @@ function pushRoadsOutOfWater(positions, edges, waterPolygons) {
   }
 }
 
+// Shortest distance from (x,y) to a line segment, for pointToPolygonDistance below.
+function distanceToSegment(x, y, ax, ay, bx, by) {
+  const dx = bx - ax;
+  const dy = by - ay;
+  const lengthSq = dx * dx + dy * dy;
+  const t = lengthSq === 0 ? 0 : clamp(((x - ax) * dx + (y - ay) * dy) / lengthSq, 0, 1);
+  const closestX = ax + t * dx;
+  const closestY = ay + t * dy;
+  return Math.hypot(x - closestX, y - closestY);
+}
+
+function pointToPolygonDistance(x, y, poly) {
+  let min = Infinity;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    min = Math.min(min, distanceToSegment(x, y, poly[i].x, poly[i].y, poly[j].x, poly[j].y));
+  }
+  return min;
+}
+
+// pushOutOfWater only fixes a node that's literally inside a lake; it does
+// nothing for one that's merely uncomfortably close to the shore, which
+// declump()'s crowded-pocket drift can absolutely produce even under its
+// MAX_DRIFT cap -- if a node's many close neighbors happen to sit mostly
+// on the lake side, the drift budget gets spent moving toward the water
+// (see e.g. Witte Residence Hall, real position ~2.7km from Lake Monona,
+// landing within visual shore-hugging distance after decluttering).
+// The fix has to be selective, though: several real locations (Memorial
+// Union, the Lakeshore dorms) are genuinely, correctly close to Lake
+// Mendota's real shore, and pushing them inland would reintroduce the
+// exact bug in the opposite direction. So this only enforces clearance
+// for a node whose *raw, undisplaced* projected position was already
+// comfortably clear of the lake -- if declump moved it closer than that,
+// push it back out; if it was already lakeside in real life, leave it.
+const MIN_WATER_CLEARANCE = 40;
+
+function ensureWaterClearance(positions, rawPositions, waterPolygons) {
+  for (const [id, pos] of positions.entries()) {
+    const raw = rawPositions.get(id);
+    for (const { poly, dy } of waterPolygons) {
+      const rawClearance = pointToPolygonDistance(raw.x, raw.y, poly);
+      if (rawClearance < MIN_WATER_CLEARANCE) continue; // genuinely lakeside -- leave it
+      for (let i = 0; i < 20; i++) {
+        if (pointToPolygonDistance(pos.x, pos.y, poly) >= MIN_WATER_CLEARANCE) break;
+        pos.y += dy * 4; // dy is already "away from this lake, toward land" (see pushOutOfWater)
+      }
+    }
+  }
+}
+
 function screenTextProps(screen) {
   return { x: screen.x, y: screen.y, textAnchor: 'middle' };
 }
@@ -299,11 +348,12 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     // pushRoadsOutOfWater moves both endpoints of any road that crosses the
     // water, without checking whether that motion pushes either endpoint's
     // own center back into a lake as a side effect -- so a single pass of
-    // "fix nodes, then fix roads" isn't actually a guarantee. Alternate
-    // both until neither has anything left to do.
+    // "fix nodes, then fix roads" isn't actually a guarantee. Alternate all
+    // three (water, roads, shore clearance) until nothing moves.
     for (let i = 0; i < 5; i++) {
       pushOutOfWater(declumped, waterPolygons);
       pushRoadsOutOfWater(declumped, edges, waterPolygons);
+      ensureWaterClearance(declumped, raw, waterPolygons);
     }
     return declumped;
   }, [nodes, edges, bounds]);

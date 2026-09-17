@@ -11,7 +11,7 @@ algorithm, with estimated walk time and which Madison Metro Transit bus
 
 **Highlights**
 
-- **58 real locations, geocoded, not guessed** — every coordinate comes
+- **57 real locations, geocoded, not guessed** — every coordinate comes
   from [OpenStreetMap's Nominatim](https://nominatim.openstreetmap.org/),
   and geocoding caught two real placement errors an earlier hand-estimated
   pass got wrong (see [Where the coordinates come from](#where-the-coordinates-come-from)).
@@ -94,7 +94,7 @@ identical path costs).
 
 ## Research track
 
-Alongside the live 58-location app above, [`pipeline/`](pipeline/) ingests
+Alongside the live 57-location app above, [`pipeline/`](pipeline/) ingests
 the real OpenStreetMap street network for the same Madison/UW-Madison
 area into a full-scale routable graph -- a genuinely large, real dataset
 to build and benchmark additional pathfinding algorithms against, kept
@@ -259,7 +259,7 @@ src/
   MapADT.java, PlaceholderMap.java   generic key/value map ADT (hash map backed)
   GraphADT.java, BaseGraph.java      generic directed weighted graph
   DijkstraGraph.java                 shortest-path algorithm (priority-queue Dijkstra)
-  RoadNetwork.java                   the 58-location network: intersections, roads, bus routes, one-ways
+  RoadNetwork.java                   the 57-location network: intersections, roads, bus routes, one-ways
   RoadNetworkLoader.java             reads data/locations.csv + data/roads.csv into RoadNetwork
   PathFinderServer.java              HTTP API + static file server
   Json.java                          minimal hand-rolled JSON response writer

@@ -134,7 +134,7 @@
         },
         {
             "id": "grainger_hall",
-            "name": "Grainger Hall",
+            "name": "Grainger Hall (Wisconsin School of Business)",
             "lat": 43.0727,
             "lon": -89.4016
         },
@@ -251,12 +251,6 @@
             "name": "Lucky Apartments",
             "lat": 43.073,
             "lon": -89.398
-        },
-        {
-            "id": "business_school",
-            "name": "Wisconsin School of Business",
-            "lat": 43.073,
-            "lon": -89.4019
         },
         {
             "id": "red_gym",
@@ -864,18 +858,6 @@
             "from": "lucky_apts",
             "to": "grainger_hall",
             "miles": 0.18,
-            "busRoute": null
-        },
-        {
-            "from": "grainger_hall",
-            "to": "business_school",
-            "miles": 0.05,
-            "busRoute": null
-        },
-        {
-            "from": "business_school",
-            "to": "grainger_hall",
-            "miles": 0.05,
             "busRoute": null
         },
         {
