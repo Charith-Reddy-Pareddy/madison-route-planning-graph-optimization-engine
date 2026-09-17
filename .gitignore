@@ -38,3 +38,9 @@ lib/*.jar
 frontend/node_modules/
 # Built by `make frontend` (vite build --outDir ../web); frontend/ is the source of truth.
 /web/
+
+### Research pipeline ###
+# Raw Overpass response (~14MB) and the intermediate parsed nodes/edges --
+# both fully regenerable via `python3 pipeline/build_graph.py`. Only its
+# final output (experiments/data/osm_*.csv) is committed.
+pipeline/data/
