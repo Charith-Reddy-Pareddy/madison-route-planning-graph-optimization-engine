@@ -97,6 +97,36 @@ function project(lat, lon, bounds) {
 // layouts do for decluttering, e.g. subway-map-style distortion).
 const MIN_SEPARATION = 62;
 const REPULSION_PASSES = 200;
+// Pairwise repulsion alone has no restoring force: a node with several
+// close neighbors concentrated mostly on one side (common at the edge of a
+// dense cluster, e.g. the campus core) gets nudged the same direction by
+// each of them in turn and can walk dozens of nodes' worth of distance
+// away from its real position before every pair finally clears
+// MIN_SEPARATION -- nothing pulls it back, and in a genuinely dense pocket
+// (~20 buildings within a few real-world blocks) that drift can run for
+// hundreds of pixels, landing a node somewhere absurd like inside a lake.
+// A hard cap on total displacement from the true projected position
+// bounds that: repulsion can still spread out a locally crowded pocket,
+// but never at the cost of a node ending up somewhere else on the map
+// entirely. Applied every pass so later passes react to the clamped
+// position, not just at the end. The tradeoff: the single densest real
+// pocket (~20 campus buildings within a few blocks of each other) can't
+// fully reach MIN_SEPARATION within this bound -- a handful of nodes
+// there stay closer than that. That's an accepted tradeoff (a few nearby
+// circles, and layoutLabels() already drops a colliding label rather than
+// overlapping it) against the alternative of a node silently teleporting
+// somewhere geographically nonsensical, like into a lake.
+const MAX_DRIFT = 100;
+
+function clampDrift(pos, home) {
+  const dx = pos.x - home.x;
+  const dy = pos.y - home.y;
+  const dist = Math.hypot(dx, dy);
+  if (dist <= MAX_DRIFT) return;
+  const scale = MAX_DRIFT / dist;
+  pos.x = home.x + dx * scale;
+  pos.y = home.y + dy * scale;
+}
 
 function declump(rawPositions) {
   const ids = [...rawPositions.keys()];
@@ -120,6 +150,9 @@ function declump(rawPositions) {
         b.x += ux * push;
         b.y += uy * push;
       }
+    }
+    for (const id of ids) {
+      clampDrift(pos.get(id), rawPositions.get(id));
     }
     if (!moved) break;
   }
@@ -363,7 +396,17 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     const scale = VIEW_WIDTH / rect.width;
     const dx = (e.clientX - dragState.current.startX) * scale;
     const dy = (e.clientY - dragState.current.startY) * scale;
-    setView((v) => ({ ...v, pan: { x: dragState.current.pan.x + dx, y: dragState.current.pan.y + dy } }));
+    // Capture the base pan now, synchronously, rather than reading
+    // dragState.current again inside the updater below: React doesn't
+    // always invoke a functional setState updater immediately -- it can
+    // defer it, and a fast real drag fires pointermove/pointerup in quick
+    // succession. If pointerup (which sets dragState.current = null) runs
+    // before this updater is actually invoked, a live re-read of
+    // dragState.current.pan here would crash on a null ref -- capturing
+    // the value eagerly closes over a plain object instead, which stays
+    // valid no matter when React gets around to calling the updater.
+    const basePan = dragState.current.pan;
+    setView((v) => ({ ...v, pan: { x: basePan.x + dx, y: basePan.y + dy } }));
   }
 
   function handlePointerUp(e) {

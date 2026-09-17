@@ -142,4 +142,75 @@ describe('NetworkMap', () => {
     expect(after).not.toBe(before);
     expect(zoomOf(container)).toBe(1);
   });
+
+  // Regression test: a real 58-location run once placed "Social Science
+  // Building" ~200px away from its true position, near Lake Monona, because
+  // declump()'s pairwise repulsion has no restoring force -- a node whose
+  // close neighbors sit mostly on one side gets nudged the same direction
+  // over and over (18 different neighbors, all pushing it further south, in
+  // that real case), with nothing pulling it back. This reproduces that
+  // shape -- one node with many close neighbors clustered almost entirely
+  // to its north -- and checks the fix directly: the node's final position
+  // should stay within a bounded distance of where it actually projects to,
+  // not just "somewhere in a spread-out cluster."
+  function project(lat, lon, bounds) {
+    const x = 46 + ((lon - bounds.lonMin) / (bounds.lonMax - bounds.lonMin || 1)) * (800 - 92);
+    const y = 46 + ((bounds.latMax - lat) / (bounds.latMax - bounds.latMin || 1)) * (640 - 92);
+    return { x, y };
+  }
+  function computeBounds(allNodes) {
+    const lats = allNodes.map((n) => n.lat);
+    const lons = allNodes.map((n) => n.lon);
+    return {
+      latMin: Math.min(...lats) - 0.033,
+      latMax: Math.max(...lats) + 0.022,
+      lonMin: Math.min(...lons),
+      lonMax: Math.max(...lons),
+    };
+  }
+
+  it('never drifts a node far from its true position, even with many neighbors on one side', () => {
+    // Two far-apart anchors give computeBounds() a realistic overall span
+    // (like the real ~0.09-degree-tall network), so the tight cluster below
+    // only occupies a small fraction of the canvas -- matching the real
+    // campus-core density bug, not an artificially magnified one where the
+    // cluster alone would define (and fill) the whole viewBox.
+    const anchors = [
+      { id: 'nw_anchor', name: 'NW Anchor', lat: 43.12, lon: -89.45 },
+      { id: 'se_anchor', name: 'SE Anchor', lat: 43.03, lon: -89.34 },
+    ];
+    const target = { id: 'target', name: 'Target', lat: 43.075, lon: -89.4 };
+    // 80 neighbors, all almost coincident with each other and just north of
+    // `target` -- an exaggerated version of real UW campus-core density
+    // (dozens of buildings within a few blocks, overwhelmingly to one
+    // side), enough to reliably trigger the pre-fix runaway in a small
+    // synthetic fixture that doesn't have the real network's 58 locations.
+    const neighbors = Array.from({ length: 80 }, (_, i) => ({
+      id: `n${i}`,
+      name: `Neighbor ${i}`,
+      lat: 43.0754 + i * 0.0003,
+      lon: -89.4 + (i % 2 === 0 ? 1 : -1) * 0.00005,
+    }));
+    const clusterNodes = [...anchors, target, ...neighbors];
+
+    const { container } = render(<NetworkMap nodes={clusterNodes} edges={[]} path={null} />);
+    const byName = new Map(
+      [...container.querySelectorAll('g.map-node')].map((g) => [
+        g.querySelector('title').textContent,
+        { x: Number(g.querySelector('circle').getAttribute('cx')), y: Number(g.querySelector('circle').getAttribute('cy')) },
+      ]),
+    );
+
+    const bounds = computeBounds(clusterNodes);
+    const targetRaw = project(target.lat, target.lon, bounds);
+    const targetFinal = byName.get(target.name);
+    const drift = Math.hypot(targetFinal.x - targetRaw.x, targetFinal.y - targetRaw.y);
+
+    // The component's own drift cap is 100px; before that fix existed, this
+    // exact shape (many one-sided close neighbors) drifted the real
+    // "Social Science Building" node ~200px off its true position. A
+    // generous margin above the cap (not equal to it) keeps this test from
+    // being just a restatement of the constant.
+    expect(drift).toBeLessThan(120);
+  });
 });
