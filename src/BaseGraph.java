@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -216,11 +217,56 @@ public class BaseGraph<NodeType, EdgeType extends Number> {
 
     /**
      * Return the number of edges in the graph.
-     * 
+     *
      * @return the number of edges in the graph
      */
     public int getEdgeCount() {
         return this.edgeCount;
+    }
+
+    /**
+     * Every directed edge leaving {@code data}, as (successor, weight)
+     * pairs -- the traversal primitive the shortest-path algorithms in
+     * ShortestPathAlgorithm implementations use, so they can walk any
+     * BaseGraph without being coupled to its internal Node/Edge classes
+     * the way DijkstraGraph (a subclass) is.
+     *
+     * @throws NoSuchElementException if data is not a node in this graph
+     */
+    public List<Neighbor<NodeType, EdgeType>> neighborsOf(NodeType data) {
+        Node node = requireNode(data);
+        List<Neighbor<NodeType, EdgeType>> result = new ArrayList<>();
+        for (Edge edge : node.edgesLeaving) {
+            result.add(new Neighbor<>(edge.successor.data, edge.data));
+        }
+        return result;
+    }
+
+    /**
+     * Every directed edge arriving at {@code data}, as (predecessor,
+     * weight) pairs -- the reverse-graph counterpart to
+     * {@link #neighborsOf}, for algorithms (e.g. bidirectional search)
+     * that need to search backward from a destination along real edge
+     * directions rather than just re-running neighborsOf on an assumed
+     * -undirected graph.
+     *
+     * @throws NoSuchElementException if data is not a node in this graph
+     */
+    public List<Neighbor<NodeType, EdgeType>> predecessorsOf(NodeType data) {
+        Node node = requireNode(data);
+        List<Neighbor<NodeType, EdgeType>> result = new ArrayList<>();
+        for (Edge edge : node.edgesEntering) {
+            result.add(new Neighbor<>(edge.predecessor.data, edge.data));
+        }
+        return result;
+    }
+
+    private Node requireNode(NodeType data) {
+        Node node = nodes.get(data);
+        if (node == null) {
+            throw new NoSuchElementException("No node found for data: " + data);
+        }
+        return node;
     }
 
 }

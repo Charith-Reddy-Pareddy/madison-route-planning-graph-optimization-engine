@@ -267,14 +267,20 @@ data/
 src/
   MapADT.java, PlaceholderMap.java   generic key/value map ADT (hash map backed)
   GraphADT.java, BaseGraph.java      generic directed weighted graph
-  DijkstraGraph.java                 shortest-path algorithm (priority-queue Dijkstra)
+  DijkstraGraph.java                 shortest-path algorithm (priority-queue Dijkstra) -- what the live app runs
   RoadNetwork.java                   the 57-location network: intersections, roads, bus routes, one-ways
   RoadNetworkLoader.java             reads data/locations.csv + data/roads.csv into RoadNetwork
   PathFinderServer.java              HTTP API + static file server
   Json.java                          minimal hand-rolled JSON response writer
   Main.java                          entry point
+  ShortestPathAlgorithm.java, PathResult.java, Neighbor.java, AStarHeuristic.java
+                                      the pluggable algorithm family's shared interface/types (see "Additional pathfinding algorithms")
+  DijkstraAlgorithm.java, BidirectionalDijkstraAlgorithm.java
+  AStarAlgorithm.java, BidirectionalAStarAlgorithm.java
+                                      the four algorithms themselves
 test/
   DijkstraGraphTest.java             algorithm unit tests
+  AlgorithmsCorrectnessTest.java     the 4-algorithm family vs. DijkstraGraph, exhaustively on the real network
   RoadNetworkTest.java               network sanity checks (every location reachable, no dangling roads)
   RoadNetworkLoaderTest.java         CSV parsing, incl. quoted commas in locations.csv's query column
   PathFinderServerIntegrationTest.java  end-to-end HTTP integration tests
@@ -331,4 +337,63 @@ It also tracks a best-known distance per node so it only enqueues a
 candidate path when that path is a strict improvement over the best one
 already found to that node — see [Project history](#project-history) for
 why that matters and how it's tested.
+
+## Additional pathfinding algorithms
+
+`DijkstraGraph` (above) stays exactly as-is -- it's what the live app's
+`/api/route` actually runs. Alongside it, `src/` has a second, independent
+family of shortest-path algorithms behind one common interface,
+[`ShortestPathAlgorithm`](src/ShortestPathAlgorithm.java), so they're
+directly swappable and comparable against each other and against
+`DijkstraGraph`'s own answer -- the foundation the benchmark suite and
+cross-validation work builds on:
+
+- [`DijkstraAlgorithm`](src/DijkstraAlgorithm.java) — a fresh,
+  from-scratch priority-queue Dijkstra (same best-known-distance pruning
+  as `DijkstraGraph`, so a benchmark comparison measures real algorithmic
+  differences, not one side carrying an avoidable inefficiency).
+- [`AStarAlgorithm`](src/AStarAlgorithm.java) — Dijkstra with the queue
+  ordered by cost-so-far plus an admissible heuristic
+  ([`RoadNetwork.haversineHeuristic()`](src/RoadNetwork.java): real
+  straight-line distance between two points, which can never exceed the
+  real road distance).
+- [`BidirectionalDijkstraAlgorithm`](src/BidirectionalDijkstraAlgorithm.java)
+  — searches forward from the start and backward from the end at the same
+  time (via `BaseGraph.predecessorsOf`, a real reverse-edge traversal —
+  this network has one-way streets, so "backward" isn't just running
+  forward search on the other node), stopping once neither frontier could
+  possibly improve on the best meeting point found so far.
+- [`BidirectionalAStarAlgorithm`](src/BidirectionalAStarAlgorithm.java) —
+  both of the above combined. The one that actually caught a real bug:
+  see below.
+
+`BaseGraph` itself gained two small public methods to make this possible,
+`neighborsOf`/`predecessorsOf`, returning a node's outgoing/incoming
+edges as plain (node, weight) pairs -- enough for an algorithm to
+traverse the graph without being coupled to `BaseGraph`'s internal
+`Node`/`Edge` representation the way `DijkstraGraph` (a subclass) is.
+
+**A real correctness bug, caught by testing, not just claimed away.** The
+plan for this work was explicit that each new algorithm had to match
+`DijkstraGraph`'s cost on every existing test graph before being
+considered done -- not "compiles and runs." That check caught a genuine
+bug in the first version of `BidirectionalAStarAlgorithm`: on a real
+query (`john_nolen` → `humanities_building`), it returned a 2.99mi path
+where the true shortest was 2.37mi. The cause was subtle -- the stopping
+condition compared cost-so-far peeked off each side's priority queue, a
+valid bound for plain Dijkstra (where the queue is ordered by cost-so-far)
+but not for A* (where the queue is ordered by cost-so-far *plus
+heuristic*, so the top of the queue no longer bounds the remaining
+cost-so-far values). The fix uses symmetric potentials (Ikeda et al.
+1994) so both sides' priorities stay correctly comparable; see the class
+doc on `BidirectionalAStarAlgorithm` for the full derivation. It's now
+verified against an independent check, not just re-derived on paper: see
+below.
+
+**Verification**: `AlgorithmsCorrectnessTest` checks all four algorithms
+against the lecture-example graph (including edge cases: same start/end,
+disconnected nodes, an unknown node) and, exhaustively, against every
+ordered pair of the real 57-location network (3,192 pairs — not a
+sample), comparing each algorithm's cost to `DijkstraGraph`'s own answer
+for that same query. All four match on all 3,192 pairs.
 

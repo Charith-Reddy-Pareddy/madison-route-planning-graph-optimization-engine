@@ -85,4 +85,30 @@ public class RoadNetwork {
   public List<Road> roads() {
     return roads;
   }
+
+  private static final double EARTH_RADIUS_MILES = 3958.8;
+
+  /**
+   * A haversine-distance {@link AStarHeuristic} over this network's real
+   * coordinates -- admissible for A* and bidirectional A*, since a
+   * straight-line distance can never exceed the real road distance
+   * between two points.
+   */
+  public AStarHeuristic<String> haversineHeuristic() {
+    return (fromId, toId) -> {
+      Intersection from = intersections.get(fromId);
+      Intersection to = intersections.get(toId);
+      return haversineMiles(from.lat(), from.lon(), to.lat(), to.lon());
+    };
+  }
+
+  private static double haversineMiles(double lat1, double lon1, double lat2, double lon2) {
+    double phi1 = Math.toRadians(lat1);
+    double phi2 = Math.toRadians(lat2);
+    double dPhi = Math.toRadians(lat2 - lat1);
+    double dLambda = Math.toRadians(lon2 - lon1);
+    double a = Math.sin(dPhi / 2) * Math.sin(dPhi / 2)
+        + Math.cos(phi1) * Math.cos(phi2) * Math.sin(dLambda / 2) * Math.sin(dLambda / 2);
+    return 2 * EARTH_RADIUS_MILES * Math.asin(Math.min(1.0, Math.sqrt(a)));
+  }
 }
