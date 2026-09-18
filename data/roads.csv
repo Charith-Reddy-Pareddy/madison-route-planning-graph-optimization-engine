@@ -34,9 +34,9 @@ tenney_park,east_wash,0.93,
 willy_st,tenney_park,1.16,
 tenney_park,willy_st,1.16,
 east_wash,atwood_schenks,1.34,Route L
-atwood_schenks,olbrich_gardens,1.03,Route 38
-olbrich_gardens,atwood_schenks,1.03,Route 38
-olbrich_gardens,tenney_park,1.77,
+atwood_schenks,olbrich_gardens,0.93,Route 38
+olbrich_gardens,atwood_schenks,0.93,Route 38
+olbrich_gardens,tenney_park,1.67,
 monroe_edgewood,arboretum,1.07,
 arboretum,monroe_edgewood,1.07,
 bascom_hill,hilldale,2.49,
@@ -63,8 +63,8 @@ bascom_hill,chadbourne_hall,0.16,
 chadbourne_hall,bascom_hill,0.16,
 bascom_hill,social_sciences,0.11,
 social_sciences,bascom_hill,0.11,
-morgridge_hall,education_building,0.05,
-education_building,morgridge_hall,0.05,
+morgridge_hall,education_building,0.31,
+education_building,morgridge_hall,0.31,
 state_frances,memorial_library,0.12,Route A
 memorial_library,state_frances,0.12,Route A
 memorial_library,humanities_building,0.13,

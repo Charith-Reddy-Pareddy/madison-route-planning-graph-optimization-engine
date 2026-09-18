@@ -44,3 +44,5 @@ frontend/node_modules/
 # both fully regenerable via `python3 pipeline/build_graph.py`. Only its
 # final output (experiments/data/osm_*.csv) is committed.
 pipeline/data/
+# Cached Nominatim responses from scripts/geocode.py -- regenerable.
+scripts/.geocode_cache/

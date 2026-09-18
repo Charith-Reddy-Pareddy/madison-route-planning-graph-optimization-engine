@@ -133,7 +133,16 @@ always resolve a street *intersection* precisely (e.g. "State St & Gilman
 St" can land at some other point along State St rather than exactly that
 corner), so a few points are approximate to a block or so -- but every
 point is real data, not invented, and every distance is computed from it.
-Full provenance, plus the CSV schema, is in [data/sources.md](data/sources.md).
+Full provenance, the CSV schema (each location's real geocode `query`,
+`source`, and `retrieved_at`), and how to reproduce or re-verify any of
+it with [`scripts/geocode.py`](scripts/geocode.py) are in
+[data/sources.md](data/sources.md).
+
+Shortest-path correctness is verified the same way, not just assumed:
+every ordered pair of the network's 57 locations (3,192 total) was
+cross-checked against an independent reference Dijkstra implementation,
+for both the Java backend and the separate client-side JS fallback --
+3,192/3,192 matched on both.
 
 ## The network map
 
@@ -267,6 +276,7 @@ src/
 test/
   DijkstraGraphTest.java             algorithm unit tests
   RoadNetworkTest.java               network sanity checks (every location reachable, no dangling roads)
+  RoadNetworkLoaderTest.java         CSV parsing, incl. quoted commas in locations.csv's query column
   PathFinderServerIntegrationTest.java  end-to-end HTTP integration tests
   JsonTest.java                      JSON writer unit tests
 frontend/
@@ -284,6 +294,7 @@ pipeline/                             research track: real OSM ingestion (see "R
 experiments/data/                     pipeline's output: osm_locations.csv, osm_roads.csv (committed; pipeline/data/ raw/intermediate files are not)
 scripts/
   validate_network.py                 connectivity/integrity checks for a graph the size of the OSM dataset
+  geocode.py                          reusable Nominatim lookup + batch re-verification (see data/sources.md)
 .github/workflows/
   ci.yml                              runs `make test` on push/PR
   pages.yml                           builds the frontend and deploys it to GitHub Pages on push to main

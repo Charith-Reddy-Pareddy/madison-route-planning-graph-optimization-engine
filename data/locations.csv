@@ -1,58 +1,58 @@
-id,name,lat,lon
-capitol,Capitol Square,43.0747,-89.3842
-king_st,King St & Main St,43.0747,-89.381
-willy_st,Williamson St,43.0767,-89.3739
-john_nolen,John Nolen Dr & Broom St,43.0528,-89.3787
-state_frances,State St & Frances St,43.0751,-89.3957
-state_gilman,State St & Gilman St,43.0748,-89.3908
-library_mall,Library Mall,43.0753,-89.3991
-memorial_union,Memorial Union,43.0765,-89.4003
-bascom_hill,Bascom Hill,43.0753,-89.4038
-camp_randall,Camp Randall Stadium,43.0701,-89.4127
-regent_park,Regent St & Park St,43.0679,-89.4014
-monroe_edgewood,Monroe St & Edgewood Ave,43.0564,-89.4301
-east_wash,East Washington Ave & Blair St,43.0805,-89.3761
-tenney_park,Tenney Park,43.0932,-89.3698
-atwood_schenks,Atwood Ave & Schenk's Corners,43.0923,-89.3551
-olbrich_gardens,Olbrich Gardens,43.0926,-89.3346
-arboretum,UW Arboretum,43.0409,-89.431
-hilldale,Hilldale,43.0732,-89.4531
-morgridge_hall,Morgridge Hall,43.0728,-89.4069
-union_south,Union South,43.0718,-89.4081
-kohl_center,Kohl Center,43.0694,-89.3969
-engineering_hall,Engineering Mall,43.0748,-89.4107
-grainger_hall,Grainger Hall (Wisconsin School of Business),43.0727,-89.4016
-chazen_museum,Chazen Museum of Art,43.0739,-89.3987
-college_library,College Library (Helen C. White Hall),43.0767,-89.4013
-witte_hall,Witte Residence Hall,43.0714,-89.397
-sellery_hall,Sellery Residence Hall,43.0716,-89.4002
-ogg_hall,Ogg Residence Hall,43.0706,-89.3999
-chadbourne_hall,Chadbourne Residential College,43.0738,-89.4013
-memorial_library,Memorial Library,43.0754,-89.398
-humanities_building,Humanities Building,43.0742,-89.4001
-social_sciences,Social Science Building,43.0766,-89.4052
-education_building,Education Building,43.0731,-89.4074
-van_hise_hall,Van Hise Hall,43.0756,-89.4069
-science_hall,Science Hall,43.0759,-89.4011
-van_vleck_hall,Van Vleck Hall,43.0748,-89.4049
-discovery_building,Wisconsin Institutes for Discovery,43.0728,-89.4081
-nicholas_rec,Nicholas Recreation Center,43.0704,-89.3983
-dejope_hall,Dejope Residence Hall,43.0778,-89.4178
-atmosphere_apts,Atmosphere Madison,43.0684,-89.3973
-x01_apts,X01,43.0729,-89.4027
-lucky_apts,Lucky Apartments,43.073,-89.398
-red_gym,Red Gym,43.0763,-89.3985
-vilas_hall,Vilas Hall,43.0727,-89.3998
-target_state_st,Target (State St),43.0752,-89.396
-chipotle_state_st,Chipotle (State St),43.0752,-89.3966
-popeyes_state_st,Popeyes (State St),43.0751,-89.3964
-ians_pizza,Ian's Pizza (State St),43.0749,-89.3871
-middleton_building,Middleton Building,43.0748,-89.4082
-vilas_zoo,Henry Vilas Zoo,43.0598,-89.4105
-elizabeth_waters,Elizabeth Waters Residence Hall,43.077,-89.4065
-slichter_hall,Slichter Residence Hall,43.0771,-89.4122
-kronshage_halls,Kronshage Residence Halls,43.0779,-89.4159
-bradley_hall,Bradley Residence Hall,43.078,-89.4164
-bakke_rec_center,Bakke Recreation & Wellbeing Center,43.0769,-89.4198
-lakeshore_preserve,Lakeshore Nature Preserve,43.0833,-89.4303
-eagle_heights,Eagle Heights,43.0884,-89.4364
+id,name,lat,lon,query,source,retrieved_at
+capitol,Capitol Square,43.0747,-89.3842,"Capitol Square, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:19Z
+king_st,King St & Main St,43.0747,-89.381,"King St & Main St, Madison, WI",Nominatim (OpenStreetMap),
+willy_st,Williamson St,43.0767,-89.3739,"Williamson St, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:21Z
+john_nolen,John Nolen Dr & Broom St,43.0528,-89.3787,"John Nolen Dr & Broom St, Madison, WI",Nominatim (OpenStreetMap),
+state_frances,State St & Frances St,43.0751,-89.3957,"State St & Frances St, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:24Z
+state_gilman,State St & Gilman St,43.0748,-89.3908,"State St & Gilman St, Madison, WI",Nominatim (OpenStreetMap),
+library_mall,Library Mall,43.0753,-89.3991,"Library Mall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:26Z
+memorial_union,Memorial Union,43.0765,-89.4003,"Memorial Union, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:27Z
+bascom_hill,Bascom Hill,43.0753,-89.4038,"Bascom Hill, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:28Z
+camp_randall,Camp Randall Stadium,43.0701,-89.4127,"Camp Randall Stadium, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:30Z
+regent_park,Regent St & Park St,43.0679,-89.4014,"Regent St & Park St, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:31Z
+monroe_edgewood,Monroe St & Edgewood Ave,43.0564,-89.4301,"Monroe St & Edgewood Ave, Madison, WI",Nominatim (OpenStreetMap),
+east_wash,East Washington Ave & Blair St,43.0805,-89.3761,"East Washington Ave & Blair St, Madison, WI",Nominatim (OpenStreetMap),
+tenney_park,Tenney Park,43.0932,-89.3698,"Tenney Park, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:35Z
+atwood_schenks,Atwood Ave & Schenk's Corners,43.0923,-89.3551,"Atwood Ave & Schenk's Corners, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:36Z
+olbrich_gardens,Olbrich Gardens,43.093,-89.3367,"Olbrich Gardens, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:37Z
+arboretum,UW Arboretum,43.0409,-89.431,"UW Arboretum, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:39Z
+hilldale,Hilldale,43.0732,-89.4531,"Hilldale, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:40Z
+morgridge_hall,Morgridge Hall,43.0728,-89.4069,"Morgridge Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:41Z
+union_south,Union South,43.0718,-89.4081,"Union South, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:42Z
+kohl_center,Kohl Center,43.0694,-89.3969,"Kohl Center, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:44Z
+engineering_hall,Engineering Mall,43.0748,-89.4107,"Engineering Mall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:45Z
+grainger_hall,Grainger Hall (Wisconsin School of Business),43.0727,-89.4016,"Grainger Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:46Z
+chazen_museum,Chazen Museum of Art,43.0739,-89.3987,"Chazen Museum of Art, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:47Z
+college_library,College Library (Helen C. White Hall),43.0767,-89.4013,"Helen C. White Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:49Z
+witte_hall,Witte Residence Hall,43.0714,-89.397,"Witte Residence Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:50Z
+sellery_hall,Sellery Residence Hall,43.0716,-89.4002,"Sellery Residence Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:51Z
+ogg_hall,Ogg Residence Hall,43.0706,-89.3999,"Ogg Residence Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:52Z
+chadbourne_hall,Chadbourne Residential College,43.0738,-89.4013,"Chadbourne Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:54Z
+memorial_library,Memorial Library,43.0754,-89.398,"Memorial Library, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:56Z
+humanities_building,Humanities Building,43.0742,-89.4001,"Humanities Building, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:04:57Z
+social_sciences,Social Science Building,43.0766,-89.4052,"Social Science Building, Madison, WI",Nominatim (OpenStreetMap),
+education_building,Education Building,43.0758,-89.4023,"Education Building, 1000 Observatory Drive, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:00Z
+van_hise_hall,Van Hise Hall,43.0756,-89.4069,"Van Hise Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:01Z
+science_hall,Science Hall,43.0759,-89.4011,"Science Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:02Z
+van_vleck_hall,Van Vleck Hall,43.0748,-89.4049,"Van Vleck Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:04Z
+discovery_building,Wisconsin Institutes for Discovery,43.0728,-89.4081,"Wisconsin Institute for Discovery, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:06:05Z
+nicholas_rec,Nicholas Recreation Center,43.0704,-89.3983,"Nicholas Recreation Center, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:06Z
+dejope_hall,Dejope Residence Hall,43.0778,-89.4178,"Dejope Residence Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:07Z
+atmosphere_apts,Atmosphere Madison,43.0684,-89.3973,"Atmosphere Madison, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:08Z
+x01_apts,X01,43.0729,-89.4027,"X01, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:10Z
+lucky_apts,Lucky Apartments,43.073,-89.398,"777 University Avenue, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:11Z
+red_gym,Red Gym,43.0763,-89.3985,"Red Gym, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:12Z
+vilas_hall,Vilas Hall,43.0727,-89.3998,"Vilas Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:14Z
+target_state_st,Target (State St),43.0752,-89.396,"Target, State Street, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:15Z
+chipotle_state_st,Chipotle (State St),43.0752,-89.3966,"Chipotle Mexican Grill, State Street, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:16Z
+popeyes_state_st,Popeyes (State St),43.0751,-89.3964,"Popeyes, State Street, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:18Z
+ians_pizza,Ian's Pizza (State St),43.0749,-89.3871,"Ian's Pizza on State, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:19Z
+middleton_building,Middleton Building,43.0748,-89.4082,"Middleton Building, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:20Z
+vilas_zoo,Henry Vilas Zoo,43.0598,-89.4105,"Henry Vilas Zoo, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:21Z
+elizabeth_waters,Elizabeth Waters Residence Hall,43.077,-89.4065,"Elizabeth Waters Residence Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:22Z
+slichter_hall,Slichter Residence Hall,43.0771,-89.4122,"Slichter Residence Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:24Z
+kronshage_halls,Kronshage Residence Halls,43.0779,-89.4159,"Kronshage Residence Halls, Madison, WI",Nominatim (OpenStreetMap),
+bradley_hall,Bradley Residence Hall,43.078,-89.4164,"Bradley Residence Hall, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:26Z
+bakke_rec_center,Bakke Recreation & Wellbeing Center,43.0769,-89.4198,"Bakke Recreation, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:28Z
+lakeshore_preserve,Lakeshore Nature Preserve,43.0833,-89.4303,"Lakeshore Nature Preserve, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:29Z
+eagle_heights,Eagle Heights,43.0884,-89.4364,"Eagle Heights Community Center, Madison, WI",Nominatim (OpenStreetMap),2026-09-17T18:05:30Z

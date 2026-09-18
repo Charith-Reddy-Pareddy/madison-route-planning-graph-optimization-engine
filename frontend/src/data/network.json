@@ -93,8 +93,8 @@
         {
             "id": "olbrich_gardens",
             "name": "Olbrich Gardens",
-            "lat": 43.0926,
-            "lon": -89.3346
+            "lat": 43.093,
+            "lon": -89.3367
         },
         {
             "id": "arboretum",
@@ -195,8 +195,8 @@
         {
             "id": "education_building",
             "name": "Education Building",
-            "lat": 43.0731,
-            "lon": -89.4074
+            "lat": 43.0758,
+            "lon": -89.4023
         },
         {
             "id": "van_hise_hall",
@@ -557,19 +557,19 @@
         {
             "from": "atwood_schenks",
             "to": "olbrich_gardens",
-            "miles": 1.03,
+            "miles": 0.93,
             "busRoute": "Route 38"
         },
         {
             "from": "olbrich_gardens",
             "to": "atwood_schenks",
-            "miles": 1.03,
+            "miles": 0.93,
             "busRoute": "Route 38"
         },
         {
             "from": "olbrich_gardens",
             "to": "tenney_park",
-            "miles": 1.77,
+            "miles": 1.67,
             "busRoute": null
         },
         {
@@ -731,13 +731,13 @@
         {
             "from": "morgridge_hall",
             "to": "education_building",
-            "miles": 0.05,
+            "miles": 0.31,
             "busRoute": null
         },
         {
             "from": "education_building",
             "to": "morgridge_hall",
-            "miles": 0.05,
+            "miles": 0.31,
             "busRoute": null
         },
         {
