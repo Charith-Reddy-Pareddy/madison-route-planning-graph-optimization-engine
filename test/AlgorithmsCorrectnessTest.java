@@ -61,7 +61,8 @@ public class AlgorithmsCorrectnessTest {
         new DijkstraAlgorithm<>(),
         new BidirectionalDijkstraAlgorithm<>(),
         new AStarAlgorithm<>(ZERO_HEURISTIC),
-        new BidirectionalAStarAlgorithm<>(ZERO_HEURISTIC));
+        new BidirectionalAStarAlgorithm<>(ZERO_HEURISTIC),
+        new ALTAlgorithm<>(4));
   }
 
   @Test
@@ -153,7 +154,8 @@ public class AlgorithmsCorrectnessTest {
         new DijkstraAlgorithm<>(),
         new BidirectionalDijkstraAlgorithm<>(),
         new AStarAlgorithm<>(network.haversineHeuristic()),
-        new BidirectionalAStarAlgorithm<>(network.haversineHeuristic()));
+        new BidirectionalAStarAlgorithm<>(network.haversineHeuristic()),
+        new ALTAlgorithm<>(8));
 
     int pairsChecked = 0;
     for (RoadNetwork.Intersection startLoc : locations) {
