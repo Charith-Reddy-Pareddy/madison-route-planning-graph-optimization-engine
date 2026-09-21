@@ -32,6 +32,9 @@ public class DijkstraAlgorithm<NodeType, EdgeType extends Number> implements Sho
     if (start == null || end == null || !graph.containsNode(start) || !graph.containsNode(end)) {
       throw new NoSuchElementException("start or end node not in graph");
     }
+    if (start.equals(end)) {
+      return new PathResult<>(List.of(start), 0.0, 0);
+    }
 
     Map<NodeType, Double> bestKnown = new HashMap<>();
     Map<NodeType, NodeType> predecessor = new HashMap<>();

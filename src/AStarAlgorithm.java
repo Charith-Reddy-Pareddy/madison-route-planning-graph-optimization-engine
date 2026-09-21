@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
@@ -31,6 +32,9 @@ public class AStarAlgorithm<NodeType, EdgeType extends Number> implements Shorte
   public PathResult<NodeType> findPath(BaseGraph<NodeType, EdgeType> graph, NodeType start, NodeType end) {
     if (start == null || end == null || !graph.containsNode(start) || !graph.containsNode(end)) {
       throw new NoSuchElementException("start or end node not in graph");
+    }
+    if (start.equals(end)) {
+      return new PathResult<>(List.of(start), 0.0, 0);
     }
 
     Map<NodeType, Double> bestKnown = new HashMap<>();
