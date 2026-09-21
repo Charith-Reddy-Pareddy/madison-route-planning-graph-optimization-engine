@@ -43,7 +43,7 @@ public class BidirectionalDijkstraAlgorithm<NodeType, EdgeType extends Number>
       throw new NoSuchElementException("start or end node not in graph");
     }
     if (start.equals(end)) {
-      return new PathResult<>(List.of(start), 0.0);
+      return new PathResult<>(List.of(start), 0.0, 0);
     }
 
     Map<NodeType, Double> distF = new HashMap<>();
@@ -62,6 +62,7 @@ public class BidirectionalDijkstraAlgorithm<NodeType, EdgeType extends Number>
 
     double bestCost = Double.POSITIVE_INFINITY;
     NodeType meetingNode = null;
+    int nodesExpanded = 0;
 
     while (!queueF.isEmpty() && !queueB.isEmpty()) {
       if (queueF.peek().cost() + queueB.peek().cost() >= bestCost) {
@@ -78,6 +79,7 @@ public class BidirectionalDijkstraAlgorithm<NodeType, EdgeType extends Number>
         continue;
       }
       settledThis.add(current.node());
+      nodesExpanded++;
 
       if (settledOther.contains(current.node())) {
         double total = current.cost() + distOther.get(current.node());
@@ -116,7 +118,7 @@ public class BidirectionalDijkstraAlgorithm<NodeType, EdgeType extends Number>
     if (meetingNode == null) {
       throw new NoSuchElementException("no path from " + start + " to " + end);
     }
-    return new PathResult<>(stitchPath(predF, predB, start, end, meetingNode), bestCost);
+    return new PathResult<>(stitchPath(predF, predB, start, end, meetingNode), bestCost, nodesExpanded);
   }
 
   /**

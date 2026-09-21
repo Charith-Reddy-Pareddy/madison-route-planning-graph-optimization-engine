@@ -40,6 +40,7 @@ public class AStarAlgorithm<NodeType, EdgeType extends Number> implements Shorte
 
     bestKnown.put(start, 0.0);
     queue.add(new Entry<>(start, 0.0, heuristic.estimate(start, end)));
+    int nodesExpanded = 0;
 
     while (!queue.isEmpty()) {
       Entry<NodeType> current = queue.poll();
@@ -47,9 +48,10 @@ public class AStarAlgorithm<NodeType, EdgeType extends Number> implements Shorte
         continue;
       }
       visited.add(current.node());
+      nodesExpanded++;
 
       if (current.node().equals(end)) {
-        return new PathResult<>(DijkstraAlgorithm.reconstructPath(predecessor, start, end), current.gCost());
+        return new PathResult<>(DijkstraAlgorithm.reconstructPath(predecessor, start, end), current.gCost(), nodesExpanded);
       }
 
       for (Neighbor<NodeType, EdgeType> neighbor : graph.neighborsOf(current.node())) {

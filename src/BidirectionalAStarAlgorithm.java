@@ -62,7 +62,7 @@ public class BidirectionalAStarAlgorithm<NodeType, EdgeType extends Number>
       throw new NoSuchElementException("start or end node not in graph");
     }
     if (start.equals(end)) {
-      return new PathResult<>(List.of(start), 0.0);
+      return new PathResult<>(List.of(start), 0.0, 0);
     }
 
     ToDoubleFunction<NodeType> pf = v -> (heuristic.estimate(v, end) - heuristic.estimate(v, start)) / 2.0;
@@ -84,6 +84,7 @@ public class BidirectionalAStarAlgorithm<NodeType, EdgeType extends Number>
 
     double bestCost = Double.POSITIVE_INFINITY;
     NodeType meetingNode = null;
+    int nodesExpanded = 0;
 
     while (!queueF.isEmpty() && !queueB.isEmpty()) {
       // Priority (g + potential), not raw g -- see class doc for why that
@@ -102,6 +103,7 @@ public class BidirectionalAStarAlgorithm<NodeType, EdgeType extends Number>
         continue;
       }
       settledThis.add(current.node());
+      nodesExpanded++;
 
       if (settledOther.contains(current.node())) {
         double total = current.gCost() + distOther.get(current.node());
@@ -142,6 +144,6 @@ public class BidirectionalAStarAlgorithm<NodeType, EdgeType extends Number>
     if (meetingNode == null) {
       throw new NoSuchElementException("no path from " + start + " to " + end);
     }
-    return new PathResult<>(BidirectionalDijkstraAlgorithm.stitchPath(predF, predB, start, end, meetingNode), bestCost);
+    return new PathResult<>(BidirectionalDijkstraAlgorithm.stitchPath(predF, predB, start, end, meetingNode), bestCost, nodesExpanded);
   }
 }

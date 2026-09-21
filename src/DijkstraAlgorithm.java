@@ -40,6 +40,7 @@ public class DijkstraAlgorithm<NodeType, EdgeType extends Number> implements Sho
 
     bestKnown.put(start, 0.0);
     queue.add(new Entry<>(start, 0.0));
+    int nodesExpanded = 0;
 
     while (!queue.isEmpty()) {
       Entry<NodeType> current = queue.poll();
@@ -47,9 +48,10 @@ public class DijkstraAlgorithm<NodeType, EdgeType extends Number> implements Sho
         continue;
       }
       visited.add(current.node());
+      nodesExpanded++;
 
       if (current.node().equals(end)) {
-        return new PathResult<>(reconstructPath(predecessor, start, end), current.cost());
+        return new PathResult<>(reconstructPath(predecessor, start, end), current.cost(), nodesExpanded);
       }
 
       for (Neighbor<NodeType, EdgeType> neighbor : graph.neighborsOf(current.node())) {
