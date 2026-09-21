@@ -7,16 +7,19 @@ import java.util.Random;
 
 /**
  * Times {@link DijkstraAlgorithm}, {@link AStarAlgorithm}, {@link
- * BidirectionalDijkstraAlgorithm}, and {@link BidirectionalAStarAlgorithm}
- * against each other on synthetic graphs of increasing size (see {@link
- * BenchmarkGraphGenerator}), and writes one CSV row per (algorithm, size)
- * pair to results/benchmark.csv: average query latency, average nodes
- * expanded, and approximate heap usage for building the graph itself.
+ * BidirectionalDijkstraAlgorithm}, {@link BidirectionalAStarAlgorithm}, and
+ * {@link ALTAlgorithm} against each other on synthetic graphs of increasing
+ * size (see {@link BenchmarkGraphGenerator}), and writes one CSV row per
+ * (algorithm, size) pair to results/benchmark.csv: first-query latency
+ * (includes any lazy preprocessing, e.g. ALT's landmark selection), average
+ * steady-state query latency, average nodes expanded, and approximate heap
+ * usage for building the graph itself.
  *
- * <p>None of these algorithms need a preprocessing step (unlike, say,
- * contraction hierarchies), so there's no separate preprocessing-time
- * column yet -- see the "Additional pathfinding algorithms" section of the
- * top-level README for why only these four exist so far.
+ * <p>The first-query-vs-steady-state split is what surfaces preprocessing
+ * cost without needing a special case: the four non-preprocessing
+ * algorithms have first-query and steady-state latency close together,
+ * while ALT's first query is where its one-time landmark Dijkstra runs
+ * actually happen (see {@link ALTAlgorithm}'s per-graph cache).
  *
  * <p>Run with: java -cp out/classes:out/benchmarks BenchmarkRunner
  */
@@ -28,7 +31,13 @@ public class BenchmarkRunner {
   private static final long GRAPH_SEED = 42;
   private static final long QUERY_SEED = 7;
 
-  private record Row(String algorithm, int nodeCount, double avgLatencyMs, double avgNodesExpanded, long graphHeapBytes) {}
+  private record Row(
+      String algorithm,
+      int nodeCount,
+      double firstQueryMs,
+      double avgLatencyMs,
+      double avgNodesExpanded,
+      long graphHeapBytes) {}
 
   public static void main(String[] args) throws IOException {
     List<Row> rows = new java.util.ArrayList<>();
@@ -71,17 +80,23 @@ public class BenchmarkRunner {
               queries,
               size,
               graphHeapBytes));
+      rows.add(benchmark("ALT", new ALTAlgorithm<>(8), generated, queries, size, graphHeapBytes));
     }
 
     Path outDir = Path.of("benchmarks", "results");
     Files.createDirectories(outDir);
     Path outFile = outDir.resolve("benchmark.csv");
     try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(outFile))) {
-      writer.println("algorithm,node_count,avg_latency_ms,avg_nodes_expanded,graph_heap_bytes");
+      writer.println("algorithm,node_count,first_query_ms,avg_latency_ms,avg_nodes_expanded,graph_heap_bytes");
       for (Row row : rows) {
         writer.printf(
-            "%s,%d,%.4f,%.1f,%d%n",
-            row.algorithm(), row.nodeCount(), row.avgLatencyMs(), row.avgNodesExpanded(), row.graphHeapBytes());
+            "%s,%d,%.4f,%.4f,%.1f,%d%n",
+            row.algorithm(),
+            row.nodeCount(),
+            row.firstQueryMs(),
+            row.avgLatencyMs(),
+            row.avgNodesExpanded(),
+            row.graphHeapBytes());
       }
     }
     System.out.println("Wrote " + rows.size() + " rows to " + outFile);
@@ -94,17 +109,26 @@ public class BenchmarkRunner {
       List<String[]> queries,
       int nodeCount,
       long graphHeapBytes) {
+    double firstQueryMs = 0.0;
     long totalNanos = 0;
     long totalNodesExpanded = 0;
     int successfulQueries = 0;
+    int steadyStateQueries = 0;
 
-    for (String[] query : queries) {
+    for (int i = 0; i < queries.size(); i++) {
+      String[] query = queries.get(i);
       long start = System.nanoTime();
       try {
         PathResult<String> result = algorithm.findPath(generated.graph(), query[0], query[1]);
-        totalNanos += System.nanoTime() - start;
+        long elapsedNanos = System.nanoTime() - start;
         totalNodesExpanded += result.nodesExpanded();
         successfulQueries++;
+        if (i == 0) {
+          firstQueryMs = elapsedNanos / 1e6;
+        } else {
+          totalNanos += elapsedNanos;
+          steadyStateQueries++;
+        }
       } catch (java.util.NoSuchElementException e) {
         // The synthetic graph is strongly connected by construction (see
         // BenchmarkGraphGenerator), so this shouldn't happen -- but if start == end validation
@@ -112,12 +136,12 @@ public class BenchmarkRunner {
       }
     }
 
-    double avgLatencyMs = successfulQueries == 0 ? 0.0 : (totalNanos / 1e6) / successfulQueries;
+    double avgLatencyMs = steadyStateQueries == 0 ? 0.0 : (totalNanos / 1e6) / steadyStateQueries;
     double avgNodesExpanded = successfulQueries == 0 ? 0.0 : (double) totalNodesExpanded / successfulQueries;
     System.out.printf(
-        "  %-24s n=%-8d avg latency %.3fms  avg nodes expanded %.1f%n",
-        name, nodeCount, avgLatencyMs, avgNodesExpanded);
-    return new Row(name, nodeCount, avgLatencyMs, avgNodesExpanded, graphHeapBytes);
+        "  %-24s n=%-8d first query %.3fms  avg steady-state latency %.3fms  avg nodes expanded %.1f%n",
+        name, nodeCount, firstQueryMs, avgLatencyMs, avgNodesExpanded);
+    return new Row(name, nodeCount, firstQueryMs, avgLatencyMs, avgNodesExpanded, graphHeapBytes);
   }
 
   /** A rough, best-effort heap snapshot -- run with -Xmx set and treat this as approximate, not exact. */
