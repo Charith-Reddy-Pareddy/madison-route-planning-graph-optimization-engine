@@ -95,6 +95,21 @@ public class AlgorithmsCorrectnessTest {
   }
 
   @Test
+  public void allAlgorithmsReportSaneNodesExpanded() {
+    BaseGraph<String, Double> graph = lectureExampleGraph();
+    for (ShortestPathAlgorithm<String, Double> algorithm : allAlgorithms()) {
+      String name = algorithm.getClass().getSimpleName();
+      PathResult<String> same = algorithm.findPath(graph, "A", "A");
+      assertEquals(0, same.nodesExpanded(), name);
+
+      PathResult<String> real = algorithm.findPath(graph, "D", "I");
+      assertTrue(real.nodesExpanded() > 0, name);
+      // 10 nodes total in lectureExampleGraph() -- no algorithm should ever settle more than that.
+      assertTrue(real.nodesExpanded() <= 10, name);
+    }
+  }
+
+  @Test
   public void allAlgorithmsThrowWhenNoPathExists() {
     BaseGraph<String, Double> graph = lectureExampleGraph();
     for (ShortestPathAlgorithm<String, Double> algorithm : allAlgorithms()) {
