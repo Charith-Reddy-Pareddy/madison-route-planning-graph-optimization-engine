@@ -22,7 +22,7 @@ import java.util.Random;
  */
 public class BenchmarkRunner {
 
-  private static final int[] SIZES = {100, 1_000, 10_000, 100_000};
+  private static final int[] SIZES = {100, 1_000, 10_000, 100_000, 1_000_000};
   private static final int AVG_DEGREE = 4;
   private static final int QUERIES_PER_SIZE = 30;
   private static final long GRAPH_SEED = 42;
