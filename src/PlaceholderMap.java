@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -63,7 +64,7 @@ public class PlaceholderMap<KeyType, ValueType> implements MapADT<KeyType, Value
 
     @Override
     public List<KeyType> getKeys() {
-        throw new UnsupportedOperationException("PlaceholderMap does not support the .getKeys() method");
+        return new ArrayList<>(baseMap.keySet());
     }
 
 
