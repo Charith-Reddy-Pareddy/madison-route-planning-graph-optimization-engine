@@ -49,6 +49,13 @@ export default function RouteResult({ statusType, statusMessage, route, nodesByI
       {route && (
         <>
           <h3 className="section-label">{isDrive ? 'Driving directions' : 'Walking directions'}</h3>
+          {isDrive && 'live' in route && (
+            <p className={route.live ? 'live-status live' : 'live-status'}>
+              {route.live
+                ? 'Distances refreshed from a live routing API just now.'
+                : 'Using precomputed distances (live data was off, or a leg fell back after the live API didn’t respond).'}
+            </p>
+          )}
           <ol className="steps">
             {route.segments.map((segment, i) => (
               <li key={`${segment.from}-${segment.to}-${i}`}>

@@ -34,10 +34,15 @@ export async function getGraph() {
   return network;
 }
 
-/** Fetches (or computes locally) the shortest route between two intersection ids, in 'walk' or 'drive' mode. */
-export async function getRoute(startId, endId, mode = 'walk') {
+/**
+ * Fetches (or computes locally) the shortest route between two intersection ids, in 'walk' or
+ * 'drive' mode. `live=true` (drive only) asks the backend to refresh each leg's distance from a
+ * real external routing API instead of the precomputed graph -- only the real Java backend can do
+ * that (see LiveRoutingClient.java), so it's silently ignored in the no-backend fallback.
+ */
+export async function getRoute(startId, endId, mode = 'walk', live = false) {
   if (await hasBackend()) {
-    const params = new URLSearchParams({ start: startId, end: endId, mode });
+    const params = new URLSearchParams({ start: startId, end: endId, mode, live: String(live) });
     return getJSON(`/api/route?${params}`);
   }
   return computeRoute(network, startId, endId, mode);

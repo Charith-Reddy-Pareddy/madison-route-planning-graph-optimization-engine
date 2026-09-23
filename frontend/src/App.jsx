@@ -10,6 +10,7 @@ export default function App() {
   const [startId, setStartId] = useState('');
   const [endId, setEndId] = useState('');
   const [mode, setMode] = useState('walk');
+  const [live, setLive] = useState(false);
   const [route, setRoute] = useState(null);
   const [status, setStatus] = useState({ type: 'idle', message: '' });
   // Which field a map click sets next: click one node for start, the next for end.
@@ -22,12 +23,12 @@ export default function App() {
   // should ever be applied to state.
   const latestRequestId = useRef(0);
 
-  const findRoute = useCallback(async (start, end, travelMode) => {
+  const findRoute = useCallback(async (start, end, travelMode, useLive) => {
     const requestId = ++latestRequestId.current;
     setStatus({ type: 'loading', message: 'Calculating route...' });
     setRoute(null);
     try {
-      const result = await getRoute(start, end, travelMode);
+      const result = await getRoute(start, end, travelMode, useLive);
       if (requestId !== latestRequestId.current) return;
       setRoute(result);
       setStatus({ type: 'success', message: `Shortest route found: ${result.path.length} stop(s).` });
@@ -47,7 +48,7 @@ export default function App() {
         if (sorted.length > 1) {
           setStartId(sorted[0].id);
           setEndId(sorted[1].id);
-          findRoute(sorted[0].id, sorted[1].id, mode);
+          findRoute(sorted[0].id, sorted[1].id, mode, live);
         }
       })
       .catch((err) => {
@@ -60,13 +61,13 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    findRoute(startId, endId, mode);
+    findRoute(startId, endId, mode, live);
   }
 
   function handleSwap() {
     setStartId(endId);
     setEndId(startId);
-    findRoute(endId, startId, mode);
+    findRoute(endId, startId, mode, live);
   }
 
   function handleNodeClick(id) {
@@ -76,14 +77,25 @@ export default function App() {
     } else {
       setEndId(id);
       setPickTarget('start');
-      findRoute(startId, id, mode);
+      findRoute(startId, id, mode, live);
     }
   }
 
   function handleModeChange(newMode) {
     setMode(newMode);
+    // 'live' only means anything for drive mode (see LiveRoutingClient's class doc) -- switching
+    // away from drive turns it back off rather than leaving a stale, inapplicable setting on.
+    const newLive = newMode === 'drive' ? live : false;
+    setLive(newLive);
     if (startId && endId) {
-      findRoute(startId, endId, newMode);
+      findRoute(startId, endId, newMode, newLive);
+    }
+  }
+
+  function handleLiveChange(newLive) {
+    setLive(newLive);
+    if (startId && endId) {
+      findRoute(startId, endId, mode, newLive);
     }
   }
 
@@ -111,6 +123,8 @@ export default function App() {
                 endId={endId}
                 mode={mode}
                 onModeChange={handleModeChange}
+                live={live}
+                onLiveChange={handleLiveChange}
                 onStartChange={setStartId}
                 onEndChange={setEndId}
                 onSubmit={handleSubmit}

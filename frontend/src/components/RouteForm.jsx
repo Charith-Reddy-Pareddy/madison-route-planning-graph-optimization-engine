@@ -4,6 +4,8 @@ export default function RouteForm({
   endId,
   mode,
   onModeChange,
+  live,
+  onLiveChange,
   onStartChange,
   onEndChange,
   onSubmit,
@@ -25,6 +27,12 @@ export default function RouteForm({
           Drive
         </label>
       </fieldset>
+      {mode === 'drive' && (
+        <label className="live-toggle">
+          <input type="checkbox" checked={live} onChange={(e) => onLiveChange(e.target.checked)} />
+          Use live routing data (real-time, requires the backend)
+        </label>
+      )}
       <label>
         Start
         <select value={startId} onChange={(e) => onStartChange(e.target.value)} required>
