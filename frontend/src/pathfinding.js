@@ -1,16 +1,23 @@
 // Client-side Dijkstra + response shaping, mirroring PathFinderServer's
 // /api/route exactly (same field names, same rounding, same error
-// messages) so this can stand in for the Java backend when there isn't
-// one to call -- e.g. a static GitHub Pages deploy. Ports the walking-pace
-// estimate from RoadNetwork.estimatedMinutes (WALK_MPH = 3.5).
+// messages, same mode handling) so this can stand in for the Java backend
+// when there isn't one to call -- e.g. a static GitHub Pages deploy. Ports
+// the pace estimates from RoadNetwork.estimatedMinutes.
 const WALK_MPH = 3.5;
+const BUS_MPH = 12.0;
+const DRIVE_MPH = 20.0;
 
 function round2(d) {
   return Math.round(d * 100) / 100;
 }
 
-function estimatedMinutes(miles) {
-  return Math.max(1, Math.round((miles / WALK_MPH) * 60));
+function estimatedMinutes(miles, mode, busRoute) {
+  const mph = mode === 'drive' ? DRIVE_MPH : busRoute ? BUS_MPH : WALK_MPH;
+  return Math.max(1, Math.round((miles / mph) * 60));
+}
+
+function milesFor(edge, mode) {
+  return mode === 'drive' ? edge.driveMiles : edge.walkMiles;
 }
 
 // Binary min-heap keyed by priority (path cost), used as computeRoute's
@@ -75,15 +82,19 @@ export class MinHeap {
  * returning the same shape PathFinderServer's /api/route does. Throws an Error
  * with the same messages the HTTP API uses for unknown ids / no path found.
  */
-export function computeRoute(network, startId, endId) {
+export function computeRoute(network, startId, endId, mode = 'walk') {
   const nodeIds = network.nodes.map((n) => n.id);
   if (!nodeIds.includes(startId) || !nodeIds.includes(endId)) {
     throw new Error('unknown intersection id');
   }
 
+  // An edge with no real distance for this mode (e.g. no drivable route found for a
+  // walk-only edge, see data/sources.md) simply isn't part of this mode's graph.
   const adjacency = new Map(nodeIds.map((id) => [id, []]));
   for (const edge of network.edges) {
-    adjacency.get(edge.from).push(edge);
+    if (milesFor(edge, mode) != null) {
+      adjacency.get(edge.from).push(edge);
+    }
   }
 
   const dist = new Map(nodeIds.map((id) => [id, Infinity]));
@@ -100,7 +111,7 @@ export function computeRoute(network, startId, endId) {
     if (current === endId) break;
     visited.add(current);
     for (const edge of adjacency.get(current)) {
-      const alt = currentDist + edge.miles;
+      const alt = currentDist + milesFor(edge, mode);
       if (alt < dist.get(edge.to)) {
         dist.set(edge.to, alt);
         cameVia.set(edge.to, edge);
@@ -125,11 +136,12 @@ export function computeRoute(network, startId, endId) {
   let totalMinutes = 0;
   for (let i = 0; i < pathIds.length - 1; i++) {
     const edge = cameVia.get(pathIds[i + 1]);
-    const miles = round2(edge.miles);
-    const minutes = estimatedMinutes(edge.miles);
+    const edgeMiles = milesFor(edge, mode);
+    const miles = round2(edgeMiles);
+    const minutes = estimatedMinutes(edgeMiles, mode, edge.busRoute);
     totalMinutes += minutes;
     segments.push({ from: edge.from, to: edge.to, miles, minutes, busRoute: edge.busRoute ?? null });
   }
 
-  return { path, segments, totalMiles: round2(dist.get(endId)), totalMinutes };
+  return { path, segments, totalMiles: round2(dist.get(endId)), totalMinutes, mode };
 }

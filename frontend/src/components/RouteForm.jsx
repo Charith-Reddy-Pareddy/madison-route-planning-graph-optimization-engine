@@ -1,8 +1,30 @@
-export default function RouteForm({ nodes, startId, endId, onStartChange, onEndChange, onSubmit, onSwap, loading }) {
+export default function RouteForm({
+  nodes,
+  startId,
+  endId,
+  mode,
+  onModeChange,
+  onStartChange,
+  onEndChange,
+  onSubmit,
+  onSwap,
+  loading,
+}) {
   const sorted = [...nodes].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <form onSubmit={onSubmit}>
+      <fieldset className="mode-toggle">
+        <legend>Travel mode</legend>
+        <label>
+          <input type="radio" name="mode" value="walk" checked={mode === 'walk'} onChange={() => onModeChange('walk')} />
+          Walk
+        </label>
+        <label>
+          <input type="radio" name="mode" value="drive" checked={mode === 'drive'} onChange={() => onModeChange('drive')} />
+          Drive
+        </label>
+      </fieldset>
       <label>
         Start
         <select value={startId} onChange={(e) => onStartChange(e.target.value)} required>

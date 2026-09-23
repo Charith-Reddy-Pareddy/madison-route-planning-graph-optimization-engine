@@ -347,733 +347,855 @@
         {
             "from": "capitol",
             "to": "king_st",
-            "miles": 0.16,
+            "walkMiles": 0.188,
+            "driveMiles": 0.509,
             "busRoute": null
         },
         {
             "from": "king_st",
             "to": "capitol",
-            "miles": 0.16,
+            "walkMiles": 0.188,
+            "driveMiles": 0.351,
             "busRoute": null
         },
         {
             "from": "capitol",
             "to": "state_frances",
-            "miles": 0.58,
+            "walkMiles": 0.598,
+            "driveMiles": 0.81,
             "busRoute": "Route A"
         },
         {
             "from": "state_frances",
             "to": "capitol",
-            "miles": 0.58,
+            "walkMiles": 0.598,
+            "driveMiles": 0.791,
             "busRoute": "Route A"
         },
         {
             "from": "capitol",
             "to": "john_nolen",
-            "miles": 1.54,
+            "walkMiles": 1.755,
+            "driveMiles": 1.976,
             "busRoute": null
         },
         {
             "from": "king_st",
             "to": "willy_st",
-            "miles": 0.38,
+            "walkMiles": 0.387,
+            "driveMiles": 0.434,
             "busRoute": "Route C"
         },
         {
             "from": "willy_st",
             "to": "king_st",
-            "miles": 0.38,
+            "walkMiles": 0.387,
+            "driveMiles": 0.395,
             "busRoute": "Route C"
         },
         {
             "from": "willy_st",
             "to": "capitol",
-            "miles": 0.54,
+            "walkMiles": 0.573,
+            "driveMiles": 0.735,
             "busRoute": null
         },
         {
             "from": "state_frances",
             "to": "state_gilman",
-            "miles": 0.25,
+            "walkMiles": 0.263,
+            "driveMiles": 0.904,
             "busRoute": "Route A"
         },
         {
             "from": "state_gilman",
             "to": "state_frances",
-            "miles": 0.25,
+            "walkMiles": 0.263,
+            "driveMiles": 0.386,
             "busRoute": "Route A"
         },
         {
             "from": "state_gilman",
             "to": "library_mall",
-            "miles": 0.42,
+            "walkMiles": 0.441,
+            "driveMiles": 0.51,
             "busRoute": "Route A"
         },
         {
             "from": "library_mall",
             "to": "state_gilman",
-            "miles": 0.42,
+            "walkMiles": 0.441,
+            "driveMiles": 0.827,
             "busRoute": "Route A"
         },
         {
             "from": "library_mall",
             "to": "memorial_union",
-            "miles": 0.1,
+            "walkMiles": 0.168,
+            "driveMiles": 0.139,
             "busRoute": null
         },
         {
             "from": "memorial_union",
             "to": "library_mall",
-            "miles": 0.1,
+            "walkMiles": 0.168,
+            "driveMiles": 0.139,
             "busRoute": null
         },
         {
             "from": "library_mall",
             "to": "regent_park",
-            "miles": 0.52,
+            "walkMiles": 0.596,
+            "driveMiles": 0.666,
             "busRoute": null
         },
         {
             "from": "regent_park",
             "to": "library_mall",
-            "miles": 0.52,
+            "walkMiles": 0.596,
+            "driveMiles": 0.676,
             "busRoute": null
         },
         {
             "from": "memorial_union",
             "to": "bascom_hill",
-            "miles": 0.19,
+            "walkMiles": 0.307,
+            "driveMiles": 0.297,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "memorial_union",
-            "miles": 0.19,
+            "walkMiles": 0.307,
+            "driveMiles": 0.297,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "camp_randall",
-            "miles": 0.57,
+            "walkMiles": 0.83,
+            "driveMiles": 0.915,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "regent_park",
-            "miles": 0.59,
+            "walkMiles": 0.804,
+            "driveMiles": 0.809,
             "busRoute": null
         },
         {
             "from": "regent_park",
             "to": "camp_randall",
-            "miles": 0.59,
+            "walkMiles": 0.804,
+            "driveMiles": 0.811,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "monroe_edgewood",
-            "miles": 1.29,
+            "walkMiles": 1.347,
+            "driveMiles": 1.343,
             "busRoute": "Route D"
         },
         {
             "from": "monroe_edgewood",
             "to": "camp_randall",
-            "miles": 1.29,
+            "walkMiles": 1.347,
+            "driveMiles": 1.343,
             "busRoute": "Route D"
         },
         {
             "from": "regent_park",
             "to": "monroe_edgewood",
-            "miles": 1.65,
+            "walkMiles": 1.788,
+            "driveMiles": 1.784,
             "busRoute": null
         },
         {
             "from": "monroe_edgewood",
             "to": "regent_park",
-            "miles": 1.65,
+            "walkMiles": 1.788,
+            "driveMiles": 1.785,
             "busRoute": null
         },
         {
             "from": "regent_park",
             "to": "john_nolen",
-            "miles": 1.55,
+            "walkMiles": 1.974,
+            "driveMiles": 1.978,
             "busRoute": null
         },
         {
             "from": "john_nolen",
             "to": "regent_park",
-            "miles": 1.55,
+            "walkMiles": 1.974,
+            "driveMiles": 2.035,
             "busRoute": null
         },
         {
             "from": "john_nolen",
             "to": "capitol",
-            "miles": 1.54,
+            "walkMiles": 1.755,
+            "driveMiles": 2.25,
             "busRoute": null
         },
         {
             "from": "king_st",
             "to": "east_wash",
-            "miles": 0.47,
+            "walkMiles": 0.56,
+            "driveMiles": 0.661,
             "busRoute": "Route L"
         },
         {
             "from": "east_wash",
             "to": "king_st",
-            "miles": 0.47,
+            "walkMiles": 0.56,
+            "driveMiles": 0.633,
             "busRoute": "Route L"
         },
         {
             "from": "east_wash",
             "to": "tenney_park",
-            "miles": 0.93,
+            "walkMiles": 1.198,
+            "driveMiles": 1.266,
             "busRoute": null
         },
         {
             "from": "tenney_park",
             "to": "east_wash",
-            "miles": 0.93,
+            "walkMiles": 1.198,
+            "driveMiles": 1.269,
             "busRoute": null
         },
         {
             "from": "willy_st",
             "to": "tenney_park",
-            "miles": 1.16,
+            "walkMiles": 1.557,
+            "driveMiles": 1.713,
             "busRoute": null
         },
         {
             "from": "tenney_park",
             "to": "willy_st",
-            "miles": 1.16,
+            "walkMiles": 1.557,
+            "driveMiles": 1.641,
             "busRoute": null
         },
         {
             "from": "east_wash",
             "to": "atwood_schenks",
-            "miles": 1.34,
+            "walkMiles": 1.465,
+            "driveMiles": 1.638,
             "busRoute": "Route L"
         },
         {
             "from": "atwood_schenks",
             "to": "olbrich_gardens",
-            "miles": 0.93,
+            "walkMiles": 1.058,
+            "driveMiles": 1.09,
             "busRoute": "Route 38"
         },
         {
             "from": "olbrich_gardens",
             "to": "atwood_schenks",
-            "miles": 0.93,
+            "walkMiles": 1.058,
+            "driveMiles": 1.07,
             "busRoute": "Route 38"
         },
         {
             "from": "olbrich_gardens",
             "to": "tenney_park",
-            "miles": 1.67,
+            "walkMiles": 2.029,
+            "driveMiles": 2.407,
             "busRoute": null
         },
         {
             "from": "monroe_edgewood",
             "to": "arboretum",
-            "miles": 1.07,
+            "walkMiles": 2.15,
+            "driveMiles": 2.169,
             "busRoute": null
         },
         {
             "from": "arboretum",
             "to": "monroe_edgewood",
-            "miles": 1.07,
+            "walkMiles": 2.15,
+            "driveMiles": 2.166,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "hilldale",
-            "miles": 2.49,
+            "walkMiles": 2.745,
+            "driveMiles": 2.848,
             "busRoute": null
         },
         {
             "from": "hilldale",
             "to": "bascom_hill",
-            "miles": 2.49,
+            "walkMiles": 2.745,
+            "driveMiles": 2.955,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "morgridge_hall",
-            "miles": 0.23,
+            "walkMiles": 0.339,
+            "driveMiles": 0.382,
             "busRoute": null
         },
         {
             "from": "morgridge_hall",
             "to": "bascom_hill",
-            "miles": 0.23,
+            "walkMiles": 0.339,
+            "driveMiles": 0.542,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "union_south",
-            "miles": 0.26,
+            "walkMiles": 0.388,
+            "driveMiles": null,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "camp_randall",
-            "miles": 0.26,
+            "walkMiles": 0.388,
+            "driveMiles": 0.592,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "kohl_center",
-            "miles": 0.8,
+            "walkMiles": 0.945,
+            "driveMiles": 1.314,
             "busRoute": null
         },
         {
             "from": "kohl_center",
             "to": "camp_randall",
-            "miles": 0.8,
+            "walkMiles": 0.945,
+            "driveMiles": 1.308,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "engineering_hall",
-            "miles": 0.24,
+            "walkMiles": 0.306,
+            "driveMiles": 0.536,
             "busRoute": null
         },
         {
             "from": "engineering_hall",
             "to": "union_south",
-            "miles": 0.24,
+            "walkMiles": 0.306,
+            "driveMiles": null,
             "busRoute": null
         },
         {
             "from": "state_frances",
             "to": "grainger_hall",
-            "miles": 0.34,
+            "walkMiles": 0.441,
+            "driveMiles": 0.619,
             "busRoute": "Route A"
         },
         {
             "from": "grainger_hall",
             "to": "state_frances",
-            "miles": 0.34,
+            "walkMiles": 0.441,
+            "driveMiles": 0.728,
             "busRoute": "Route A"
         },
         {
             "from": "state_gilman",
             "to": "chazen_museum",
-            "miles": 0.4,
+            "walkMiles": 0.475,
+            "driveMiles": 0.54,
             "busRoute": "Route A"
         },
         {
             "from": "chazen_museum",
             "to": "state_gilman",
-            "miles": 0.4,
+            "walkMiles": 0.475,
+            "driveMiles": 0.675,
             "busRoute": "Route A"
         },
         {
             "from": "memorial_union",
             "to": "college_library",
-            "miles": 0.05,
+            "walkMiles": 0.14,
+            "driveMiles": 0.012,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "memorial_union",
-            "miles": 0.05,
+            "walkMiles": 0.14,
+            "driveMiles": 0.012,
             "busRoute": null
         },
         {
             "from": "witte_hall",
             "to": "sellery_hall",
-            "miles": 0.16,
+            "walkMiles": 0.274,
+            "driveMiles": 0.465,
             "busRoute": "Route B"
         },
         {
             "from": "sellery_hall",
             "to": "witte_hall",
-            "miles": 0.16,
+            "walkMiles": 0.274,
+            "driveMiles": 0.281,
             "busRoute": "Route B"
         },
         {
             "from": "witte_hall",
             "to": "ogg_hall",
-            "miles": 0.16,
+            "walkMiles": 0.2,
+            "driveMiles": null,
             "busRoute": "Route B"
         },
         {
             "from": "ogg_hall",
             "to": "witte_hall",
-            "miles": 0.16,
+            "walkMiles": 0.2,
+            "driveMiles": null,
             "busRoute": "Route B"
         },
         {
             "from": "bascom_hill",
             "to": "chadbourne_hall",
-            "miles": 0.16,
+            "walkMiles": 0.246,
+            "driveMiles": 0.461,
             "busRoute": null
         },
         {
             "from": "chadbourne_hall",
             "to": "bascom_hill",
-            "miles": 0.16,
+            "walkMiles": 0.246,
+            "driveMiles": 0.461,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "social_sciences",
-            "miles": 0.11,
+            "walkMiles": 0.207,
+            "driveMiles": 0.151,
             "busRoute": null
         },
         {
             "from": "social_sciences",
             "to": "bascom_hill",
-            "miles": 0.11,
+            "walkMiles": 0.207,
+            "driveMiles": 0.151,
             "busRoute": null
         },
         {
             "from": "morgridge_hall",
             "to": "education_building",
-            "miles": 0.31,
+            "walkMiles": 0.456,
+            "driveMiles": null,
             "busRoute": null
         },
         {
             "from": "education_building",
             "to": "morgridge_hall",
-            "miles": 0.31,
+            "walkMiles": 0.456,
+            "driveMiles": 0.487,
             "busRoute": null
         },
         {
             "from": "state_frances",
             "to": "memorial_library",
-            "miles": 0.12,
+            "walkMiles": 0.121,
+            "driveMiles": 0.186,
             "busRoute": "Route A"
         },
         {
             "from": "memorial_library",
             "to": "state_frances",
-            "miles": 0.12,
+            "walkMiles": 0.121,
+            "driveMiles": 0.186,
             "busRoute": "Route A"
         },
         {
             "from": "memorial_library",
             "to": "humanities_building",
-            "miles": 0.13,
+            "walkMiles": 0.211,
+            "driveMiles": 0.313,
             "busRoute": null
         },
         {
             "from": "humanities_building",
             "to": "memorial_library",
-            "miles": 0.13,
+            "walkMiles": 0.211,
+            "driveMiles": 0.313,
             "busRoute": null
         },
         {
             "from": "memorial_library",
             "to": "science_hall",
-            "miles": 0.16,
+            "walkMiles": 0.287,
+            "driveMiles": 0.3,
             "busRoute": null
         },
         {
             "from": "science_hall",
             "to": "memorial_library",
-            "miles": 0.16,
+            "walkMiles": 0.287,
+            "driveMiles": 0.3,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "van_hise_hall",
-            "miles": 0.29,
+            "walkMiles": 0.36,
+            "driveMiles": 0.493,
             "busRoute": null
         },
         {
             "from": "van_hise_hall",
             "to": "college_library",
-            "miles": 0.29,
+            "walkMiles": 0.36,
+            "driveMiles": 0.493,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "van_vleck_hall",
-            "miles": 0.22,
+            "walkMiles": 0.305,
+            "driveMiles": 0.468,
             "busRoute": null
         },
         {
             "from": "van_vleck_hall",
             "to": "college_library",
-            "miles": 0.22,
+            "walkMiles": 0.305,
+            "driveMiles": 0.468,
             "busRoute": null
         },
         {
             "from": "engineering_hall",
             "to": "discovery_building",
-            "miles": 0.19,
+            "walkMiles": 0.223,
+            "driveMiles": 0.615,
             "busRoute": null
         },
         {
             "from": "discovery_building",
             "to": "engineering_hall",
-            "miles": 0.19,
+            "walkMiles": 0.223,
+            "driveMiles": 0.688,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "nicholas_rec",
-            "miles": 0.5,
+            "walkMiles": 0.594,
+            "driveMiles": 0.634,
             "busRoute": null
         },
         {
             "from": "nicholas_rec",
             "to": "union_south",
-            "miles": 0.5,
+            "walkMiles": 0.594,
+            "driveMiles": null,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "atmosphere_apts",
-            "miles": 0.79,
+            "walkMiles": 0.999,
+            "driveMiles": 1.062,
             "busRoute": null
         },
         {
             "from": "atmosphere_apts",
             "to": "camp_randall",
-            "miles": 0.79,
+            "walkMiles": 0.999,
+            "driveMiles": 1.06,
             "busRoute": null
         },
         {
             "from": "kohl_center",
             "to": "x01_apts",
-            "miles": 0.38,
+            "walkMiles": 0.436,
+            "driveMiles": 0.578,
             "busRoute": null
         },
         {
             "from": "x01_apts",
             "to": "kohl_center",
-            "miles": 0.38,
+            "walkMiles": 0.436,
+            "driveMiles": 0.578,
             "busRoute": null
         },
         {
             "from": "grainger_hall",
             "to": "lucky_apts",
-            "miles": 0.18,
+            "walkMiles": 0.226,
+            "driveMiles": 0.405,
             "busRoute": null
         },
         {
             "from": "lucky_apts",
             "to": "grainger_hall",
-            "miles": 0.18,
+            "walkMiles": 0.226,
+            "driveMiles": 0.28,
             "busRoute": null
         },
         {
             "from": "library_mall",
             "to": "red_gym",
-            "miles": 0.08,
+            "walkMiles": 0.105,
+            "driveMiles": 0.033,
             "busRoute": null
         },
         {
             "from": "red_gym",
             "to": "library_mall",
-            "miles": 0.08,
+            "walkMiles": 0.105,
+            "driveMiles": 0.033,
             "busRoute": null
         },
         {
             "from": "grainger_hall",
             "to": "vilas_hall",
-            "miles": 0.09,
+            "walkMiles": 0.164,
+            "driveMiles": 0.205,
             "busRoute": null
         },
         {
             "from": "vilas_hall",
             "to": "grainger_hall",
-            "miles": 0.09,
+            "walkMiles": 0.164,
+            "driveMiles": 0.159,
             "busRoute": null
         },
         {
             "from": "state_frances",
             "to": "target_state_st",
-            "miles": 0.05,
+            "walkMiles": 0.019,
+            "driveMiles": 0.0,
             "busRoute": "Route A"
         },
         {
             "from": "target_state_st",
             "to": "state_frances",
-            "miles": 0.05,
+            "walkMiles": 0.019,
+            "driveMiles": 0.0,
             "busRoute": "Route A"
         },
         {
             "from": "state_frances",
             "to": "chipotle_state_st",
-            "miles": 0.05,
+            "walkMiles": 0.063,
+            "driveMiles": 0.151,
             "busRoute": "Route A"
         },
         {
             "from": "chipotle_state_st",
             "to": "state_frances",
-            "miles": 0.05,
+            "walkMiles": 0.063,
+            "driveMiles": 0.151,
             "busRoute": "Route A"
         },
         {
             "from": "state_frances",
             "to": "popeyes_state_st",
-            "miles": 0.05,
+            "walkMiles": 0.037,
+            "driveMiles": 0.126,
             "busRoute": "Route A"
         },
         {
             "from": "popeyes_state_st",
             "to": "state_frances",
-            "miles": 0.05,
+            "walkMiles": 0.037,
+            "driveMiles": 0.126,
             "busRoute": "Route A"
         },
         {
             "from": "capitol",
             "to": "ians_pizza",
-            "miles": 0.15,
+            "walkMiles": 0.167,
+            "driveMiles": 0.246,
             "busRoute": "Route A"
         },
         {
             "from": "ians_pizza",
             "to": "capitol",
-            "miles": 0.15,
+            "walkMiles": 0.167,
+            "driveMiles": 0.168,
             "busRoute": "Route A"
         },
         {
             "from": "van_hise_hall",
             "to": "middleton_building",
-            "miles": 0.09,
+            "walkMiles": 0.172,
+            "driveMiles": 0.09,
             "busRoute": null
         },
         {
             "from": "middleton_building",
             "to": "van_hise_hall",
-            "miles": 0.09,
+            "walkMiles": 0.172,
+            "driveMiles": 0.09,
             "busRoute": null
         },
         {
             "from": "camp_randall",
             "to": "vilas_zoo",
-            "miles": 0.72,
+            "walkMiles": 0.918,
+            "driveMiles": 0.929,
             "busRoute": null
         },
         {
             "from": "vilas_zoo",
             "to": "camp_randall",
-            "miles": 0.72,
+            "walkMiles": 0.918,
+            "driveMiles": 0.878,
             "busRoute": null
         },
         {
             "from": "bascom_hill",
             "to": "elizabeth_waters",
-            "miles": 0.18,
+            "walkMiles": 0.254,
+            "driveMiles": 0.184,
             "busRoute": null
         },
         {
             "from": "elizabeth_waters",
             "to": "bascom_hill",
-            "miles": 0.18,
+            "walkMiles": 0.254,
+            "driveMiles": 0.184,
             "busRoute": null
         },
         {
             "from": "library_mall",
             "to": "witte_hall",
-            "miles": 0.29,
+            "walkMiles": 0.443,
+            "driveMiles": 0.483,
             "busRoute": "Route B"
         },
         {
             "from": "witte_hall",
             "to": "library_mall",
-            "miles": 0.29,
+            "walkMiles": 0.443,
+            "driveMiles": 0.484,
             "busRoute": "Route B"
         },
         {
             "from": "memorial_union",
             "to": "elizabeth_waters",
-            "miles": 0.31,
+            "walkMiles": 0.419,
+            "driveMiles": 0.412,
             "busRoute": "Route 80"
         },
         {
             "from": "elizabeth_waters",
             "to": "memorial_union",
-            "miles": 0.31,
+            "walkMiles": 0.419,
+            "driveMiles": 0.412,
             "busRoute": "Route 80"
         },
         {
             "from": "elizabeth_waters",
             "to": "slichter_hall",
-            "miles": 0.29,
+            "walkMiles": 0.328,
+            "driveMiles": 0.477,
             "busRoute": "Route 80"
         },
         {
             "from": "slichter_hall",
             "to": "elizabeth_waters",
-            "miles": 0.29,
+            "walkMiles": 0.328,
+            "driveMiles": 0.477,
             "busRoute": "Route 80"
         },
         {
             "from": "slichter_hall",
             "to": "kronshage_halls",
-            "miles": 0.19,
+            "walkMiles": 0.211,
+            "driveMiles": 0.31,
             "busRoute": "Route 80"
         },
         {
             "from": "kronshage_halls",
             "to": "slichter_hall",
-            "miles": 0.19,
+            "walkMiles": 0.211,
+            "driveMiles": 0.31,
             "busRoute": "Route 80"
         },
         {
             "from": "kronshage_halls",
             "to": "bradley_hall",
-            "miles": 0.05,
+            "walkMiles": 0.02,
+            "driveMiles": 0.024,
             "busRoute": null
         },
         {
             "from": "bradley_hall",
             "to": "kronshage_halls",
-            "miles": 0.05,
+            "walkMiles": 0.02,
+            "driveMiles": 0.024,
             "busRoute": null
         },
         {
             "from": "kronshage_halls",
             "to": "dejope_hall",
-            "miles": 0.1,
+            "walkMiles": 0.1,
+            "driveMiles": 0.41,
             "busRoute": null
         },
         {
             "from": "dejope_hall",
             "to": "kronshage_halls",
-            "miles": 0.1,
+            "walkMiles": 0.1,
+            "driveMiles": 0.41,
             "busRoute": null
         },
         {
             "from": "dejope_hall",
             "to": "bakke_rec_center",
-            "miles": 0.12,
+            "walkMiles": 0.283,
+            "driveMiles": 0.266,
             "busRoute": null
         },
         {
             "from": "bakke_rec_center",
             "to": "dejope_hall",
-            "miles": 0.12,
+            "walkMiles": 0.283,
+            "driveMiles": 0.266,
             "busRoute": null
         },
         {
             "from": "bakke_rec_center",
             "to": "lakeshore_preserve",
-            "miles": 0.69,
+            "walkMiles": 0.788,
+            "driveMiles": 0.808,
             "busRoute": "Route 80"
         },
         {
             "from": "lakeshore_preserve",
             "to": "bakke_rec_center",
-            "miles": 0.69,
+            "walkMiles": 0.788,
+            "driveMiles": 0.848,
             "busRoute": "Route 80"
         },
         {
             "from": "lakeshore_preserve",
             "to": "eagle_heights",
-            "miles": 0.47,
+            "walkMiles": 0.652,
+            "driveMiles": 1.16,
             "busRoute": "Route 80"
         },
         {
             "from": "eagle_heights",
             "to": "lakeshore_preserve",
-            "miles": 0.47,
+            "walkMiles": 0.652,
+            "driveMiles": 1.151,
             "busRoute": "Route 80"
         }
     ]

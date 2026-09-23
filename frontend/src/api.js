@@ -34,11 +34,11 @@ export async function getGraph() {
   return network;
 }
 
-/** Fetches (or computes locally) the shortest route between two intersection ids. */
-export async function getRoute(startId, endId) {
+/** Fetches (or computes locally) the shortest route between two intersection ids, in 'walk' or 'drive' mode. */
+export async function getRoute(startId, endId, mode = 'walk') {
   if (await hasBackend()) {
-    const params = new URLSearchParams({ start: startId, end: endId });
+    const params = new URLSearchParams({ start: startId, end: endId, mode });
     return getJSON(`/api/route?${params}`);
   }
-  return computeRoute(network, startId, endId);
+  return computeRoute(network, startId, endId, mode);
 }

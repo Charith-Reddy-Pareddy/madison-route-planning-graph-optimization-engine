@@ -9,6 +9,7 @@ export default function App() {
   const [graphError, setGraphError] = useState(null);
   const [startId, setStartId] = useState('');
   const [endId, setEndId] = useState('');
+  const [mode, setMode] = useState('walk');
   const [route, setRoute] = useState(null);
   const [status, setStatus] = useState({ type: 'idle', message: '' });
   // Which field a map click sets next: click one node for start, the next for end.
@@ -21,12 +22,12 @@ export default function App() {
   // should ever be applied to state.
   const latestRequestId = useRef(0);
 
-  const findRoute = useCallback(async (start, end) => {
+  const findRoute = useCallback(async (start, end, travelMode) => {
     const requestId = ++latestRequestId.current;
     setStatus({ type: 'loading', message: 'Calculating route...' });
     setRoute(null);
     try {
-      const result = await getRoute(start, end);
+      const result = await getRoute(start, end, travelMode);
       if (requestId !== latestRequestId.current) return;
       setRoute(result);
       setStatus({ type: 'success', message: `Shortest route found: ${result.path.length} stop(s).` });
@@ -46,7 +47,7 @@ export default function App() {
         if (sorted.length > 1) {
           setStartId(sorted[0].id);
           setEndId(sorted[1].id);
-          findRoute(sorted[0].id, sorted[1].id);
+          findRoute(sorted[0].id, sorted[1].id, mode);
         }
       })
       .catch((err) => {
@@ -59,13 +60,13 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    findRoute(startId, endId);
+    findRoute(startId, endId, mode);
   }
 
   function handleSwap() {
     setStartId(endId);
     setEndId(startId);
-    findRoute(endId, startId);
+    findRoute(endId, startId, mode);
   }
 
   function handleNodeClick(id) {
@@ -75,7 +76,14 @@ export default function App() {
     } else {
       setEndId(id);
       setPickTarget('start');
-      findRoute(startId, id);
+      findRoute(startId, id, mode);
+    }
+  }
+
+  function handleModeChange(newMode) {
+    setMode(newMode);
+    if (startId && endId) {
+      findRoute(startId, endId, newMode);
     }
   }
 
@@ -101,6 +109,8 @@ export default function App() {
                 nodes={graph.nodes}
                 startId={startId}
                 endId={endId}
+                mode={mode}
+                onModeChange={handleModeChange}
                 onStartChange={setStartId}
                 onEndChange={setEndId}
                 onSubmit={handleSubmit}

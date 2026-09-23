@@ -29,7 +29,8 @@ function groupBusTrips(segments) {
 
 export default function RouteResult({ statusType, statusMessage, route, nodesById }) {
   const nameOf = (id) => nodesById.get(id)?.name ?? id;
-  const busTrips = route ? groupBusTrips(route.segments) : [];
+  const isDrive = route?.mode === 'drive';
+  const busTrips = !isDrive && route ? groupBusTrips(route.segments) : [];
 
   return (
     <>
@@ -47,7 +48,7 @@ export default function RouteResult({ statusType, statusMessage, route, nodesByI
 
       {route && (
         <>
-          <h3 className="section-label">Walking directions</h3>
+          <h3 className="section-label">{isDrive ? 'Driving directions' : 'Walking directions'}</h3>
           <ol className="steps">
             {route.segments.map((segment, i) => (
               <li key={`${segment.from}-${segment.to}-${i}`}>
@@ -55,31 +56,35 @@ export default function RouteResult({ statusType, statusMessage, route, nodesByI
               </li>
             ))}
             <li className="total">
-              Total: {route.totalMiles} mi, ~{route.totalMinutes} min on foot
+              Total: {route.totalMiles} mi, ~{route.totalMinutes} min {isDrive ? 'by car' : 'on foot'}
             </li>
           </ol>
 
-          <h3 className="section-label">Bus trips along this route</h3>
-          {busTrips.length > 0 ? (
-            <ul className="bus-trips">
-              {busTrips.map((trip, i) => (
-                <li key={`${trip.from}-${trip.to}-${i}`}>
-                  <span className="mode-tag bus">{trip.busRoute}</span> {nameOf(trip.from)} &rarr; {nameOf(trip.to)} (
-                  {trip.miles} mi, ~{busMinutes(trip.miles)} min by bus)
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="no-bus">No bus route covers this trip -- it's a walk the whole way.</p>
-          )}
+          {!isDrive && (
+            <>
+              <h3 className="section-label">Bus trips along this route</h3>
+              {busTrips.length > 0 ? (
+                <ul className="bus-trips">
+                  {busTrips.map((trip, i) => (
+                    <li key={`${trip.from}-${trip.to}-${i}`}>
+                      <span className="mode-tag bus">{trip.busRoute}</span> {nameOf(trip.from)} &rarr;{' '}
+                      {nameOf(trip.to)} ({trip.miles} mi, ~{busMinutes(trip.miles)} min by bus)
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="no-bus">No bus route covers this trip -- it's a walk the whole way.</p>
+              )}
 
-          <p className="transit-disclaimer">
-            Bus suggestions are illustrative, based on Metro Transit's published routes -- check{' '}
-            <a href="https://www.cityofmadison.com/metro/routes-schedules" target="_blank" rel="noreferrer">
-              Metro Transit
-            </a>{' '}
-            for live times.
-          </p>
+              <p className="transit-disclaimer">
+                Bus suggestions are illustrative, based on Metro Transit's published routes -- check{' '}
+                <a href="https://www.cityofmadison.com/metro/routes-schedules" target="_blank" rel="noreferrer">
+                  Metro Transit
+                </a>{' '}
+                for live times.
+              </p>
+            </>
+          )}
         </>
       )}
     </>
