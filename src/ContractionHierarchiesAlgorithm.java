@@ -15,24 +15,20 @@ import java.util.Set;
  * removing a node from the graph never changes the shortest-path distance between any pair of its
  * still-active neighbors. A shortcut u-&gt;w is only added when no path from u to w already exists
  * (at the point v is contracted, among still-active nodes) that's at least as cheap as going
- * through v -- checked with a bounded witness search, not assumed.
+ * through v -- checked with a witness search, not assumed.
  *
- * <p>This is the Day 3 slice of the contraction-hierarchies work: node ordering and the
- * contraction step itself, plus a correctness check -- running an ordinary Dijkstra over the
- * augmented graph (original edges + shortcuts) must give the exact same shortest-path COST as the
- * original graph, for every query, because a shortcut is only ever added when no cheaper route
- * already exists. Two things are deliberately deferred to Day 4:
- * <ul>
- *   <li>The actual speedup: restricting the query to a bidirectional search over only "upward"
- *       edges (toward higher-ranked/later-contracted nodes), which is the entire point of
- *       contraction hierarchies. Until then, {@link #findPath} runs a plain, unrestricted Dijkstra
- *       over the augmented graph, which is not expected to be faster than {@link
- *       DijkstraAlgorithm} -- it exists to validate the contraction logic, not to be benchmarked.
- *   <li>Shortcut unpacking: a returned path may include a shortcut edge that "jumps" directly
- *       between two nodes, skipping the real intermediate node(s) it stands in for. The cost is
- *       always exactly correct; the path is not yet a real drivable route. Callers that need the
- *       real route should not use this class's path until that's added.
- * </ul>
+ * <p>The query exploits the one structural fact contraction guarantees: every shortest path has a
+ * highest-ranked "peak" node, and the path is rank-increasing from the source up to the peak and
+ * rank-increasing from the target up to the peak (i.e. rank-decreasing from the peak down to the
+ * target). So instead of searching the whole graph, {@link #findPath} runs two searches that only
+ * ever move to higher-ranked nodes -- forward from the start over {@code out} edges, backward from
+ * the end over {@code in} edges -- each one naturally small and quick to exhaust, and takes the
+ * cheapest node reached by both.
+ *
+ * <p>A returned path may contain shortcut edges that "jump" over the real intermediate node(s)
+ * they stand in for; each shortcut records which node it was contracted through ({@code
+ * shortcutVia}), so the raw search path is unpacked back into real original edges before being
+ * returned -- recursively, since a shortcut can itself be built from other shortcuts.
  *
  * <p>Node ordering here uses a static ascending-degree heuristic (lower-degree nodes contracted
  * first) rather than the full dynamic edge-difference priority real CH implementations use, and
@@ -50,7 +46,12 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
   private final Map<BaseGraph<NodeType, EdgeType>, Preprocessed<NodeType>> cache = new IdentityHashMap<>();
 
   private record Preprocessed<NodeType>(
-      Map<NodeType, Map<NodeType, Double>> out, Map<NodeType, Map<NodeType, Double>> in, Map<NodeType, Integer> rank) {}
+      Map<NodeType, Map<NodeType, Double>> out,
+      Map<NodeType, Map<NodeType, Double>> in,
+      Map<NodeType, Integer> rank,
+      Map<EdgeKey<NodeType>, NodeType> shortcutVia) {}
+
+  private record EdgeKey<NodeType>(NodeType from, NodeType to) {}
 
   private record Entry<NodeType>(NodeType node, double cost) implements Comparable<Entry<NodeType>> {
     @Override
@@ -58,6 +59,8 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
       return Double.compare(cost, other.cost);
     }
   }
+
+  private record UpwardSearchResult<NodeType>(Map<NodeType, Double> dist, Map<NodeType, NodeType> pred, int expanded) {}
 
   @Override
   public PathResult<NodeType> findPath(BaseGraph<NodeType, EdgeType> graph, NodeType start, NodeType end) {
@@ -69,18 +72,52 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
     }
 
     Preprocessed<NodeType> preprocessed = cache.computeIfAbsent(graph, this::preprocess);
+    Map<NodeType, Integer> rank = preprocessed.rank();
 
-    // Interim Day-3 query: a plain Dijkstra over the augmented (original + shortcut) graph. This
-    // is what validates the contraction/shortcut logic; the upward-restricted bidirectional
-    // search that makes contraction hierarchies actually fast is Day 4 -- see the class doc.
-    Map<NodeType, Double> bestKnown = new HashMap<>();
-    Map<NodeType, NodeType> predecessor = new HashMap<>();
+    UpwardSearchResult<NodeType> forward = upwardSearch(preprocessed.out(), rank, start);
+    UpwardSearchResult<NodeType> backward = upwardSearch(preprocessed.in(), rank, end);
+
+    double bestCost = Double.POSITIVE_INFINITY;
+    NodeType meetingNode = null;
+    for (Map.Entry<NodeType, Double> entry : forward.dist().entrySet()) {
+      Double otherSide = backward.dist().get(entry.getKey());
+      if (otherSide != null) {
+        double total = entry.getValue() + otherSide;
+        if (total < bestCost) {
+          bestCost = total;
+          meetingNode = entry.getKey();
+        }
+      }
+    }
+
+    if (meetingNode == null) {
+      throw new NoSuchElementException("no path from " + start + " to " + end);
+    }
+
+    List<NodeType> rawPath =
+        BidirectionalDijkstraAlgorithm.stitchPath(forward.pred(), backward.pred(), start, end, meetingNode);
+    List<NodeType> realPath = unpack(rawPath, preprocessed.shortcutVia());
+    return new PathResult<>(realPath, bestCost, forward.expanded() + backward.expanded());
+  }
+
+  /**
+   * A Dijkstra from {@code source} restricted to edges that move to a higher-ranked node. Both
+   * directions use the same "higher rank only" rule -- the forward search over {@code out} edges,
+   * the backward search over {@code in} edges -- because of the peak-node argument in the class
+   * doc: ranks increase from the source up to the peak, and ranks *decrease* from the peak down to
+   * the target in the forward direction, which means walking backward from the target toward the
+   * peak also moves to strictly higher ranks at every step, just via predecessor edges instead of
+   * successor edges.
+   */
+  private UpwardSearchResult<NodeType> upwardSearch(
+      Map<NodeType, Map<NodeType, Double>> adjacency, Map<NodeType, Integer> rank, NodeType source) {
+    Map<NodeType, Double> dist = new HashMap<>();
+    Map<NodeType, NodeType> pred = new HashMap<>();
     Set<NodeType> visited = new HashSet<>();
     PriorityQueue<Entry<NodeType>> queue = new PriorityQueue<>();
-    int nodesExpanded = 0;
-
-    bestKnown.put(start, 0.0);
-    queue.add(new Entry<>(start, 0.0));
+    dist.put(source, 0.0);
+    queue.add(new Entry<>(source, 0.0));
+    int expanded = 0;
 
     while (!queue.isEmpty()) {
       Entry<NodeType> current = queue.poll();
@@ -88,29 +125,45 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
         continue;
       }
       visited.add(current.node());
-      nodesExpanded++;
+      expanded++;
+      int currentRank = rank.get(current.node());
 
-      if (current.node().equals(end)) {
-        return new PathResult<>(
-            DijkstraAlgorithm.reconstructPath(predecessor, start, end), current.cost(), nodesExpanded);
-      }
-
-      for (Map.Entry<NodeType, Double> edge : preprocessed.out().getOrDefault(current.node(), Map.of()).entrySet()) {
+      for (Map.Entry<NodeType, Double> edge : adjacency.getOrDefault(current.node(), Map.of()).entrySet()) {
         NodeType next = edge.getKey();
-        if (visited.contains(next)) {
+        if (rank.get(next) <= currentRank) {
           continue;
         }
         double newCost = current.cost() + edge.getValue();
-        Double known = bestKnown.get(next);
+        Double known = dist.get(next);
         if (known == null || newCost < known) {
-          bestKnown.put(next, newCost);
-          predecessor.put(next, current.node());
+          dist.put(next, newCost);
+          pred.put(next, current.node());
           queue.add(new Entry<>(next, newCost));
         }
       }
     }
+    return new UpwardSearchResult<>(dist, pred, expanded);
+  }
 
-    throw new NoSuchElementException("no path from " + start + " to " + end);
+  /** Expands every shortcut edge in {@code rawPath} back into the real edges it stands in for. */
+  private List<NodeType> unpack(List<NodeType> rawPath, Map<EdgeKey<NodeType>, NodeType> shortcutVia) {
+    List<NodeType> result = new ArrayList<>();
+    result.add(rawPath.get(0));
+    for (int i = 0; i < rawPath.size() - 1; i++) {
+      appendExpanded(rawPath.get(i), rawPath.get(i + 1), shortcutVia, result);
+    }
+    return result;
+  }
+
+  /** Appends the real node sequence from a to b (exclusive of a) to result, recursively unpacking a into b if that edge is a shortcut. */
+  private void appendExpanded(NodeType a, NodeType b, Map<EdgeKey<NodeType>, NodeType> shortcutVia, List<NodeType> result) {
+    NodeType via = shortcutVia.get(new EdgeKey<>(a, b));
+    if (via == null) {
+      result.add(b);
+    } else {
+      appendExpanded(a, via, shortcutVia, result);
+      appendExpanded(via, b, shortcutVia, result);
+    }
   }
 
   private Preprocessed<NodeType> preprocess(BaseGraph<NodeType, EdgeType> graph) {
@@ -122,12 +175,12 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
     // original graph and only ever GAINS shortcut edges; it never loses an edge, because a
     // contracted node is still a perfectly valid query endpoint (a real user can start or end a
     // route there) -- only its role as an intermediate hop for OTHER nodes' shortest paths is
-    // superseded by shortcuts. Reusing one shrinking graph for both jobs was the Day-3 bug: it
-    // deleted the only way to actually reach a contracted node once it got contracted.
+    // superseded by shortcuts.
     Map<NodeType, Map<NodeType, Double>> workingOut = new HashMap<>();
     Map<NodeType, Map<NodeType, Double>> workingIn = new HashMap<>();
     Map<NodeType, Map<NodeType, Double>> finalOut = new HashMap<>();
     Map<NodeType, Map<NodeType, Double>> finalIn = new HashMap<>();
+    Map<EdgeKey<NodeType>, NodeType> shortcutVia = new HashMap<>();
     for (NodeType node : allNodes) {
       workingOut.put(node, new HashMap<>());
       workingIn.put(node, new HashMap<>());
@@ -174,9 +227,12 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
             // No path from u to w avoiding v is cheap enough -- u->v->w becomes the only shortest
             // route once v is gone, so a shortcut is required to preserve that distance. Added to
             // both graphs: `working` so later witness searches can see it, `finalGraph` so queries
-            // can actually use it.
+            // can actually use it -- and recorded in shortcutVia (only when it actually wins the
+            // graph's currently-cheapest edge for u->w) so the query can unpack it back into v.
             addOrUpdateEdge(workingOut, workingIn, u, w, throughV);
-            addOrUpdateEdge(finalOut, finalIn, u, w, throughV);
+            if (addOrUpdateEdge(finalOut, finalIn, u, w, throughV)) {
+              shortcutVia.put(new EdgeKey<>(u, w), v);
+            }
           }
         }
       }
@@ -190,7 +246,7 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
       }
     }
 
-    return new Preprocessed<>(finalOut, finalIn, rank);
+    return new Preprocessed<>(finalOut, finalIn, rank, shortcutVia);
   }
 
   /**
@@ -241,13 +297,16 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
     return Double.POSITIVE_INFINITY;
   }
 
-  private void addOrUpdateEdge(
+  /** Returns true if this call actually inserted or improved the edge (a strictly cheaper route than any recorded so far). */
+  private boolean addOrUpdateEdge(
       Map<NodeType, Map<NodeType, Double>> out, Map<NodeType, Map<NodeType, Double>> in,
       NodeType pred, NodeType succ, double weight) {
     Double existing = out.get(pred).get(succ);
     if (existing == null || weight < existing) {
       out.get(pred).put(succ, weight);
       in.get(succ).put(pred, weight);
+      return true;
     }
+    return false;
   }
 }
