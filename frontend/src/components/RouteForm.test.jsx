@@ -42,4 +42,24 @@ describe('RouteForm', () => {
     );
     expect(screen.getByRole('button', { name: /calculating/i })).toBeDisabled();
   });
+
+  it('calls onModeChange with the newly selected travel mode', () => {
+    const onModeChange = vi.fn();
+    render(
+      <RouteForm
+        nodes={nodes}
+        startId="a"
+        endId="b"
+        mode="walk"
+        onModeChange={onModeChange}
+        onStartChange={() => {}}
+        onEndChange={() => {}}
+        onSubmit={() => {}}
+        onSwap={() => {}}
+        loading={false}
+      />,
+    );
+    fireEvent.click(screen.getByRole('radio', { name: /drive/i }));
+    expect(onModeChange).toHaveBeenCalledWith('drive');
+  });
 });

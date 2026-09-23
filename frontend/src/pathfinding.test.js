@@ -8,9 +8,9 @@ const nodes = [
   { id: 'c', name: 'C' },
 ];
 const edges = [
-  { from: 'a', to: 'b', miles: 1, busRoute: null },
-  { from: 'b', to: 'c', miles: 2, busRoute: 'Route A' },
-  { from: 'a', to: 'c', miles: 5, busRoute: null },
+  { from: 'a', to: 'b', walkMiles: 1, busRoute: null },
+  { from: 'b', to: 'c', walkMiles: 2, busRoute: 'Route A' },
+  { from: 'a', to: 'c', walkMiles: 5, busRoute: null },
 ];
 const small = { nodes, edges };
 
@@ -34,7 +34,7 @@ describe('computeRoute', () => {
   });
 
   it('throws when no path exists between two real nodes', () => {
-    const disconnected = { nodes, edges: [{ from: 'a', to: 'b', miles: 1, busRoute: null }] };
+    const disconnected = { nodes, edges: [{ from: 'a', to: 'b', walkMiles: 1, busRoute: null }] };
     expect(() => computeRoute(disconnected, 'a', 'c')).toThrow('no route found');
   });
 
@@ -45,7 +45,7 @@ describe('computeRoute', () => {
   // the bundled network.json is out of sync with the real RoadNetwork.java.
   it('matches the backend exactly for the pinned camp_randall -> bascom_hill case', () => {
     const result = computeRoute(network, 'camp_randall', 'bascom_hill');
-    expect(result.totalMiles).toBe(1.4);
+    expect(result.totalMiles).toBe(1.87);
   });
 });
 
@@ -76,7 +76,7 @@ function shortestPathCostLinearScan(network, startId, endId) {
     if (current === null || current === endId) break;
     visited.add(current);
     for (const edge of adjacency.get(current)) {
-      const alt = currentDist + edge.miles;
+      const alt = currentDist + edge.walkMiles;
       if (alt < dist.get(edge.to)) dist.set(edge.to, alt);
     }
   }
@@ -106,15 +106,15 @@ function randomConnectedGraph(nodeCount, extraEdgeCount, seed) {
   const edges = [];
   for (let i = 1; i < order.length; i++) {
     const from = order[Math.floor(rand() * i)];
-    const miles = Math.round((0.1 + rand() * 2) * 100) / 100;
-    edges.push({ from, to: order[i], miles, busRoute: null });
-    edges.push({ from: order[i], to: from, miles, busRoute: null });
+    const walkMiles = Math.round((0.1 + rand() * 2) * 100) / 100;
+    edges.push({ from, to: order[i], walkMiles, busRoute: null });
+    edges.push({ from: order[i], to: from, walkMiles, busRoute: null });
   }
   for (let i = 0; i < extraEdgeCount; i++) {
     const from = nodeIds[Math.floor(rand() * nodeCount)];
     const to = nodeIds[Math.floor(rand() * nodeCount)];
     if (from === to) continue;
-    edges.push({ from, to, miles: Math.round((0.1 + rand() * 2) * 100) / 100, busRoute: null });
+    edges.push({ from, to, walkMiles: Math.round((0.1 + rand() * 2) * 100) / 100, busRoute: null });
   }
   return { nodes: nodeIds.map((id) => ({ id, name: id })), edges };
 }
