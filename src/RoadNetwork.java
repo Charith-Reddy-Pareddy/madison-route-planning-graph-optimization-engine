@@ -106,6 +106,10 @@ public class RoadNetwork {
     return i == null ? id : i.name();
   }
 
+  public Intersection intersectionOf(String id) {
+    return intersections.get(id);
+  }
+
   public List<Road> roads() {
     return roads;
   }
