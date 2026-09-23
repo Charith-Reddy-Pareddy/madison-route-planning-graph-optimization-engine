@@ -7,13 +7,15 @@ import java.util.Random;
 
 /**
  * Times {@link DijkstraAlgorithm}, {@link AStarAlgorithm}, {@link
- * BidirectionalDijkstraAlgorithm}, {@link BidirectionalAStarAlgorithm}, and
- * {@link ALTAlgorithm} against each other on synthetic graphs of increasing
- * size (see {@link BenchmarkGraphGenerator}), and writes one CSV row per
- * (algorithm, size) pair to results/benchmark.csv: first-query latency
- * (includes any lazy preprocessing, e.g. ALT's landmark selection), average
- * steady-state query latency, average nodes expanded, and approximate heap
- * usage for building the graph itself.
+ * BidirectionalDijkstraAlgorithm}, {@link BidirectionalAStarAlgorithm},
+ * {@link ALTAlgorithm}, and (up to {@link #CONTRACTION_HIERARCHIES_MAX_SIZE}
+ * nodes) {@link ContractionHierarchiesAlgorithm} against each other on
+ * synthetic graphs of increasing size (see {@link BenchmarkGraphGenerator}),
+ * and writes one CSV row per (algorithm, size) pair to results/benchmark.csv:
+ * first-query latency (includes any lazy preprocessing, e.g. ALT's landmark
+ * selection or CH's contraction), average steady-state query latency,
+ * average nodes expanded, and approximate heap usage for building the graph
+ * itself.
  *
  * <p>The first-query-vs-steady-state split is what surfaces preprocessing
  * cost without needing a special case: the four non-preprocessing
@@ -26,6 +28,15 @@ import java.util.Random;
 public class BenchmarkRunner {
 
   private static final int[] SIZES = {100, 1_000, 10_000, 100_000, 1_000_000};
+
+  // ContractionHierarchiesAlgorithm's witness search is unbounded and re-run per node during
+  // preprocessing. Measured preprocessing time: ~94ms at 100 nodes, ~10s at 1,000 nodes -- worse
+  // than linear scaling, so 10,000 nodes was tried and had to be killed after running well past
+  // 5 minutes without finishing. 1,000 is the largest size confirmed to complete quickly; going
+  // higher needs the real dynamic priority queue and a bounded witness search first (see that
+  // class's doc), not just a bigger number here.
+  private static final int CONTRACTION_HIERARCHIES_MAX_SIZE = 1_000;
+
   private static final int AVG_DEGREE = 4;
   private static final int QUERIES_PER_SIZE = 30;
   private static final long GRAPH_SEED = 42;
@@ -81,6 +92,16 @@ public class BenchmarkRunner {
               size,
               graphHeapBytes));
       rows.add(benchmark("ALT", new ALTAlgorithm<>(8), generated, queries, size, graphHeapBytes));
+      if (size <= CONTRACTION_HIERARCHIES_MAX_SIZE) {
+        rows.add(
+            benchmark(
+                "ContractionHierarchies",
+                new ContractionHierarchiesAlgorithm<>(),
+                generated,
+                queries,
+                size,
+                graphHeapBytes));
+      }
     }
 
     Path outDir = Path.of("benchmarks", "results");
