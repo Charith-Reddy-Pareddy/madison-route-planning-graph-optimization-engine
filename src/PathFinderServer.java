@@ -121,7 +121,8 @@ public class PathFinderServer {
       RoadNetwork.Road r = roads.get(i);
       edgesJson.append("{\"from\":").append(Json.string(r.from()))
           .append(",\"to\":").append(Json.string(r.to()))
-          .append(",\"miles\":").append(Json.number(r.miles()))
+          .append(",\"walkMiles\":").append(Json.number(r.walkMiles()))
+          .append(",\"driveMiles\":").append(r.driveMiles() == null ? "null" : Json.number(r.driveMiles()))
           .append(",\"busRoute\":").append(Json.stringOrNull(r.busRoute()))
           .append("}");
       if (i < roads.size() - 1) edgesJson.append(",");
@@ -148,13 +149,23 @@ public class PathFinderServer {
       sendJson(exchange, 404, Json.error("unknown intersection id"));
       return;
     }
+    RoadNetwork.Mode mode;
+    String modeParam = params.get("mode");
+    try {
+      mode = modeParam == null || modeParam.isBlank()
+          ? RoadNetwork.Mode.WALK
+          : RoadNetwork.Mode.valueOf(modeParam.toUpperCase());
+    } catch (IllegalArgumentException e) {
+      sendJson(exchange, 400, Json.error("'mode' must be 'walk' or 'drive'"));
+      return;
+    }
 
     try {
-      List<String> path = network.graph().shortestPathData(start, end);
+      List<String> path = network.graph(mode).shortestPathData(start, end);
       // Dijkstra accumulates cost as a running sum of edge weights, which can
       // land a hair off a "clean" decimal (e.g. 1.7000000000000002) due to
       // binary floating-point rounding -- round for display, not just for looks.
-      double cost = round2(network.graph().shortestPathCost(start, end));
+      double cost = round2(network.graph(mode).shortestPathCost(start, end));
 
       List<String> pathEntries = new ArrayList<>();
       List<String> segmentEntries = new ArrayList<>();
@@ -165,11 +176,11 @@ public class PathFinderServer {
         if (i < path.size() - 1) {
           String nextId = path.get(i + 1);
           RoadNetwork.Road road = network.roadBetween(id, nextId);
-          double legMiles = round2(road.miles());
-          // Walking pace regardless of whether a bus also covers this leg --
-          // this is the on-foot time; the frontend estimates bus-trip time
-          // separately for the legs it groups into an actual bus ride.
-          int minutes = RoadNetwork.estimatedMinutes(road.miles(), null);
+          double legMiles = round2(road.milesFor(mode));
+          // Walking pace (or bus pace on a covered leg) for WALK mode; city-driving pace for
+          // DRIVE mode -- the frontend estimates bus-trip time separately for WALK-mode legs it
+          // groups into an actual bus ride, so busRoute only affects the estimate in WALK mode.
+          int minutes = RoadNetwork.estimatedMinutes(legMiles, mode, road.busRoute());
           totalMinutes += minutes;
           segmentEntries.add("{\"from\":" + Json.string(id)
               + ",\"to\":" + Json.string(nextId)
@@ -182,7 +193,8 @@ public class PathFinderServer {
       String body = "{\"path\":[" + String.join(",", pathEntries) + "]"
           + ",\"segments\":[" + String.join(",", segmentEntries) + "]"
           + ",\"totalMiles\":" + Json.number(cost)
-          + ",\"totalMinutes\":" + totalMinutes + "}";
+          + ",\"totalMinutes\":" + totalMinutes
+          + ",\"mode\":" + Json.string(mode.name().toLowerCase()) + "}";
       sendJson(exchange, 200, body);
     } catch (NoSuchElementException e) {
       sendJson(exchange, 404, Json.error("no route found between those intersections"));

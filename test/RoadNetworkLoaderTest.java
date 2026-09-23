@@ -27,7 +27,7 @@ public class RoadNetworkLoaderTest {
   @Test
   public void parsesLocationsWithoutExtraColumns() throws IOException {
     Path dir = writeTempCsv("locations.csv", "id,name,lat,lon\ncapitol,Capitol Square,43.0747,-89.3842\n");
-    Files.writeString(dir.resolve("roads.csv"), "from,to,miles,busRoute\n");
+    Files.writeString(dir.resolve("roads.csv"), "from,to,walkMiles,driveMiles,busRoute\n");
 
     RoadNetworkLoader.NetworkData data = RoadNetworkLoader.load(dir);
     assertEquals(1, data.intersections().size());
@@ -46,7 +46,7 @@ public class RoadNetworkLoaderTest {
         + "target_state_st,Target (State St),43.0752,-89.396,"
         + "\"Target, State Street, Madison, WI\",Nominatim (OpenStreetMap),2026-09-17T12:00:00Z\n";
     Path dir = writeTempCsv("locations.csv", content);
-    Files.writeString(dir.resolve("roads.csv"), "from,to,miles,busRoute\n");
+    Files.writeString(dir.resolve("roads.csv"), "from,to,walkMiles,driveMiles,busRoute\n");
 
     RoadNetworkLoader.NetworkData data = RoadNetworkLoader.load(dir);
     assertEquals(1, data.intersections().size());
@@ -60,12 +60,24 @@ public class RoadNetworkLoaderTest {
   @Test
   public void roadsWithBlankBusRouteParseAsNull() throws IOException {
     Path dir = writeTempCsv("locations.csv", "id,name,lat,lon\na,A,43.0,-89.0\nb,B,43.1,-89.1\n");
-    Files.writeString(dir.resolve("roads.csv"), "from,to,miles,busRoute\na,b,0.5,\nb,a,0.5,Route A\n");
+    Files.writeString(
+        dir.resolve("roads.csv"), "from,to,walkMiles,driveMiles,busRoute\na,b,0.5,0.6,\nb,a,0.5,0.6,Route A\n");
 
     RoadNetworkLoader.NetworkData data = RoadNetworkLoader.load(dir);
     List<RoadNetwork.Road> roads = data.roads();
     assertEquals(2, roads.size());
     assertNull(roads.get(0).busRoute());
     assertEquals("Route A", roads.get(1).busRoute());
+  }
+
+  @Test
+  public void roadsWithBlankDriveMilesParseAsNull() throws IOException {
+    Path dir = writeTempCsv("locations.csv", "id,name,lat,lon\na,A,43.0,-89.0\nb,B,43.1,-89.1\n");
+    Files.writeString(dir.resolve("roads.csv"), "from,to,walkMiles,driveMiles,busRoute\na,b,0.5,,\n");
+
+    RoadNetworkLoader.NetworkData data = RoadNetworkLoader.load(dir);
+    RoadNetwork.Road road = data.roads().get(0);
+    assertEquals(0.5, road.walkMiles());
+    assertNull(road.driveMiles());
   }
 }

@@ -18,15 +18,29 @@ public class RoadNetwork {
   /** A named intersection, with coordinates for map rendering. */
   public record Intersection(String id, String name, double lat, double lon) {}
 
-  /**
-   * A directed road segment between two intersections, weighted by miles.
-   * {@code busRoute} is the real Madison Metro Transit route (per
-   * cityofmadison.com/metro) that runs this corridor, or null for a
-   * walk-only segment; used to estimate travel time and to suggest a bus.
-   */
-  public record Road(String from, String to, double miles, String busRoute) {}
+  /** Which travel mode a route is being planned for -- each has its own graph and its own real distances. */
+  public enum Mode {
+    WALK,
+    DRIVE
+  }
 
-  private final DijkstraGraph<String, Double> graph = new DijkstraGraph<>();
+  /**
+   * A directed road segment between two intersections, with a real distance for each mode (see
+   * scripts/compute_route_distances.py and data/sources.md). {@code driveMiles} is null for the
+   * handful of edges with no drivable route found in the real street data -- that edge simply
+   * isn't part of the drive-mode graph. {@code busRoute} is the real Madison Metro Transit route
+   * (per cityofmadison.com/metro) that runs this corridor, or null for a walk-only segment; used
+   * to estimate travel time and to suggest a bus.
+   */
+  public record Road(String from, String to, double walkMiles, Double driveMiles, String busRoute) {
+    /** The real distance for this road in the given mode, or null if this road doesn't exist in that mode. */
+    public Double milesFor(Mode mode) {
+      return mode == Mode.WALK ? walkMiles : driveMiles;
+    }
+  }
+
+  private final DijkstraGraph<String, Double> walkGraph = new DijkstraGraph<>();
+  private final DijkstraGraph<String, Double> driveGraph = new DijkstraGraph<>();
   private final Map<String, Intersection> intersections = new LinkedHashMap<>();
   private final List<Road> roads = new ArrayList<>();
   private final Map<String, Road> roadIndex = new LinkedHashMap<>();
@@ -39,12 +53,16 @@ public class RoadNetwork {
   RoadNetwork(RoadNetworkLoader.NetworkData data) {
     for (Intersection i : data.intersections()) {
       intersections.put(i.id(), i);
-      graph.insertNode(i.id());
+      walkGraph.insertNode(i.id());
+      driveGraph.insertNode(i.id());
     }
     for (Road r : data.roads()) {
       roads.add(r);
       roadIndex.put(r.from() + "->" + r.to(), r);
-      graph.insertEdge(r.from(), r.to(), r.miles());
+      walkGraph.insertEdge(r.from(), r.to(), r.walkMiles());
+      if (r.driveMiles() != null) {
+        driveGraph.insertEdge(r.from(), r.to(), r.driveMiles());
+      }
     }
   }
 
@@ -53,20 +71,26 @@ public class RoadNetwork {
     return roadIndex.get(from + "->" + to);
   }
 
-  // Rough average speeds used to turn a leg's distance into an estimated
-  // travel time: a city bus (including stops) is faster than walking, but
-  // nowhere near highway speed.
+  // Rough average speeds used to turn a leg's distance into an estimated travel time: a city bus
+  // (including stops) is faster than walking but nowhere near highway speed; city driving
+  // (including lights and turns) is faster still but nowhere near highway speed either.
   private static final double WALK_MPH = 3.5;
   private static final double BUS_MPH = 12.0;
+  private static final double DRIVE_MPH = 20.0;
 
-  /** Estimated minutes to cover `miles`, walking or riding `busRoute` if given. */
-  public static int estimatedMinutes(double miles, String busRoute) {
-    double mph = busRoute == null ? WALK_MPH : BUS_MPH;
+  /** Estimated minutes to cover `miles` in `mode`, riding `busRoute` instead of walking it if given (WALK mode only). */
+  public static int estimatedMinutes(double miles, Mode mode, String busRoute) {
+    double mph = mode == Mode.DRIVE ? DRIVE_MPH : (busRoute == null ? WALK_MPH : BUS_MPH);
     return (int) Math.max(1, Math.round(miles / mph * 60));
   }
 
+  /** The walk-mode graph -- kept as the default {@link #graph()} for callers that predate travel modes. */
   public DijkstraGraph<String, Double> graph() {
-    return graph;
+    return graph(Mode.WALK);
+  }
+
+  public DijkstraGraph<String, Double> graph(Mode mode) {
+    return mode == Mode.WALK ? walkGraph : driveGraph;
   }
 
   public Collection<Intersection> intersections() {

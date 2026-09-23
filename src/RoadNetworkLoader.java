@@ -45,8 +45,11 @@ public class RoadNetworkLoader {
     List<RoadNetwork.Road> result = new ArrayList<>();
     for (String line : dataLines(csv)) {
       String[] cols = splitCsvLine(line);
-      String busRoute = cols.length > 3 && !cols[3].isBlank() ? cols[3] : null;
-      result.add(new RoadNetwork.Road(cols[0], cols[1], Double.parseDouble(cols[2]), busRoute));
+      // from,to,walkMiles,driveMiles,busRoute -- driveMiles is blank for the handful of edges
+      // with no real drivable route found (see data/sources.md's "Known gap").
+      Double driveMiles = cols.length > 3 && !cols[3].isBlank() ? Double.parseDouble(cols[3]) : null;
+      String busRoute = cols.length > 4 && !cols[4].isBlank() ? cols[4] : null;
+      result.add(new RoadNetwork.Road(cols[0], cols[1], Double.parseDouble(cols[2]), driveMiles, busRoute));
     }
     return result;
   }
