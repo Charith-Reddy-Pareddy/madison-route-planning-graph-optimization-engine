@@ -33,6 +33,7 @@ public class PathFinderServer {
 
   private final RoadNetwork network;
   private final Path webRoot;
+  private final LiveRoutingClient liveRoutingClient = new LiveRoutingClient();
   private HttpServer server;
   private ExecutorService executor;
 
@@ -159,24 +160,44 @@ public class PathFinderServer {
       sendJson(exchange, 400, Json.error("'mode' must be 'walk' or 'drive'"));
       return;
     }
+    boolean live = "true".equalsIgnoreCase(params.get("live"));
+    if (live && mode != RoadNetwork.Mode.DRIVE) {
+      // The public live routing API this hits only reliably serves a driving profile -- see
+      // LiveRoutingClient's class doc for why walking isn't offered here.
+      sendJson(exchange, 400, Json.error("'live' is only supported with mode=drive"));
+      return;
+    }
 
     try {
+      // The route (which named locations, in which order) always comes from our own graph search
+      // over the precomputed data -- live mode only refreshes each leg's *distance number* from a
+      // real routing API afterward, it never changes which route gets chosen.
       List<String> path = network.graph(mode).shortestPathData(start, end);
-      // Dijkstra accumulates cost as a running sum of edge weights, which can
-      // land a hair off a "clean" decimal (e.g. 1.7000000000000002) due to
-      // binary floating-point rounding -- round for display, not just for looks.
-      double cost = round2(network.graph(mode).shortestPathCost(start, end));
 
       List<String> pathEntries = new ArrayList<>();
       List<String> segmentEntries = new ArrayList<>();
       int totalMinutes = 0;
+      double totalMiles = 0;
+      boolean allLegsLive = live;
       for (int i = 0; i < path.size(); i++) {
         String id = path.get(i);
         pathEntries.add("{\"id\":" + Json.string(id) + ",\"name\":" + Json.string(network.nameOf(id)) + "}");
         if (i < path.size() - 1) {
           String nextId = path.get(i + 1);
           RoadNetwork.Road road = network.roadBetween(id, nextId);
-          double legMiles = round2(road.milesFor(mode));
+          double legMiles = road.milesFor(mode);
+          if (live) {
+            RoadNetwork.Intersection from = network.intersectionOf(id);
+            RoadNetwork.Intersection to = network.intersectionOf(nextId);
+            Double liveMiles = liveRoutingClient.liveDriveMiles(from.lat(), from.lon(), to.lat(), to.lon());
+            if (liveMiles != null) {
+              legMiles = liveMiles;
+            } else {
+              allLegsLive = false; // this one leg falls back to the precomputed distance
+            }
+          }
+          legMiles = round2(legMiles);
+          totalMiles += legMiles; // only used for the response total when live actually changed a number
           // Walking pace (or bus pace on a covered leg) for WALK mode; city-driving pace for
           // DRIVE mode -- the frontend estimates bus-trip time separately for WALK-mode legs it
           // groups into an actual bus ride, so busRoute only affects the estimate in WALK mode.
@@ -189,12 +210,19 @@ public class PathFinderServer {
               + ",\"busRoute\":" + Json.stringOrNull(road.busRoute()) + "}");
         }
       }
+      // Non-live requests keep using the graph's own precise cost (summed unrounded, rounded once
+      // at the end) exactly as before -- only a live request needs the sum of the already-rounded,
+      // possibly-live-refreshed per-leg numbers actually shown above, since those are what changed.
+      double cost = live
+          ? round2(totalMiles)
+          : round2(network.graph(mode).shortestPathCost(start, end));
 
       String body = "{\"path\":[" + String.join(",", pathEntries) + "]"
           + ",\"segments\":[" + String.join(",", segmentEntries) + "]"
           + ",\"totalMiles\":" + Json.number(cost)
           + ",\"totalMinutes\":" + totalMinutes
-          + ",\"mode\":" + Json.string(mode.name().toLowerCase()) + "}";
+          + ",\"mode\":" + Json.string(mode.name().toLowerCase())
+          + ",\"live\":" + allLegsLive + "}";
       sendJson(exchange, 200, body);
     } catch (NoSuchElementException e) {
       sendJson(exchange, 404, Json.error("no route found between those intersections"));
