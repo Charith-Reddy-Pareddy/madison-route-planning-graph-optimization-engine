@@ -123,6 +123,23 @@ public class PathFinderServerIntegrationTest {
   }
 
   @Test
+  public void routeEndpointRejectsLiveModeWithWalk() throws Exception {
+    // LiveRoutingClient only calls a real driving-profile routing API -- walk isn't offered, see
+    // its class doc. Deliberately not testing the live=true&mode=drive success path here: that
+    // depends on a real external service being reachable, which would make this suite flaky.
+    HttpResponse<String> resp = get("/api/route?start=capitol&end=king_st&mode=walk&live=true");
+    assertEquals(400, resp.statusCode());
+    assertTrue(resp.body().contains("error"));
+  }
+
+  @Test
+  public void routeEndpointDefaultsLiveToFalse() throws Exception {
+    HttpResponse<String> resp = get("/api/route?start=capitol&end=king_st&mode=drive");
+    assertEquals(200, resp.statusCode());
+    assertTrue(resp.body().contains("\"live\":false"));
+  }
+
+  @Test
   public void staticIndexPageIsServed() throws Exception {
     HttpResponse<String> resp = get("/");
     assertEquals(200, resp.statusCode());
