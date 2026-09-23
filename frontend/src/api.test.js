@@ -20,10 +20,16 @@ describe('api', () => {
     expect(fetch).toHaveBeenCalledWith('/api/graph');
   });
 
-  it('getRoute URL-encodes start/end/mode into the query string', async () => {
+  it('getRoute URL-encodes start/end/mode/live into the query string', async () => {
     mockFetch(200, { path: [], segments: [], totalMiles: 0 });
     await getRoute('state st & gilman', 'b');
-    expect(fetch).toHaveBeenCalledWith('/api/route?start=state+st+%26+gilman&end=b&mode=walk');
+    expect(fetch).toHaveBeenCalledWith('/api/route?start=state+st+%26+gilman&end=b&mode=walk&live=false');
+  });
+
+  it('getRoute passes live=true through when requested', async () => {
+    mockFetch(200, { path: [], segments: [], totalMiles: 0 });
+    await getRoute('a', 'b', 'drive', true);
+    expect(fetch).toHaveBeenCalledWith('/api/route?start=a&end=b&mode=drive&live=true');
   });
 
   it('rejects with the server-provided error message on a non-2xx response', async () => {
