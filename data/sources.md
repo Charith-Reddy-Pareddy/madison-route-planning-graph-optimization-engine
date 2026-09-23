@@ -80,17 +80,67 @@ Two different reasons, neither a known error:
 
 ## roads.csv
 
-Each road's `miles` is the real great-circle (haversine) distance between
-its two endpoints' geocoded coordinates, not a guess. `busRoute` is the
-real Madison Metro Transit route (per [cityofmadison.com/metro](https://www.cityofmadison.com/metro/))
-that covers that corridor, or blank for a walk-only segment.
+Each road has two real, independently-computed distances -- `walkMiles`
+and `driveMiles` -- not one straight-line number. An earlier version of
+this file had a single `miles` column that was the great-circle
+(haversine) distance between the two endpoints' geocoded coordinates:
+real coordinates, but a straight line through buildings and around the
+actual street grid, not a route anyone could walk or drive. That
+consistently understated real distance (a straight line is a lower bound
+on any real route) and couldn't distinguish walking from driving at all.
+
+Both columns now come from [`scripts/compute_route_distances.py`](../scripts/compute_route_distances.py):
+real Dijkstra shortest-path search over the real Madison street graph
+already fetched from OpenStreetMap for the research track
+([pipeline/data/parsed/{nodes,edges}.json](../pipeline/README.md)),
+filtered per mode --
+
+- **walk**: every real street/path/sidewalk edge except
+  motorway/motorway_link/trunk/trunk_link (no legal pedestrian access),
+  treated as undirected -- a one-way *street* doesn't stop a pedestrian
+  using its sidewalk against traffic.
+- **drive**: every real edge except footway/pedestrian/path/steps/
+  cycleway/track/corridor/platform/bus_stop, kept directed exactly as
+  parsed (`parse_osm.py` already resolves real `oneway` tags into which
+  directed edges exist at all, so this respects real one-way streets).
+
+Each of the 57 curated locations is snapped independently to its nearest
+real graph node in each filtered mode -- the nearest walkable point isn't
+always the nearest drivable one. Real effect of switching from
+straight-line to a real route: every corrected distance got *longer*
+(as expected -- a straight line is a lower bound), by as much as 2x for
+routes that have to go around a lake or follow a road grid instead of
+cutting a diagonal (e.g. `monroe_edgewood <-> arboretum` went from a
+straight-line 1.07mi to a real 2.15mi walk).
+
+`busRoute` is still the real Madison Metro Transit route (per
+[cityofmadison.com/metro](https://www.cityofmadison.com/metro/)) that
+covers that corridor, or blank for a walk-only segment.
+
+**Known gap**: 6 of the 122 directed rows came back with no drivable
+route found in the fetched OSM extract (`walkMiles` still real and
+present for all of them) -- `witte_hall<->ogg_hall` in both directions,
+plus one direction each for `camp_randall->union_south`,
+`engineering_hall->union_south`, `nicholas_rec->union_south`, and
+`morgridge_hall->education_building`. `union_south` is not actually
+drive-isolated (all three outbound directions from it resolved fine --
+only the return trip didn't, plausibly a real one-way access loop near
+its entrance); `witte_hall<->ogg_hall` is the one genuine gap worth
+flagging, since it's Ogg Hall's *only* curated edge, which would leave it
+completely unreachable in drive mode -- despite a real bus physically
+covering that corridor (`busRoute=Route B`), which means the real street
+does exist and this is very likely a bounding-box edge effect (see
+`pipeline/README.md`'s note that ~0.74% of the fetched extract lands in
+small disconnected fragments) or a node-snapping artifact, not a real-
+world fact. Left blank rather than papered over with a guess; worth a
+follow-up re-fetch with a wider bounding box.
 
 This is a hand-curated subset of the real street network -- not every
 real street or intersection between two points is included, only enough
-to connect the named locations plausibly. A separate research track
-([pipeline/](../pipeline/)) ingests the full real OpenStreetMap street
-graph for the same area instead of this curated subset -- see the
-top-level README's "Research track" section.
+to connect the named locations plausibly. The same research-track OSM
+graph this script draws from ([pipeline/](../pipeline/)) also exists on
+its own, at full scale, kept separate from what the deployed app serves --
+see the top-level README's "Research track" section.
 
 ## Reproducing this data
 
