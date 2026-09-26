@@ -94,6 +94,35 @@ form label {
   color: var(--muted);
 }
 
+/* Radio/checkbox labels need the input next to its text, not stacked in a
+   column like the Start/End dropdown labels above -- overrides `form label`
+   for just these (higher specificity: one class + one element beats two
+   elements), so the row layout wins without touching the dropdown labels. */
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+}
+
+.mode-toggle legend {
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 0 0.3rem;
+}
+
+.mode-toggle label,
+.live-toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
 select, button {
   font-size: 0.9rem;
   border-radius: 8px;
