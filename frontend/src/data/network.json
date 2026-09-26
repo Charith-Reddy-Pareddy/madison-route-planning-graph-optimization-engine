@@ -1197,6 +1197,20 @@
             "walkMiles": 0.652,
             "driveMiles": 1.151,
             "busRoute": "Route 80"
+        },
+        {
+            "from": "kohl_center",
+            "to": "witte_hall",
+            "walkMiles": 0.187,
+            "driveMiles": 0.188,
+            "busRoute": null
+        },
+        {
+            "from": "witte_hall",
+            "to": "kohl_center",
+            "walkMiles": 0.187,
+            "driveMiles": 0.188,
+            "busRoute": null
         }
     ]
 }

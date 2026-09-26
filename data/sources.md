@@ -117,6 +117,30 @@ straight-line 1.07mi to a real 2.15mi walk).
 [cityofmadison.com/metro](https://www.cityofmadison.com/metro/)) that
 covers that corridor, or blank for a walk-only segment.
 
+**Bigger known gap -- sparse curation, not a distance-accuracy problem**:
+recomputing distances (above) fixes how long each *existing* edge is, but
+doesn't fix which edges exist. `kohl_center` had exactly two curated edges
+(to `camp_randall` and `x01_apts`), neither anywhere near the
+Witte/Sellery/Ogg dorm cluster it's actually a block or two from -- so a
+`kohl_center -> sellery_hall` walk route was forced through Camp Randall
+Stadium (0.945mi away, in a different direction) instead of a direct
+~0.46mi walk. Fixed by adding the missing `kohl_center<->witte_hall` edge
+(real computed distance: 0.187mi walk, 0.188mi drive). A systematic sweep
+(every pair of locations under 0.35mi apart by real straight-line
+distance, compared against their real graph walking distance) found
+**255 more pairs with the same shape of problem** -- most traceable to
+about 15-20 severely under-connected locations that have only a single
+curated edge to the *entire rest of the network* even when a real
+neighbor is right next door (e.g. `discovery_building` and
+`morgridge_hall`, both degree-1, straight-line 0.061mi apart but 3.1mi by
+the current graph; `x01_apts`, `chazen_museum`, `education_building`,
+`lucky_apts`, `chadbourne_hall`, `vilas_hall`, `humanities_building`,
+`science_hall`, `van_vleck_hall`, and `nicholas_rec` are the other worst
+offenders). This needs the same treatment as the fix above -- find the
+real missing edge, compute its real distance from the OSM graph, verify
+the resulting route -- repeated deliberately rather than rushed, not a
+mass find-and-add.
+
 **Known gap**: 6 of the 122 directed rows came back with no drivable
 route found in the fetched OSM extract (`walkMiles` still real and
 present for all of them) -- `witte_hall<->ogg_hall` in both directions,

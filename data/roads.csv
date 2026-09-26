@@ -121,3 +121,5 @@ bakke_rec_center,lakeshore_preserve,0.788,0.808,Route 80
 lakeshore_preserve,bakke_rec_center,0.788,0.848,Route 80
 lakeshore_preserve,eagle_heights,0.652,1.16,Route 80
 eagle_heights,lakeshore_preserve,0.652,1.151,Route 80
+kohl_center,witte_hall,0.187,0.188,
+witte_hall,kohl_center,0.187,0.188,
