@@ -326,27 +326,48 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
     return needed;
   }
 
+  /** How many hops out from {@code source} the witness search is allowed to expand from -- see {@link #witnessDistance}. */
+  private static final int MAX_WITNESS_HOPS = 5;
+
+  private record WitnessEntry<NodeType>(NodeType node, double cost, int hops) implements Comparable<WitnessEntry<NodeType>> {
+    @Override
+    public int compareTo(WitnessEntry<NodeType> other) {
+      return Double.compare(cost, other.cost);
+    }
+  }
+
   /**
    * A Dijkstra from source, forbidden to pass through {@code forbidden}, restricted to
    * still-{@code active} nodes, stopping as soon as either {@code target} is reached or every
    * remaining frontier node's cost exceeds {@code limit} (safe because the queue is cost-ordered:
-   * once the cheapest remaining candidate exceeds the limit, so does everything after it) --
-   * deliberately not also capped by a node-settled or hop count; see the class doc for why that
-   * was tried and made preprocessing slower overall, not faster. Returns the real distance to
-   * target if a witness path within the limit exists, or +Infinity if not -- the caller treats
-   * "no witness" as "a shortcut is required."
+   * once the cheapest remaining candidate exceeds the limit, so does everything after it).
+   *
+   * <p>Also bounded by hop count ({@link #MAX_WITNESS_HOPS}) -- but by <em>hops from source</em>,
+   * not by how many nodes get settled overall. That distinction is the whole fix for a real,
+   * measured failure: an earlier attempt capped the number of nodes *settled* (in cost order),
+   * which meant the search could burn its entire budget settling nodes in the wrong direction
+   * (whichever happened to be cheapest first) before ever properly exploring the neighborhood
+   * immediately around the source where a real witness typically lives -- a real witness path for
+   * a shortcut candidate is almost always a small local detour, not a long-range route, so
+   * bounding by *distance from source* (hops) guarantees the full local neighborhood gets
+   * explored regardless of how many nodes that costs, while still bounding total work
+   * independently of overall graph size (a fundamentally different guarantee than a node-count
+   * cap gives, which is why the node-count attempts backfired and this is expected not to).
+   *
+   * <p>Returns the real distance to target if a witness path within the limit and hop bound
+   * exists, or +Infinity if not -- the caller treats "no witness" as "a shortcut is required."
    */
   private double witnessDistance(
       Map<NodeType, Map<NodeType, Double>> out, Set<NodeType> active, NodeType source, NodeType forbidden,
       NodeType target, double limit) {
     Map<NodeType, Double> dist = new HashMap<>();
     Set<NodeType> visited = new HashSet<>();
-    PriorityQueue<Entry<NodeType>> queue = new PriorityQueue<>();
+    PriorityQueue<WitnessEntry<NodeType>> queue = new PriorityQueue<>();
     dist.put(source, 0.0);
-    queue.add(new Entry<>(source, 0.0));
+    queue.add(new WitnessEntry<>(source, 0.0, 0));
 
     while (!queue.isEmpty()) {
-      Entry<NodeType> current = queue.poll();
+      WitnessEntry<NodeType> current = queue.poll();
       if (visited.contains(current.node())) {
         continue;
       }
@@ -356,6 +377,9 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
       visited.add(current.node());
       if (current.node().equals(target)) {
         return current.cost();
+      }
+      if (current.hops() >= MAX_WITNESS_HOPS) {
+        continue; // still a settled, valid distance -- just don't expand further out from here.
       }
       for (Map.Entry<NodeType, Double> edge : out.getOrDefault(current.node(), Map.of()).entrySet()) {
         NodeType next = edge.getKey();
@@ -369,7 +393,7 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
         Double known = dist.get(next);
         if (known == null || newCost < known) {
           dist.put(next, newCost);
-          queue.add(new Entry<>(next, newCost));
+          queue.add(new WitnessEntry<>(next, newCost, current.hops() + 1));
         }
       }
     }
