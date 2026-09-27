@@ -94,20 +94,30 @@ def build_graphs():
     def add(adj, a, b, meters):
         adj.setdefault(a, []).append((b, meters))
 
+    drive_indegree = {}
     for e in edges:
         highway = e.get("highway")
         a, b, meters = e["from"], e["to"], e["meters"]
         if highway not in DRIVE_EXCLUDED_HIGHWAYS:
             add(drive_adj, a, b, meters)
+            drive_indegree[b] = drive_indegree.get(b, 0) + 1
         if highway not in WALK_EXCLUDED_HIGHWAYS:
             add(walk_adj, a, b, meters)
             add(walk_adj, b, a, meters)  # walk graph is undirected
 
-    return node_coord, walk_adj, drive_adj
+    return node_coord, walk_adj, drive_adj, drive_indegree
 
 
-def nearest_node(lat, lon, node_coord, adjacency):
+def nearest_node(lat, lon, node_coord, adjacency, indegree=None):
+    """Nearest node in `adjacency` to (lat, lon). If `indegree` is given, prefers a node that
+    also has real incoming edges (indegree > 0) over one that doesn't, falling back to the plain
+    nearest node if no such candidate exists nearby -- snapping a location to a one-way stub with
+    zero incoming edges (an exit-only driveway, say) makes every other location undrivable *to*
+    it even though it's perfectly reachable *from* it. A real bug this caught: Union South, Ogg
+    Hall, and Education Building were each snapped to exactly this kind of node, making all three
+    completely unreachable by car from anywhere else in the network."""
     best_id, best_dist = None, math.inf
+    best_connected_id, best_connected_dist = None, math.inf
     for node_id in adjacency.keys():
         nlat, nlon = node_coord[node_id]
         # Cheap pre-filter before the real haversine call.
@@ -116,6 +126,10 @@ def nearest_node(lat, lon, node_coord, adjacency):
         d = haversine_meters(lat, lon, nlat, nlon)
         if d < best_dist:
             best_dist, best_id = d, node_id
+        if indegree is not None and indegree.get(node_id, 0) > 0 and d < best_connected_dist:
+            best_connected_dist, best_connected_id = d, node_id
+    if indegree is not None and best_connected_id is not None:
+        return best_connected_id, best_connected_dist
     return best_id, best_dist
 
 
@@ -150,7 +164,7 @@ def main():
     print(f"Loaded {len(locations)} locations, {len(rows)} road rows.")
 
     print("Loading real OSM street graph...")
-    node_coord, walk_adj, drive_adj = build_graphs()
+    node_coord, walk_adj, drive_adj, drive_indegree = build_graphs()
     print(f"  walk graph: {sum(len(v) for v in walk_adj.values())} directed edges over {len(walk_adj)} nodes")
     print(f"  drive graph: {sum(len(v) for v in drive_adj.values())} directed edges over {len(drive_adj)} nodes")
 
@@ -158,7 +172,8 @@ def main():
     walk_snap, drive_snap = {}, {}
     for loc_id, (lat, lon) in locations.items():
         wid, wdist = nearest_node(lat, lon, node_coord, walk_adj)
-        did, ddist = nearest_node(lat, lon, node_coord, drive_adj)
+        # Prefer a drive-snap node with real incoming edges -- see nearest_node's doc for why.
+        did, ddist = nearest_node(lat, lon, node_coord, drive_adj, indegree=drive_indegree)
         walk_snap[loc_id] = wid
         drive_snap[loc_id] = did
         if wdist > MAX_SNAP_METERS:
