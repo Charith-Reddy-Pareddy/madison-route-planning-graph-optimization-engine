@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """Computes real walking and driving distances for every road in data/roads.csv.
 
-The existing `miles` column is the straight-line (haversine) distance between two
-locations' geocoded coordinates -- not a real route. This script replaces it with two
-real numbers per edge, `walkMiles` and `driveMiles`, computed by running Dijkstra over
-the real Madison street graph pipeline/ already fetched from OpenStreetMap
+`walkMiles` and `driveMiles` are computed by running Dijkstra over the real Madison
+street graph pipeline/ already fetched from OpenStreetMap
 (pipeline/data/parsed/{nodes,edges}.json -- see pipeline/README.md), filtered per mode:
 
 - walk graph: every edge except motorway/motorway_link/trunk/trunk_link (no legal
@@ -16,13 +14,24 @@ the real Madison street graph pipeline/ already fetched from OpenStreetMap
 
 Each of the 57 curated locations is snapped to its nearest real OSM node in each
 filtered graph (independently -- the nearest walkable node isn't always the nearest
-drivable one), then Dijkstra runs from that snapped node to find the real route.
+drivable one), then Dijkstra runs from that snapped node to find the real route. Every
+result is clamped up to the straight-line distance between the two locations' own
+stored coordinates if the snapped-point route ever comes out shorter -- otherwise a
+snapping artifact could silently break A*'s admissible-heuristic guarantee
+(RoadNetwork.haversineHeuristic()), a real bug this script used to be able to introduce
+until AlgorithmsCorrectnessTest caught it.
+
+Safe to re-run on data/roads.csv as it already exists (idempotent: rows this script
+already wrote are just recomputed to the same or better numbers), which is how new
+edges get added -- append new from,to,,,busRoute rows with the last two fields blank,
+then re-run this script to fill in real walkMiles/driveMiles for every row, new or old.
 
 Usage:
     python3 scripts/compute_route_distances.py
 Writes data/roads.csv in place (columns: from,to,walkMiles,driveMiles,busRoute) and
-prints a report of the largest changes versus the old straight-line numbers, and any
-edge that came back unreachable in either mode.
+prints a report of the largest walk/drive distances relative to the straight-line
+distance, any edge that came back unreachable in either mode, and how many values (if
+any) needed clamping to the straight-line floor.
 """
 import csv
 import heapq
@@ -160,15 +169,33 @@ def main():
     print(f"Computing real routes for {len(rows)} road rows...")
     unreachable = []
     biggest_changes = []
+    clamped = 0
     for row in rows:
         a, b = row["from"], row["to"]
-        old_miles = float(row["miles"])
+        lat_a, lon_a = locations[a]
+        lat_b, lon_b = locations[b]
+        # The real lower bound every stored distance must respect: no real route between two
+        # points can ever be shorter than a straight line between them. Snapping each endpoint to
+        # its nearest real street-graph node (rather than routing from the buildings' own exact
+        # coordinates) can occasionally produce a real, valid route between the *snapped* points
+        # that's shorter than the straight line between the *original* stored coordinates --
+        # correct for the snapped points, but it would silently break A*'s admissible-heuristic
+        # guarantee (haversineHeuristic() in RoadNetwork.java) if stored as-is. Caught by
+        # AlgorithmsCorrectnessTest once, now guarded here so it can't come back.
+        straight_line_miles = haversine_meters(lat_a, lon_a, lat_b, lon_b) / METERS_PER_MILE
 
         walk_m = dijkstra(walk_adj, walk_snap[a], walk_snap[b])
         drive_m = dijkstra(drive_adj, drive_snap[a], drive_snap[b])
 
         walk_miles = round(walk_m / METERS_PER_MILE, 3) if walk_m is not None else None
         drive_miles = round(drive_m / METERS_PER_MILE, 3) if drive_m is not None else None
+
+        if walk_miles is not None and walk_miles < straight_line_miles:
+            walk_miles = round(straight_line_miles, 3)
+            clamped += 1
+        if drive_miles is not None and drive_miles < straight_line_miles:
+            drive_miles = round(straight_line_miles, 3)
+            clamped += 1
 
         if walk_miles is None:
             unreachable.append((a, b, "walk"))
@@ -180,7 +207,9 @@ def main():
 
         reference = walk_miles if walk_miles is not None else drive_miles
         if reference is not None:
-            biggest_changes.append((abs(reference - old_miles), a, b, old_miles, walk_miles, drive_miles))
+            biggest_changes.append(
+                (abs(reference - straight_line_miles), a, b, round(straight_line_miles, 3), walk_miles, drive_miles)
+            )
 
     with open(ROADS_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["from", "to", "walkMiles", "driveMiles", "busRoute"])
@@ -197,9 +226,9 @@ def main():
             )
 
     biggest_changes.sort(reverse=True)
-    print("\nLargest changes vs. the old straight-line distance:")
-    for delta, a, b, old, walk, drive in biggest_changes[:15]:
-        print(f"  {a} -> {b}: old(straight-line)={old}mi  walk={walk}mi  drive={drive}mi")
+    print("\nLargest changes vs. the straight-line distance:")
+    for delta, a, b, straight, walk, drive in biggest_changes[:15]:
+        print(f"  {a} -> {b}: straight-line={straight}mi  walk={walk}mi  drive={drive}mi")
 
     if unreachable:
         print(f"\n{len(unreachable)} (edge, mode) pairs had no route within the real street graph:")
@@ -207,6 +236,11 @@ def main():
             print(f"  {a} -> {b} ({mode})")
     else:
         print("\nEvery road was reachable in both walk and drive graphs.")
+
+    if clamped:
+        print(f"\n{clamped} value(s) were clamped up to the straight-line floor -- a snapped-point route")
+        print("came out shorter than the straight line between the real stored coordinates, which would")
+        print("break A*'s admissible-heuristic guarantee if left as-is.")
 
 
 if __name__ == "__main__":
