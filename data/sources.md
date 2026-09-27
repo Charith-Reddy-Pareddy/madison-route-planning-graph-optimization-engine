@@ -141,6 +141,24 @@ real missing edge, compute its real distance from the OSM graph, verify
 the resulting route -- repeated deliberately rather than rushed, not a
 mass find-and-add.
 
+**Progress**: 14 more real edges added the same way (verify what's really
+there, compute the real distance from the OSM graph, check the resulting
+route makes sense) -- `discovery_building<->morgridge_hall`,
+`x01_apts<->chadbourne_hall`, `chadbourne_hall<->humanities_building`,
+`humanities_building<->chazen_museum`, `chazen_museum<->lucky_apts`,
+`lucky_apts<->vilas_hall`, `education_building<->science_hall`,
+`van_vleck_hall<->bascom_hill`, `nicholas_rec<->witte_hall`,
+`atmosphere_apts<->kohl_center`, `middleton_building<->union_south` (no
+drivable route found for this one, same as the `witte_hall<->ogg_hall`
+gap above -- `walkMiles` only), and `grainger_hall<->sellery_hall`. The
+flagged-pair count dropped from 255 to 145. One of these new edges
+(`discovery_building<->morgridge_hall`) legitimately opened a shorter
+real route for `camp_randall -> bascom_hill` too (1.87mi -> 1.35mi),
+which is why that number moved in the pinned regression tests -- a real
+improvement, not a regression. Remaining ~145 pairs are smaller-magnitude
+and lower priority than the ones already fixed; same method applies
+whenever this gets picked back up.
+
 **Known gap**: 6 of the 122 directed rows came back with no drivable
 route found in the fetched OSM extract (`walkMiles` still real and
 present for all of them) -- `witte_hall<->ogg_hall` in both directions,
