@@ -159,6 +159,16 @@ improvement, not a regression. Remaining ~145 pairs are smaller-magnitude
 and lower priority than the ones already fixed; same method applies
 whenever this gets picked back up.
 
+**Progress, round 2**: 8 more real edges the same way --
+`education_building<->college_library`, `science_hall<->college_library`,
+`red_gym<->science_hall`, `grainger_hall<->regent_park`,
+`ogg_hall<->regent_park` (no drivable route found, walk only),
+`middleton_building<->slichter_hall`, `van_hise_hall<->grainger_hall`,
+`x01_apts<->vilas_hall`. Flagged-pair count: 145 -> 100. No pinned
+regression values moved this round. Verified live (e.g.
+`science_hall -> memorial_union` now correctly routes via College
+Library, 0.24mi total, instead of a long detour).
+
 **Known gap**: 6 of the 122 directed rows came back with no drivable
 route found in the fetched OSM extract (`walkMiles` still real and
 present for all of them) -- `witte_hall<->ogg_hall` in both directions,
