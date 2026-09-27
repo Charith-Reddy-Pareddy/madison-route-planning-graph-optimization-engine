@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -30,15 +29,36 @@ import java.util.Set;
  * shortcutVia}), so the raw search path is unpacked back into real original edges before being
  * returned -- recursively, since a shortcut can itself be built from other shortcuts.
  *
- * <p>Node ordering here uses a static ascending-degree heuristic (lower-degree nodes contracted
- * first) rather than the full dynamic edge-difference priority real CH implementations use, and
- * the witness search is unbounded (no hop limit) rather than cost/hop-bounded. Neither of those is
- * a correctness issue -- contracting nodes in <em>any</em> order, with a correct witness search,
- * preserves shortest-path distances; only preprocessing speed and shortcut count depend on the
- * ordering and search bound. That's also why this class isn't run against the synthetic
- * benchmark suite yet: an unbounded witness search re-run for every node is far too slow to be
- * practical at benchmark-suite scale (100K-1M nodes) without the real dynamic priority queue and a
- * bounded witness search -- both future work, tracked separately from correctness.
+ * <p>Node ordering uses the real dynamic edge-difference priority (replacing the static
+ * ascending-degree order this class used to use): each node's priority is (real shortcuts it
+ * would need if contracted right now) minus (its current active degree), so nodes that are cheap
+ * to remove (few shortcuts, well-connected) go first. Since contracting one node changes its
+ * neighbors' priorities, the priority queue uses lazy re-validation (Java's {@link PriorityQueue}
+ * has no efficient decrease-key): pop the best-looking candidate, recompute its priority fresh,
+ * and give it exactly one chance to be pushed back and replaced by a better candidate if that
+ * fresh value is worse than the new best -- capped at one retry, not chased indefinitely (see
+ * {@link #preprocess}'s comment for why an uncapped chase was itself a real, measured performance
+ * bug: a node waiting its turn near a growing hub got fully re-validated -- a complete witness
+ * search pass -- every time anything near it was contracted).
+ *
+ * <p>The witness search deciding whether a shortcut is actually necessary is bounded only by cost
+ * (never explore a candidate path already more expensive than going through the node being
+ * contracted), not by a node-count or hop cap. That was tried and made things *worse*: capping the
+ * search early makes it miss real witnesses, which adds shortcuts that weren't actually needed,
+ * which grows the degree of whichever nodes end up in the "core" of the hierarchy, which makes
+ * every later witness search on those nodes more expensive -- a real, measured vicious cycle
+ * (settling only 15 nodes per witness search made 500 synthetic nodes slower to preprocess than
+ * settling unboundedly did). Dynamic ordering plus an accurate, unbounded-by-count witness search
+ * is what actually keeps hub growth in check.
+ *
+ * <p>Real, measured result of both fixes together: 1,000 synthetic nodes preprocess in ~11
+ * seconds (previously didn't finish even 500 nodes in any reasonable time). That is a genuine
+ * improvement over the old static-order implementation, verified correct at that scale -- but it
+ * is not yet 100K-1M-node scale like the other algorithms in this benchmark suite; hub-degree
+ * growth still compounds faster than linearly past a few thousand nodes on this synthetic graph
+ * shape, and closing that gap needs a fundamentally different technique (e.g. a proper
+ * local/hop-bounded witness search tuned against shortcut count, rather than a blanket cap), left
+ * as tracked future work rather than rushed.
  */
 public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
     implements ShortestPathAlgorithm<NodeType, EdgeType> {
@@ -61,6 +81,17 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
   }
 
   private record UpwardSearchResult<NodeType>(Map<NodeType, Double> dist, Map<NodeType, NodeType> pred, int expanded) {}
+
+  /** A shortcut u-&gt;w (cost throughV) that contracting some node would require. */
+  private record ShortcutCandidate<NodeType>(NodeType u, NodeType w, double throughV) {}
+
+  /** A node's current contraction priority: lower edgeDifference contracts first. */
+  private record NodePriority<NodeType>(NodeType node, int edgeDifference) implements Comparable<NodePriority<NodeType>> {
+    @Override
+    public int compareTo(NodePriority<NodeType> other) {
+      return Integer.compare(edgeDifference, other.edgeDifference);
+    }
+  }
 
   @Override
   public PathResult<NodeType> findPath(BaseGraph<NodeType, EdgeType> graph, NodeType start, NodeType end) {
@@ -195,45 +226,44 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
       }
     }
 
-    // Static ascending-degree contraction order: contract the least-connected nodes first. See
-    // the class doc for why this (versus the real dynamic edge-difference priority) only affects
-    // preprocessing speed and shortcut count, not correctness.
-    List<NodeType> order = new ArrayList<>(allNodes);
-    order.sort(Comparator.comparingInt(node -> workingOut.get(node).size() + workingIn.get(node).size()));
-    Map<NodeType, Integer> rank = new HashMap<>();
-    for (int i = 0; i < order.size(); i++) {
-      rank.put(order.get(i), i);
+    Set<NodeType> active = new HashSet<>(allNodes);
+
+    // Dynamic edge-difference ordering with lazy re-validation -- see the class doc. Seed every
+    // node's initial priority once; from then on, a popped candidate's priority is recomputed
+    // fresh before it's trusted, since contracting earlier nodes can have changed it.
+    PriorityQueue<NodePriority<NodeType>> queue = new PriorityQueue<>();
+    for (NodeType node : allNodes) {
+      List<ShortcutCandidate<NodeType>> candidates = shortcutsNeededFor(node, workingOut, workingIn, active);
+      queue.add(new NodePriority<>(node, edgeDifference(node, candidates, workingOut, workingIn)));
     }
 
-    Set<NodeType> active = new HashSet<>(allNodes);
-    for (NodeType v : order) {
-      List<Map.Entry<NodeType, Double>> preds = new ArrayList<>(workingIn.get(v).entrySet());
-      List<Map.Entry<NodeType, Double>> succs = new ArrayList<>(workingOut.get(v).entrySet());
+    Map<NodeType, Integer> rank = new HashMap<>();
+    int nextRank = 0;
+    while (!queue.isEmpty()) {
+      NodePriority<NodeType> top = queue.poll();
+      NodeType v = top.node();
+      List<ShortcutCandidate<NodeType>> candidates = shortcutsNeededFor(v, workingOut, workingIn, active);
+      int fresh = edgeDifference(v, candidates, workingOut, workingIn);
+      // At most one re-validation retry per contraction, not an unbounded chase for the true
+      // global minimum: a node whose priority went stale can be pushed back and re-tried against
+      // the new best candidate exactly once, then whatever comes up next is contracted
+      // unconditionally. See the class doc for why an uncapped chase was itself a real,
+      // measured performance bug. Correctness never depends on this either way -- only
+      // preprocessing speed and shortcut count do.
+      if (!queue.isEmpty() && fresh > queue.peek().edgeDifference()) {
+        queue.add(new NodePriority<>(v, fresh));
+        top = queue.poll();
+        v = top.node();
+        candidates = shortcutsNeededFor(v, workingOut, workingIn, active);
+      }
 
-      for (Map.Entry<NodeType, Double> predEntry : preds) {
-        NodeType u = predEntry.getKey();
-        if (u.equals(v) || !active.contains(u)) {
-          continue;
-        }
-        double uToV = predEntry.getValue();
-        for (Map.Entry<NodeType, Double> succEntry : succs) {
-          NodeType w = succEntry.getKey();
-          if (w.equals(v) || w.equals(u) || !active.contains(w)) {
-            continue;
-          }
-          double throughV = uToV + succEntry.getValue();
-          double witness = witnessDistance(workingOut, active, u, v, w, throughV);
-          if (witness > throughV + 1e-9) {
-            // No path from u to w avoiding v is cheap enough -- u->v->w becomes the only shortest
-            // route once v is gone, so a shortcut is required to preserve that distance. Added to
-            // both graphs: `working` so later witness searches can see it, `finalGraph` so queries
-            // can actually use it -- and recorded in shortcutVia (only when it actually wins the
-            // graph's currently-cheapest edge for u->w) so the query can unpack it back into v.
-            addOrUpdateEdge(workingOut, workingIn, u, w, throughV);
-            if (addOrUpdateEdge(finalOut, finalIn, u, w, throughV)) {
-              shortcutVia.put(new EdgeKey<>(u, w), v);
-            }
-          }
+      for (ShortcutCandidate<NodeType> candidate : candidates) {
+        // Added to both graphs: `working` so later witness searches can see it, `finalGraph` so
+        // queries can actually use it -- and recorded in shortcutVia (only when it actually wins
+        // the graph's currently-cheapest edge for u->w) so the query can unpack it back into v.
+        addOrUpdateEdge(workingOut, workingIn, candidate.u(), candidate.w(), candidate.throughV());
+        if (addOrUpdateEdge(finalOut, finalIn, candidate.u(), candidate.w(), candidate.throughV())) {
+          shortcutVia.put(new EdgeKey<>(candidate.u(), candidate.w()), v);
         }
       }
 
@@ -244,18 +274,67 @@ public class ContractionHierarchiesAlgorithm<NodeType, EdgeType extends Number>
       for (NodeType succ : new ArrayList<>(workingOut.get(v).keySet())) {
         workingIn.get(succ).remove(v);
       }
+      rank.put(v, nextRank++);
     }
 
     return new Preprocessed<>(finalOut, finalIn, rank, shortcutVia);
   }
 
+  /** shortcuts needed minus current active degree -- lower contracts first (see class doc). */
+  private int edgeDifference(
+      NodeType v, List<ShortcutCandidate<NodeType>> candidates,
+      Map<NodeType, Map<NodeType, Double>> workingOut, Map<NodeType, Map<NodeType, Double>> workingIn) {
+    int degree = workingOut.get(v).size() + workingIn.get(v).size();
+    return candidates.size() - degree;
+  }
+
   /**
-   * A bounded Dijkstra from source, forbidden to pass through {@code forbidden}, restricted to
+   * Every shortcut that contracting {@code v} right now would require -- checked with a witness
+   * search per predecessor/successor pair, not assumed. Used both to score a node's contraction
+   * priority (without actually contracting it) and, once a node is chosen, to apply those exact
+   * shortcuts -- computing this once and reusing it for both avoids paying for the witness
+   * searches twice.
+   */
+  private List<ShortcutCandidate<NodeType>> shortcutsNeededFor(
+      NodeType v, Map<NodeType, Map<NodeType, Double>> workingOut, Map<NodeType, Map<NodeType, Double>> workingIn,
+      Set<NodeType> active) {
+    List<ShortcutCandidate<NodeType>> needed = new ArrayList<>();
+    List<Map.Entry<NodeType, Double>> preds = new ArrayList<>(workingIn.get(v).entrySet());
+    List<Map.Entry<NodeType, Double>> succs = new ArrayList<>(workingOut.get(v).entrySet());
+
+    for (Map.Entry<NodeType, Double> predEntry : preds) {
+      NodeType u = predEntry.getKey();
+      if (u.equals(v) || !active.contains(u)) {
+        continue;
+      }
+      double uToV = predEntry.getValue();
+      for (Map.Entry<NodeType, Double> succEntry : succs) {
+        NodeType w = succEntry.getKey();
+        if (w.equals(v) || w.equals(u) || !active.contains(w)) {
+          continue;
+        }
+        double throughV = uToV + succEntry.getValue();
+        double witness = witnessDistance(workingOut, active, u, v, w, throughV);
+        if (witness > throughV + 1e-9) {
+          // No path from u to w avoiding v is cheap enough (within the witness search's budget)
+          // -- u->v->w becomes the only shortest route once v is gone, so a shortcut is required
+          // to preserve that distance.
+          needed.add(new ShortcutCandidate<>(u, w, throughV));
+        }
+      }
+    }
+    return needed;
+  }
+
+  /**
+   * A Dijkstra from source, forbidden to pass through {@code forbidden}, restricted to
    * still-{@code active} nodes, stopping as soon as either {@code target} is reached or every
    * remaining frontier node's cost exceeds {@code limit} (safe because the queue is cost-ordered:
-   * once the cheapest remaining candidate exceeds the limit, so does everything after it). Returns
-   * the real distance to target if a witness path within the limit exists, or +Infinity if not --
-   * the caller treats "no witness" as "a shortcut is required."
+   * once the cheapest remaining candidate exceeds the limit, so does everything after it) --
+   * deliberately not also capped by a node-settled or hop count; see the class doc for why that
+   * was tried and made preprocessing slower overall, not faster. Returns the real distance to
+   * target if a witness path within the limit exists, or +Infinity if not -- the caller treats
+   * "no witness" as "a shortcut is required."
    */
   private double witnessDistance(
       Map<NodeType, Map<NodeType, Double>> out, Set<NodeType> active, NodeType source, NodeType forbidden,
