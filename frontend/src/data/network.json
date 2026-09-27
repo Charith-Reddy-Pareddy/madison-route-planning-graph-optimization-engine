@@ -1223,7 +1223,7 @@
             "from": "morgridge_hall",
             "to": "discovery_building",
             "walkMiles": 0.097,
-            "driveMiles": 0.301,
+            "driveMiles": 0.453,
             "busRoute": null
         },
         {
@@ -1237,7 +1237,7 @@
             "from": "chadbourne_hall",
             "to": "x01_apts",
             "walkMiles": 0.152,
-            "driveMiles": 0.338,
+            "driveMiles": 0.229,
             "busRoute": null
         },
         {
@@ -1265,7 +1265,7 @@
             "from": "chazen_museum",
             "to": "humanities_building",
             "walkMiles": 0.075,
-            "driveMiles": 0.453,
+            "driveMiles": 0.328,
             "busRoute": null
         },
         {
@@ -1279,7 +1279,7 @@
             "from": "lucky_apts",
             "to": "chazen_museum",
             "walkMiles": 0.131,
-            "driveMiles": 0.11,
+            "driveMiles": 0.59,
             "busRoute": null
         },
         {
@@ -1293,7 +1293,7 @@
             "from": "vilas_hall",
             "to": "lucky_apts",
             "walkMiles": 0.134,
-            "driveMiles": 0.296,
+            "driveMiles": 0.374,
             "busRoute": null
         },
         {
@@ -1307,7 +1307,7 @@
             "from": "science_hall",
             "to": "education_building",
             "walkMiles": 0.097,
-            "driveMiles": 0.14,
+            "driveMiles": null,
             "busRoute": null
         },
         {
@@ -1349,7 +1349,7 @@
             "from": "kohl_center",
             "to": "atmosphere_apts",
             "walkMiles": 0.307,
-            "driveMiles": 0.624,
+            "driveMiles": 0.534,
             "busRoute": null
         },
         {
@@ -1363,7 +1363,7 @@
             "from": "union_south",
             "to": "middleton_building",
             "walkMiles": 0.445,
-            "driveMiles": null,
+            "driveMiles": 0.552,
             "busRoute": null
         },
         {
@@ -1377,7 +1377,7 @@
             "from": "sellery_hall",
             "to": "grainger_hall",
             "walkMiles": 0.196,
-            "driveMiles": 0.22,
+            "driveMiles": 0.503,
             "busRoute": null
         },
         {
@@ -1391,7 +1391,7 @@
             "from": "college_library",
             "to": "education_building",
             "walkMiles": 0.124,
-            "driveMiles": 0.184,
+            "driveMiles": null,
             "busRoute": null
         },
         {
@@ -1433,7 +1433,7 @@
             "from": "regent_park",
             "to": "grainger_hall",
             "walkMiles": 0.442,
-            "driveMiles": 0.456,
+            "driveMiles": 0.474,
             "busRoute": null
         },
         {
@@ -1475,7 +1475,7 @@
             "from": "grainger_hall",
             "to": "van_hise_hall",
             "walkMiles": 0.441,
-            "driveMiles": 0.506,
+            "driveMiles": 0.412,
             "busRoute": null
         },
         {
@@ -1489,7 +1489,7 @@
             "from": "vilas_hall",
             "to": "x01_apts",
             "walkMiles": 0.201,
-            "driveMiles": 0.196,
+            "driveMiles": 0.15,
             "busRoute": null
         },
         {
@@ -1587,7 +1587,7 @@
             "from": "union_south",
             "to": "discovery_building",
             "walkMiles": 0.11,
-            "driveMiles": null,
+            "driveMiles": 0.181,
             "busRoute": null
         },
         {
@@ -1615,7 +1615,7 @@
             "from": "lucky_apts",
             "to": "witte_hall",
             "walkMiles": 0.227,
-            "driveMiles": 0.238,
+            "driveMiles": 0.554,
             "busRoute": null
         },
         {
@@ -1629,7 +1629,7 @@
             "from": "education_building",
             "to": "bascom_hill",
             "walkMiles": 0.118,
-            "driveMiles": null,
+            "driveMiles": 0.175,
             "busRoute": null
         },
         {
@@ -1755,7 +1755,7 @@
             "from": "state_gilman",
             "to": "ians_pizza",
             "walkMiles": 0.187,
-            "driveMiles": 0.539,
+            "driveMiles": 0.445,
             "busRoute": null
         },
         {
@@ -1769,7 +1769,7 @@
             "from": "lucky_apts",
             "to": "chipotle_state_st",
             "walkMiles": 0.181,
-            "driveMiles": 0.248,
+            "driveMiles": 0.558,
             "busRoute": null
         },
         {
@@ -1811,7 +1811,7 @@
             "from": "regent_park",
             "to": "atmosphere_apts",
             "walkMiles": 0.233,
-            "driveMiles": 0.248,
+            "driveMiles": 0.253,
             "busRoute": null
         },
         {
@@ -1825,7 +1825,7 @@
             "from": "morgridge_hall",
             "to": "middleton_building",
             "walkMiles": 0.336,
-            "driveMiles": 0.334,
+            "driveMiles": 0.494,
             "busRoute": null
         }
     ]
