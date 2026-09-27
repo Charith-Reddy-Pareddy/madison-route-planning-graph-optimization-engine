@@ -1211,6 +1211,174 @@
             "walkMiles": 0.187,
             "driveMiles": 0.188,
             "busRoute": null
+        },
+        {
+            "from": "discovery_building",
+            "to": "morgridge_hall",
+            "walkMiles": 0.097,
+            "driveMiles": 0.301,
+            "busRoute": null
+        },
+        {
+            "from": "morgridge_hall",
+            "to": "discovery_building",
+            "walkMiles": 0.097,
+            "driveMiles": 0.301,
+            "busRoute": null
+        },
+        {
+            "from": "x01_apts",
+            "to": "chadbourne_hall",
+            "walkMiles": 0.152,
+            "driveMiles": 0.338,
+            "busRoute": null
+        },
+        {
+            "from": "chadbourne_hall",
+            "to": "x01_apts",
+            "walkMiles": 0.152,
+            "driveMiles": 0.338,
+            "busRoute": null
+        },
+        {
+            "from": "chadbourne_hall",
+            "to": "humanities_building",
+            "walkMiles": 0.141,
+            "driveMiles": 0.045,
+            "busRoute": null
+        },
+        {
+            "from": "humanities_building",
+            "to": "chadbourne_hall",
+            "walkMiles": 0.141,
+            "driveMiles": 0.045,
+            "busRoute": null
+        },
+        {
+            "from": "humanities_building",
+            "to": "chazen_museum",
+            "walkMiles": 0.075,
+            "driveMiles": 0.453,
+            "busRoute": null
+        },
+        {
+            "from": "chazen_museum",
+            "to": "humanities_building",
+            "walkMiles": 0.075,
+            "driveMiles": 0.453,
+            "busRoute": null
+        },
+        {
+            "from": "chazen_museum",
+            "to": "lucky_apts",
+            "walkMiles": 0.131,
+            "driveMiles": 0.11,
+            "busRoute": null
+        },
+        {
+            "from": "lucky_apts",
+            "to": "chazen_museum",
+            "walkMiles": 0.131,
+            "driveMiles": 0.11,
+            "busRoute": null
+        },
+        {
+            "from": "lucky_apts",
+            "to": "vilas_hall",
+            "walkMiles": 0.134,
+            "driveMiles": 0.296,
+            "busRoute": null
+        },
+        {
+            "from": "vilas_hall",
+            "to": "lucky_apts",
+            "walkMiles": 0.134,
+            "driveMiles": 0.296,
+            "busRoute": null
+        },
+        {
+            "from": "education_building",
+            "to": "science_hall",
+            "walkMiles": 0.097,
+            "driveMiles": 0.14,
+            "busRoute": null
+        },
+        {
+            "from": "science_hall",
+            "to": "education_building",
+            "walkMiles": 0.097,
+            "driveMiles": 0.14,
+            "busRoute": null
+        },
+        {
+            "from": "van_vleck_hall",
+            "to": "bascom_hill",
+            "walkMiles": 0.078,
+            "driveMiles": 0.228,
+            "busRoute": null
+        },
+        {
+            "from": "bascom_hill",
+            "to": "van_vleck_hall",
+            "walkMiles": 0.078,
+            "driveMiles": 0.228,
+            "busRoute": null
+        },
+        {
+            "from": "nicholas_rec",
+            "to": "witte_hall",
+            "walkMiles": 0.253,
+            "driveMiles": 0.244,
+            "busRoute": null
+        },
+        {
+            "from": "witte_hall",
+            "to": "nicholas_rec",
+            "walkMiles": 0.253,
+            "driveMiles": 0.244,
+            "busRoute": null
+        },
+        {
+            "from": "atmosphere_apts",
+            "to": "kohl_center",
+            "walkMiles": 0.307,
+            "driveMiles": 0.624,
+            "busRoute": null
+        },
+        {
+            "from": "kohl_center",
+            "to": "atmosphere_apts",
+            "walkMiles": 0.307,
+            "driveMiles": 0.624,
+            "busRoute": null
+        },
+        {
+            "from": "middleton_building",
+            "to": "union_south",
+            "walkMiles": 0.445,
+            "driveMiles": null,
+            "busRoute": null
+        },
+        {
+            "from": "union_south",
+            "to": "middleton_building",
+            "walkMiles": 0.445,
+            "driveMiles": null,
+            "busRoute": null
+        },
+        {
+            "from": "grainger_hall",
+            "to": "sellery_hall",
+            "walkMiles": 0.196,
+            "driveMiles": 0.22,
+            "busRoute": null
+        },
+        {
+            "from": "sellery_hall",
+            "to": "grainger_hall",
+            "walkMiles": 0.196,
+            "driveMiles": 0.22,
+            "busRoute": null
         }
     ]
 }
