@@ -726,14 +726,14 @@
             "from": "memorial_union",
             "to": "college_library",
             "walkMiles": 0.14,
-            "driveMiles": 0.012,
+            "driveMiles": 0.052,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "memorial_union",
             "walkMiles": 0.14,
-            "driveMiles": 0.012,
+            "driveMiles": 0.052,
             "busRoute": null
         },
         {
@@ -950,14 +950,14 @@
             "from": "library_mall",
             "to": "red_gym",
             "walkMiles": 0.105,
-            "driveMiles": 0.033,
+            "driveMiles": 0.075,
             "busRoute": null
         },
         {
             "from": "red_gym",
             "to": "library_mall",
             "walkMiles": 0.105,
-            "driveMiles": 0.033,
+            "driveMiles": 0.075,
             "busRoute": null
         },
         {
@@ -978,14 +978,14 @@
             "from": "state_frances",
             "to": "target_state_st",
             "walkMiles": 0.019,
-            "driveMiles": 0.0,
+            "driveMiles": 0.017,
             "busRoute": "Route A"
         },
         {
             "from": "target_state_st",
             "to": "state_frances",
             "walkMiles": 0.019,
-            "driveMiles": 0.0,
+            "driveMiles": 0.017,
             "busRoute": "Route A"
         },
         {
@@ -1131,15 +1131,15 @@
         {
             "from": "kronshage_halls",
             "to": "bradley_hall",
-            "walkMiles": 0.02,
-            "driveMiles": 0.024,
+            "walkMiles": 0.026,
+            "driveMiles": 0.026,
             "busRoute": null
         },
         {
             "from": "bradley_hall",
             "to": "kronshage_halls",
-            "walkMiles": 0.02,
-            "driveMiles": 0.024,
+            "walkMiles": 0.026,
+            "driveMiles": 0.026,
             "busRoute": null
         },
         {
@@ -1244,14 +1244,14 @@
             "from": "chadbourne_hall",
             "to": "humanities_building",
             "walkMiles": 0.141,
-            "driveMiles": 0.045,
+            "driveMiles": 0.067,
             "busRoute": null
         },
         {
             "from": "humanities_building",
             "to": "chadbourne_hall",
             "walkMiles": 0.141,
-            "driveMiles": 0.045,
+            "driveMiles": 0.067,
             "busRoute": null
         },
         {
@@ -1524,14 +1524,14 @@
             "from": "grainger_hall",
             "to": "x01_apts",
             "walkMiles": 0.057,
-            "driveMiles": 0.009,
+            "driveMiles": 0.057,
             "busRoute": null
         },
         {
             "from": "x01_apts",
             "to": "grainger_hall",
             "walkMiles": 0.057,
-            "driveMiles": 0.009,
+            "driveMiles": 0.057,
             "busRoute": null
         },
         {
@@ -1616,6 +1616,216 @@
             "to": "witte_hall",
             "walkMiles": 0.227,
             "driveMiles": 0.238,
+            "busRoute": null
+        },
+        {
+            "from": "bascom_hill",
+            "to": "education_building",
+            "walkMiles": 0.118,
+            "driveMiles": null,
+            "busRoute": null
+        },
+        {
+            "from": "education_building",
+            "to": "bascom_hill",
+            "walkMiles": 0.118,
+            "driveMiles": null,
+            "busRoute": null
+        },
+        {
+            "from": "elizabeth_waters",
+            "to": "van_hise_hall",
+            "walkMiles": 0.163,
+            "driveMiles": 0.208,
+            "busRoute": null
+        },
+        {
+            "from": "van_hise_hall",
+            "to": "elizabeth_waters",
+            "walkMiles": 0.163,
+            "driveMiles": 0.208,
+            "busRoute": null
+        },
+        {
+            "from": "chazen_museum",
+            "to": "library_mall",
+            "walkMiles": 0.117,
+            "driveMiles": 0.249,
+            "busRoute": null
+        },
+        {
+            "from": "library_mall",
+            "to": "chazen_museum",
+            "walkMiles": 0.117,
+            "driveMiles": 0.249,
+            "busRoute": null
+        },
+        {
+            "from": "kohl_center",
+            "to": "nicholas_rec",
+            "walkMiles": 0.099,
+            "driveMiles": 0.282,
+            "busRoute": null
+        },
+        {
+            "from": "nicholas_rec",
+            "to": "kohl_center",
+            "walkMiles": 0.099,
+            "driveMiles": 0.282,
+            "busRoute": null
+        },
+        {
+            "from": "social_sciences",
+            "to": "van_hise_hall",
+            "walkMiles": 0.117,
+            "driveMiles": 0.176,
+            "busRoute": null
+        },
+        {
+            "from": "van_hise_hall",
+            "to": "social_sciences",
+            "walkMiles": 0.117,
+            "driveMiles": 0.176,
+            "busRoute": null
+        },
+        {
+            "from": "humanities_building",
+            "to": "science_hall",
+            "walkMiles": 0.239,
+            "driveMiles": 0.215,
+            "busRoute": null
+        },
+        {
+            "from": "science_hall",
+            "to": "humanities_building",
+            "walkMiles": 0.239,
+            "driveMiles": 0.215,
+            "busRoute": null
+        },
+        {
+            "from": "ogg_hall",
+            "to": "vilas_hall",
+            "walkMiles": 0.189,
+            "driveMiles": null,
+            "busRoute": null
+        },
+        {
+            "from": "vilas_hall",
+            "to": "ogg_hall",
+            "walkMiles": 0.189,
+            "driveMiles": null,
+            "busRoute": null
+        },
+        {
+            "from": "chadbourne_hall",
+            "to": "science_hall",
+            "walkMiles": 0.247,
+            "driveMiles": 0.261,
+            "busRoute": null
+        },
+        {
+            "from": "science_hall",
+            "to": "chadbourne_hall",
+            "walkMiles": 0.247,
+            "driveMiles": 0.261,
+            "busRoute": null
+        },
+        {
+            "from": "bascom_hill",
+            "to": "van_hise_hall",
+            "walkMiles": 0.197,
+            "driveMiles": 0.253,
+            "busRoute": null
+        },
+        {
+            "from": "van_hise_hall",
+            "to": "bascom_hill",
+            "walkMiles": 0.197,
+            "driveMiles": 0.253,
+            "busRoute": null
+        },
+        {
+            "from": "ians_pizza",
+            "to": "state_gilman",
+            "walkMiles": 0.187,
+            "driveMiles": 0.539,
+            "busRoute": null
+        },
+        {
+            "from": "state_gilman",
+            "to": "ians_pizza",
+            "walkMiles": 0.187,
+            "driveMiles": 0.539,
+            "busRoute": null
+        },
+        {
+            "from": "chipotle_state_st",
+            "to": "lucky_apts",
+            "walkMiles": 0.181,
+            "driveMiles": 0.248,
+            "busRoute": null
+        },
+        {
+            "from": "lucky_apts",
+            "to": "chipotle_state_st",
+            "walkMiles": 0.181,
+            "driveMiles": 0.248,
+            "busRoute": null
+        },
+        {
+            "from": "van_hise_hall",
+            "to": "van_vleck_hall",
+            "walkMiles": 0.179,
+            "driveMiles": 0.115,
+            "busRoute": null
+        },
+        {
+            "from": "van_vleck_hall",
+            "to": "van_hise_hall",
+            "walkMiles": 0.179,
+            "driveMiles": 0.115,
+            "busRoute": null
+        },
+        {
+            "from": "engineering_hall",
+            "to": "slichter_hall",
+            "walkMiles": 0.243,
+            "driveMiles": 0.278,
+            "busRoute": null
+        },
+        {
+            "from": "slichter_hall",
+            "to": "engineering_hall",
+            "walkMiles": 0.243,
+            "driveMiles": 0.278,
+            "busRoute": null
+        },
+        {
+            "from": "atmosphere_apts",
+            "to": "regent_park",
+            "walkMiles": 0.233,
+            "driveMiles": 0.248,
+            "busRoute": null
+        },
+        {
+            "from": "regent_park",
+            "to": "atmosphere_apts",
+            "walkMiles": 0.233,
+            "driveMiles": 0.248,
+            "busRoute": null
+        },
+        {
+            "from": "middleton_building",
+            "to": "morgridge_hall",
+            "walkMiles": 0.336,
+            "driveMiles": 0.334,
+            "busRoute": null
+        },
+        {
+            "from": "morgridge_hall",
+            "to": "middleton_building",
+            "walkMiles": 0.336,
+            "driveMiles": 0.334,
             "busRoute": null
         }
     ]
