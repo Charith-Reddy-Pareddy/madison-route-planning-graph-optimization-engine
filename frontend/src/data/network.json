@@ -656,14 +656,14 @@
             "from": "camp_randall",
             "to": "union_south",
             "walkMiles": 0.388,
-            "driveMiles": null,
+            "driveMiles": 0.594,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "camp_randall",
             "walkMiles": 0.388,
-            "driveMiles": 0.592,
+            "driveMiles": 0.588,
             "busRoute": null
         },
         {
@@ -684,14 +684,14 @@
             "from": "union_south",
             "to": "engineering_hall",
             "walkMiles": 0.306,
-            "driveMiles": 0.536,
+            "driveMiles": 0.532,
             "busRoute": null
         },
         {
             "from": "engineering_hall",
             "to": "union_south",
             "walkMiles": 0.306,
-            "driveMiles": null,
+            "driveMiles": 0.75,
             "busRoute": null
         },
         {
@@ -796,14 +796,14 @@
             "from": "morgridge_hall",
             "to": "education_building",
             "walkMiles": 0.456,
-            "driveMiles": null,
+            "driveMiles": 0.595,
             "busRoute": null
         },
         {
             "from": "education_building",
             "to": "morgridge_hall",
             "walkMiles": 0.456,
-            "driveMiles": 0.487,
+            "driveMiles": 0.435,
             "busRoute": null
         },
         {
@@ -894,14 +894,14 @@
             "from": "union_south",
             "to": "nicholas_rec",
             "walkMiles": 0.594,
-            "driveMiles": 0.634,
+            "driveMiles": 0.631,
             "busRoute": null
         },
         {
             "from": "nicholas_rec",
             "to": "union_south",
             "walkMiles": 0.594,
-            "driveMiles": null,
+            "driveMiles": 0.631,
             "busRoute": null
         },
         {
@@ -1300,14 +1300,14 @@
             "from": "education_building",
             "to": "science_hall",
             "walkMiles": 0.097,
-            "driveMiles": 0.14,
+            "driveMiles": 0.157,
             "busRoute": null
         },
         {
             "from": "science_hall",
             "to": "education_building",
             "walkMiles": 0.097,
-            "driveMiles": null,
+            "driveMiles": 0.157,
             "busRoute": null
         },
         {
@@ -1356,14 +1356,14 @@
             "from": "middleton_building",
             "to": "union_south",
             "walkMiles": 0.445,
-            "driveMiles": null,
+            "driveMiles": 0.55,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "middleton_building",
             "walkMiles": 0.445,
-            "driveMiles": 0.552,
+            "driveMiles": 0.548,
             "busRoute": null
         },
         {
@@ -1384,14 +1384,14 @@
             "from": "education_building",
             "to": "college_library",
             "walkMiles": 0.124,
-            "driveMiles": 0.184,
+            "driveMiles": 0.201,
             "busRoute": null
         },
         {
             "from": "college_library",
             "to": "education_building",
             "walkMiles": 0.124,
-            "driveMiles": null,
+            "driveMiles": 0.201,
             "busRoute": null
         },
         {
@@ -1580,14 +1580,14 @@
             "from": "discovery_building",
             "to": "union_south",
             "walkMiles": 0.11,
-            "driveMiles": null,
+            "driveMiles": 0.344,
             "busRoute": null
         },
         {
             "from": "union_south",
             "to": "discovery_building",
             "walkMiles": 0.11,
-            "driveMiles": 0.181,
+            "driveMiles": 0.177,
             "busRoute": null
         },
         {
@@ -1622,14 +1622,14 @@
             "from": "bascom_hill",
             "to": "education_building",
             "walkMiles": 0.118,
-            "driveMiles": null,
+            "driveMiles": 0.122,
             "busRoute": null
         },
         {
             "from": "education_building",
             "to": "bascom_hill",
             "walkMiles": 0.118,
-            "driveMiles": 0.175,
+            "driveMiles": 0.122,
             "busRoute": null
         },
         {
