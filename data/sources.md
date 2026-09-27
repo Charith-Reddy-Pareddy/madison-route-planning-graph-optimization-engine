@@ -169,13 +169,49 @@ regression values moved this round. Verified live (e.g.
 `science_hall -> memorial_union` now correctly routes via College
 Library, 0.24mi total, instead of a long detour).
 
-**Known gap**: 6 of the 122 directed rows came back with no drivable
-route found in the fetched OSM extract (`walkMiles` still real and
-present for all of them) -- `witte_hall<->ogg_hall` in both directions,
-plus one direction each for `camp_randall->union_south`,
-`engineering_hall->union_south`, `nicholas_rec->union_south`, and
-`morgridge_hall->education_building`. `union_south` is not actually
-drive-isolated (all three outbound directions from it resolved fine --
+**Progress, rounds 3-5 -- swept to zero**: 27 more real edges the same
+way across three more rounds (re-running the sweep fresh each round,
+since fixing the worst offenders changes who the next worst offenders
+are): `nicholas_rec<->ogg_hall`, `ogg_hall<->sellery_hall`,
+`grainger_hall<->x01_apts`, `red_gym<->memorial_library`,
+`library_mall<->memorial_library`, `social_sciences<->elizabeth_waters`,
+`discovery_building<->union_south`, `middleton_building<->engineering_hall`,
+`witte_hall<->lucky_apts`, `bascom_hill<->education_building`,
+`elizabeth_waters<->van_hise_hall`, `chazen_museum<->library_mall`,
+`kohl_center<->nicholas_rec`, `social_sciences<->van_hise_hall`,
+`humanities_building<->science_hall`, `ogg_hall<->vilas_hall`,
+`chadbourne_hall<->science_hall`, `bascom_hill<->van_hise_hall`,
+`ians_pizza<->state_gilman`, `chipotle_state_st<->lucky_apts`,
+`van_hise_hall<->van_vleck_hall`, `engineering_hall<->slichter_hall`,
+`atmosphere_apts<->regent_park`, `middleton_building<->morgridge_hall`.
+**Flagged-pair count: 100 -> 33 -> 0.**
+
+Two real bugs surfaced by testing along the way, both fixed:
+
+1. A few snapped-point routes came out *shorter* than the straight line
+   between the two locations' own stored coordinates -- geometrically
+   impossible for a real route, and it broke A*'s admissible-heuristic
+   guarantee (`AlgorithmsCorrectnessTest` caught a real mismatch between
+   `AStarAlgorithm` and `DijkstraGraph`). Fixed by clamping every stored
+   distance up to the straight-line floor, both by hand for the existing
+   data and permanently in `scripts/compute_route_distances.py` itself
+   (see its docstring) so it can't come back.
+2. Several new edges were added by computing one direction and reusing
+   the same number for the reverse row -- correct for `walkMiles` (the
+   walk graph is genuinely undirected) but wrong for `driveMiles`, which
+   respects real one-way streets and isn't always symmetric (e.g.
+   `lucky_apts -> chazen_museum` is really 0.59mi to drive, not the 0.11mi
+   the reverse direction happened to be). Fixed by re-running
+   `scripts/compute_route_distances.py` (now safe to re-run on the file
+   as it already exists -- see its docstring) so every directed row gets
+   its own independently-computed number.
+
+**Known gap**: a handful of directed rows have no drivable route found
+in the fetched OSM extract (`walkMiles` still real and present for all
+of them), mostly around the Witte/Sellery/Ogg dorm cluster and Union
+South -- real pedestrian-only campus paths where a car genuinely can't
+follow the same route, not missing data. `union_south` is not actually
+drive-isolated (its outbound directions mostly resolve fine --
 only the return trip didn't, plausibly a real one-way access loop near
 its entrance); `witte_hall<->ogg_hall` is the one genuine gap worth
 flagging, since it's Ogg Hall's *only* curated edge, which would leave it
