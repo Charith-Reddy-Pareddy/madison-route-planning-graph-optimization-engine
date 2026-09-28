@@ -157,7 +157,7 @@ public class PathFinderServer {
           ? RoadNetwork.Mode.WALK
           : RoadNetwork.Mode.valueOf(modeParam.toUpperCase());
     } catch (IllegalArgumentException e) {
-      sendJson(exchange, 400, Json.error("'mode' must be 'walk' or 'drive'"));
+      sendJson(exchange, 400, Json.error("'mode' must be 'walk', 'drive', or 'accessible'"));
       return;
     }
     boolean live = "true".equalsIgnoreCase(params.get("live"));

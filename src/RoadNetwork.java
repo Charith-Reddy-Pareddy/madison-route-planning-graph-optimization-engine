@@ -21,7 +21,9 @@ public class RoadNetwork {
   /** Which travel mode a route is being planned for -- each has its own graph and its own real distances. */
   public enum Mode {
     WALK,
-    DRIVE
+    DRIVE,
+    /** Walking, but the graph excludes any real steps segment and any real incline over 8% (see {@link Road}). */
+    ACCESSIBLE
   }
 
   /**
@@ -37,20 +39,25 @@ public class RoadNetwork {
    * this network currently route through real stairs on their shortest path. {@code
    * accessibleMiles} is a real alternate distance computed over a walk graph that excludes any
    * real steps segment and any real incline tag over 8%, or null if no such route exists at all
-   * (a real, honest fact about some parts of this hilly campus, not a bug -- see data/sources.md).
-   * Not yet wired into a selectable routing mode; that's the next step.
+   * (a real, honest fact about some parts of this hilly campus, not a bug -- see data/sources.md)
+   * -- selectable as {@link Mode#ACCESSIBLE}.
    */
   public record Road(
       String from, String to, double walkMiles, Double driveMiles, Boolean hasSteps, Double maxInclinePercent,
       Double accessibleMiles, String busRoute) {
     /** The real distance for this road in the given mode, or null if this road doesn't exist in that mode. */
     public Double milesFor(Mode mode) {
-      return mode == Mode.WALK ? walkMiles : driveMiles;
+      return switch (mode) {
+        case WALK -> walkMiles;
+        case DRIVE -> driveMiles;
+        case ACCESSIBLE -> accessibleMiles;
+      };
     }
   }
 
   private final DijkstraGraph<String, Double> walkGraph = new DijkstraGraph<>();
   private final DijkstraGraph<String, Double> driveGraph = new DijkstraGraph<>();
+  private final DijkstraGraph<String, Double> accessibleGraph = new DijkstraGraph<>();
   private final Map<String, Intersection> intersections = new LinkedHashMap<>();
   private final List<Road> roads = new ArrayList<>();
   private final Map<String, Road> roadIndex = new LinkedHashMap<>();
@@ -65,6 +72,7 @@ public class RoadNetwork {
       intersections.put(i.id(), i);
       walkGraph.insertNode(i.id());
       driveGraph.insertNode(i.id());
+      accessibleGraph.insertNode(i.id());
     }
     for (Road r : data.roads()) {
       roads.add(r);
@@ -72,6 +80,9 @@ public class RoadNetwork {
       walkGraph.insertEdge(r.from(), r.to(), r.walkMiles());
       if (r.driveMiles() != null) {
         driveGraph.insertEdge(r.from(), r.to(), r.driveMiles());
+      }
+      if (r.accessibleMiles() != null) {
+        accessibleGraph.insertEdge(r.from(), r.to(), r.accessibleMiles());
       }
     }
   }
@@ -88,7 +99,7 @@ public class RoadNetwork {
   private static final double BUS_MPH = 12.0;
   private static final double DRIVE_MPH = 20.0;
 
-  /** Estimated minutes to cover `miles` in `mode`, riding `busRoute` instead of walking it if given (WALK mode only). */
+  /** Estimated minutes to cover `miles` in `mode`, riding `busRoute` instead of walking it if given (WALK/ACCESSIBLE only). */
   public static int estimatedMinutes(double miles, Mode mode, String busRoute) {
     double mph = mode == Mode.DRIVE ? DRIVE_MPH : (busRoute == null ? WALK_MPH : BUS_MPH);
     return (int) Math.max(1, Math.round(miles / mph * 60));
@@ -100,7 +111,11 @@ public class RoadNetwork {
   }
 
   public DijkstraGraph<String, Double> graph(Mode mode) {
-    return mode == Mode.WALK ? walkGraph : driveGraph;
+    return switch (mode) {
+      case WALK -> walkGraph;
+      case DRIVE -> driveGraph;
+      case ACCESSIBLE -> accessibleGraph;
+    };
   }
 
   public Collection<Intersection> intersections() {
