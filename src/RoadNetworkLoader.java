@@ -45,11 +45,18 @@ public class RoadNetworkLoader {
     List<RoadNetwork.Road> result = new ArrayList<>();
     for (String line : dataLines(csv)) {
       String[] cols = splitCsvLine(line);
-      // from,to,walkMiles,driveMiles,busRoute -- driveMiles is blank for the handful of edges
-      // with no real drivable route found (see data/sources.md's "Known gap").
+      // from,to,walkMiles,driveMiles,hasSteps,maxInclinePercent,accessibleMiles,busRoute --
+      // driveMiles/accessibleMiles are blank for edges with no real route found for that mode
+      // (see data/sources.md's "Known gap"). busRoute is always the *last* column regardless of
+      // how many fields come before it, so this keeps working as the schema grows.
       Double driveMiles = cols.length > 3 && !cols[3].isBlank() ? Double.parseDouble(cols[3]) : null;
-      String busRoute = cols.length > 4 && !cols[4].isBlank() ? cols[4] : null;
-      result.add(new RoadNetwork.Road(cols[0], cols[1], Double.parseDouble(cols[2]), driveMiles, busRoute));
+      Boolean hasSteps = cols.length > 4 && !cols[4].isBlank() ? Boolean.parseBoolean(cols[4]) : null;
+      Double maxInclinePercent = cols.length > 5 && !cols[5].isBlank() ? Double.parseDouble(cols[5]) : null;
+      Double accessibleMiles = cols.length > 6 && !cols[6].isBlank() ? Double.parseDouble(cols[6]) : null;
+      String busRoute = cols.length > 4 && !cols[cols.length - 1].isBlank() ? cols[cols.length - 1] : null;
+      result.add(new RoadNetwork.Road(
+          cols[0], cols[1], Double.parseDouble(cols[2]), driveMiles, hasSteps, maxInclinePercent, accessibleMiles,
+          busRoute));
     }
     return result;
   }

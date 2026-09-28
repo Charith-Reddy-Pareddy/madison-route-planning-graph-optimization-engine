@@ -31,8 +31,18 @@ public class RoadNetwork {
    * isn't part of the drive-mode graph. {@code busRoute} is the real Madison Metro Transit route
    * (per cityofmadison.com/metro) that runs this corridor, or null for a walk-only segment; used
    * to estimate travel time and to suggest a bus.
+   *
+   * <p>{@code hasSteps} and {@code maxInclinePercent} describe the real OSM tags found along this
+   * road's actual default walking route (see scripts/compute_accessibility.py) -- 38% of roads in
+   * this network currently route through real stairs on their shortest path. {@code
+   * accessibleMiles} is a real alternate distance computed over a walk graph that excludes any
+   * real steps segment and any real incline tag over 8%, or null if no such route exists at all
+   * (a real, honest fact about some parts of this hilly campus, not a bug -- see data/sources.md).
+   * Not yet wired into a selectable routing mode; that's the next step.
    */
-  public record Road(String from, String to, double walkMiles, Double driveMiles, String busRoute) {
+  public record Road(
+      String from, String to, double walkMiles, Double driveMiles, Boolean hasSteps, Double maxInclinePercent,
+      Double accessibleMiles, String busRoute) {
     /** The real distance for this road in the given mode, or null if this road doesn't exist in that mode. */
     public Double milesFor(Mode mode) {
       return mode == Mode.WALK ? walkMiles : driveMiles;

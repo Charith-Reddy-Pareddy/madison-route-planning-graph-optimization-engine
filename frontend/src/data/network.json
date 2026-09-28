@@ -349,6 +349,9 @@
             "to": "king_st",
             "walkMiles": 0.188,
             "driveMiles": 0.509,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.223,
             "busRoute": null
         },
         {
@@ -356,6 +359,9 @@
             "to": "capitol",
             "walkMiles": 0.188,
             "driveMiles": 0.351,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.223,
             "busRoute": null
         },
         {
@@ -363,6 +369,9 @@
             "to": "state_frances",
             "walkMiles": 0.598,
             "driveMiles": 0.81,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.633,
             "busRoute": "Route A"
         },
         {
@@ -370,6 +379,9 @@
             "to": "capitol",
             "walkMiles": 0.598,
             "driveMiles": 0.791,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.633,
             "busRoute": "Route A"
         },
         {
@@ -377,6 +389,9 @@
             "to": "john_nolen",
             "walkMiles": 1.755,
             "driveMiles": 1.976,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.793,
             "busRoute": null
         },
         {
@@ -384,6 +399,9 @@
             "to": "willy_st",
             "walkMiles": 0.387,
             "driveMiles": 0.434,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.387,
             "busRoute": "Route C"
         },
         {
@@ -391,6 +409,9 @@
             "to": "king_st",
             "walkMiles": 0.387,
             "driveMiles": 0.395,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.387,
             "busRoute": "Route C"
         },
         {
@@ -398,6 +419,9 @@
             "to": "capitol",
             "walkMiles": 0.573,
             "driveMiles": 0.735,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.61,
             "busRoute": null
         },
         {
@@ -405,6 +429,9 @@
             "to": "state_gilman",
             "walkMiles": 0.263,
             "driveMiles": 0.904,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.263,
             "busRoute": "Route A"
         },
         {
@@ -412,6 +439,9 @@
             "to": "state_frances",
             "walkMiles": 0.263,
             "driveMiles": 0.386,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.263,
             "busRoute": "Route A"
         },
         {
@@ -419,6 +449,9 @@
             "to": "library_mall",
             "walkMiles": 0.441,
             "driveMiles": 0.51,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.441,
             "busRoute": "Route A"
         },
         {
@@ -426,6 +459,9 @@
             "to": "state_gilman",
             "walkMiles": 0.441,
             "driveMiles": 0.827,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.441,
             "busRoute": "Route A"
         },
         {
@@ -433,6 +469,9 @@
             "to": "memorial_union",
             "walkMiles": 0.168,
             "driveMiles": 0.139,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.181,
             "busRoute": null
         },
         {
@@ -440,6 +479,9 @@
             "to": "library_mall",
             "walkMiles": 0.168,
             "driveMiles": 0.139,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.181,
             "busRoute": null
         },
         {
@@ -447,6 +489,9 @@
             "to": "regent_park",
             "walkMiles": 0.596,
             "driveMiles": 0.666,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.596,
             "busRoute": null
         },
         {
@@ -454,6 +499,9 @@
             "to": "library_mall",
             "walkMiles": 0.596,
             "driveMiles": 0.676,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.596,
             "busRoute": null
         },
         {
@@ -461,6 +509,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.307,
             "driveMiles": 0.297,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.333,
             "busRoute": null
         },
         {
@@ -468,6 +519,9 @@
             "to": "memorial_union",
             "walkMiles": 0.307,
             "driveMiles": 0.297,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.333,
             "busRoute": null
         },
         {
@@ -475,6 +529,9 @@
             "to": "camp_randall",
             "walkMiles": 0.83,
             "driveMiles": 0.915,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.83,
             "busRoute": null
         },
         {
@@ -482,6 +539,9 @@
             "to": "regent_park",
             "walkMiles": 0.804,
             "driveMiles": 0.809,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.804,
             "busRoute": null
         },
         {
@@ -489,6 +549,9 @@
             "to": "camp_randall",
             "walkMiles": 0.804,
             "driveMiles": 0.811,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.804,
             "busRoute": null
         },
         {
@@ -496,6 +559,9 @@
             "to": "monroe_edgewood",
             "walkMiles": 1.347,
             "driveMiles": 1.343,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.347,
             "busRoute": "Route D"
         },
         {
@@ -503,6 +569,9 @@
             "to": "camp_randall",
             "walkMiles": 1.347,
             "driveMiles": 1.343,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.347,
             "busRoute": "Route D"
         },
         {
@@ -510,6 +579,9 @@
             "to": "monroe_edgewood",
             "walkMiles": 1.788,
             "driveMiles": 1.784,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.788,
             "busRoute": null
         },
         {
@@ -517,6 +589,9 @@
             "to": "regent_park",
             "walkMiles": 1.788,
             "driveMiles": 1.785,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.788,
             "busRoute": null
         },
         {
@@ -524,6 +599,9 @@
             "to": "john_nolen",
             "walkMiles": 1.974,
             "driveMiles": 1.978,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.974,
             "busRoute": null
         },
         {
@@ -531,6 +609,9 @@
             "to": "regent_park",
             "walkMiles": 1.974,
             "driveMiles": 2.035,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.974,
             "busRoute": null
         },
         {
@@ -538,6 +619,9 @@
             "to": "capitol",
             "walkMiles": 1.755,
             "driveMiles": 2.25,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.793,
             "busRoute": null
         },
         {
@@ -545,6 +629,9 @@
             "to": "east_wash",
             "walkMiles": 0.56,
             "driveMiles": 0.661,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.56,
             "busRoute": "Route L"
         },
         {
@@ -552,6 +639,9 @@
             "to": "king_st",
             "walkMiles": 0.56,
             "driveMiles": 0.633,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.56,
             "busRoute": "Route L"
         },
         {
@@ -559,6 +649,9 @@
             "to": "tenney_park",
             "walkMiles": 1.198,
             "driveMiles": 1.266,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.198,
             "busRoute": null
         },
         {
@@ -566,6 +659,9 @@
             "to": "east_wash",
             "walkMiles": 1.198,
             "driveMiles": 1.269,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.198,
             "busRoute": null
         },
         {
@@ -573,6 +669,9 @@
             "to": "tenney_park",
             "walkMiles": 1.557,
             "driveMiles": 1.713,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.557,
             "busRoute": null
         },
         {
@@ -580,6 +679,9 @@
             "to": "willy_st",
             "walkMiles": 1.557,
             "driveMiles": 1.641,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.557,
             "busRoute": null
         },
         {
@@ -587,6 +689,9 @@
             "to": "atwood_schenks",
             "walkMiles": 1.465,
             "driveMiles": 1.638,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.465,
             "busRoute": "Route L"
         },
         {
@@ -594,6 +699,9 @@
             "to": "olbrich_gardens",
             "walkMiles": 1.058,
             "driveMiles": 1.09,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.058,
             "busRoute": "Route 38"
         },
         {
@@ -601,6 +709,9 @@
             "to": "atwood_schenks",
             "walkMiles": 1.058,
             "driveMiles": 1.07,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 1.058,
             "busRoute": "Route 38"
         },
         {
@@ -608,6 +719,9 @@
             "to": "tenney_park",
             "walkMiles": 2.029,
             "driveMiles": 2.407,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 2.029,
             "busRoute": null
         },
         {
@@ -615,6 +729,9 @@
             "to": "arboretum",
             "walkMiles": 2.15,
             "driveMiles": 2.169,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 2.15,
             "busRoute": null
         },
         {
@@ -622,6 +739,9 @@
             "to": "monroe_edgewood",
             "walkMiles": 2.15,
             "driveMiles": 2.166,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 2.15,
             "busRoute": null
         },
         {
@@ -629,6 +749,9 @@
             "to": "hilldale",
             "walkMiles": 2.745,
             "driveMiles": 2.848,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 2.745,
             "busRoute": null
         },
         {
@@ -636,6 +759,9 @@
             "to": "bascom_hill",
             "walkMiles": 2.745,
             "driveMiles": 2.955,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 2.745,
             "busRoute": null
         },
         {
@@ -643,6 +769,9 @@
             "to": "morgridge_hall",
             "walkMiles": 0.339,
             "driveMiles": 0.382,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.339,
             "busRoute": null
         },
         {
@@ -650,6 +779,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.339,
             "driveMiles": 0.542,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.339,
             "busRoute": null
         },
         {
@@ -657,6 +789,9 @@
             "to": "union_south",
             "walkMiles": 0.388,
             "driveMiles": 0.594,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.393,
             "busRoute": null
         },
         {
@@ -664,6 +799,9 @@
             "to": "camp_randall",
             "walkMiles": 0.388,
             "driveMiles": 0.588,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.393,
             "busRoute": null
         },
         {
@@ -671,6 +809,9 @@
             "to": "kohl_center",
             "walkMiles": 0.945,
             "driveMiles": 1.314,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.945,
             "busRoute": null
         },
         {
@@ -678,6 +819,9 @@
             "to": "camp_randall",
             "walkMiles": 0.945,
             "driveMiles": 1.308,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.945,
             "busRoute": null
         },
         {
@@ -685,6 +829,9 @@
             "to": "engineering_hall",
             "walkMiles": 0.306,
             "driveMiles": 0.532,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.323,
             "busRoute": null
         },
         {
@@ -692,6 +839,9 @@
             "to": "union_south",
             "walkMiles": 0.306,
             "driveMiles": 0.75,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.323,
             "busRoute": null
         },
         {
@@ -699,6 +849,9 @@
             "to": "grainger_hall",
             "walkMiles": 0.441,
             "driveMiles": 0.619,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.441,
             "busRoute": "Route A"
         },
         {
@@ -706,6 +859,9 @@
             "to": "state_frances",
             "walkMiles": 0.441,
             "driveMiles": 0.728,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.441,
             "busRoute": "Route A"
         },
         {
@@ -713,6 +869,9 @@
             "to": "chazen_museum",
             "walkMiles": 0.475,
             "driveMiles": 0.54,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.475,
             "busRoute": "Route A"
         },
         {
@@ -720,6 +879,9 @@
             "to": "state_gilman",
             "walkMiles": 0.475,
             "driveMiles": 0.675,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.475,
             "busRoute": "Route A"
         },
         {
@@ -727,6 +889,9 @@
             "to": "college_library",
             "walkMiles": 0.14,
             "driveMiles": 0.052,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.14,
             "busRoute": null
         },
         {
@@ -734,6 +899,9 @@
             "to": "memorial_union",
             "walkMiles": 0.14,
             "driveMiles": 0.052,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.14,
             "busRoute": null
         },
         {
@@ -741,6 +909,9 @@
             "to": "sellery_hall",
             "walkMiles": 0.274,
             "driveMiles": 0.465,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.274,
             "busRoute": "Route B"
         },
         {
@@ -748,6 +919,9 @@
             "to": "witte_hall",
             "walkMiles": 0.274,
             "driveMiles": 0.281,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.274,
             "busRoute": "Route B"
         },
         {
@@ -755,6 +929,9 @@
             "to": "ogg_hall",
             "walkMiles": 0.2,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.2,
             "busRoute": "Route B"
         },
         {
@@ -762,6 +939,9 @@
             "to": "witte_hall",
             "walkMiles": 0.2,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.2,
             "busRoute": "Route B"
         },
         {
@@ -769,6 +949,9 @@
             "to": "chadbourne_hall",
             "walkMiles": 0.246,
             "driveMiles": 0.461,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.251,
             "busRoute": null
         },
         {
@@ -776,6 +959,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.246,
             "driveMiles": 0.461,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.251,
             "busRoute": null
         },
         {
@@ -783,6 +969,9 @@
             "to": "social_sciences",
             "walkMiles": 0.207,
             "driveMiles": 0.151,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.207,
             "busRoute": null
         },
         {
@@ -790,6 +979,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.207,
             "driveMiles": 0.151,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.207,
             "busRoute": null
         },
         {
@@ -797,6 +989,9 @@
             "to": "education_building",
             "walkMiles": 0.456,
             "driveMiles": 0.595,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.533,
             "busRoute": null
         },
         {
@@ -804,6 +999,9 @@
             "to": "morgridge_hall",
             "walkMiles": 0.456,
             "driveMiles": 0.435,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.533,
             "busRoute": null
         },
         {
@@ -811,6 +1009,9 @@
             "to": "memorial_library",
             "walkMiles": 0.121,
             "driveMiles": 0.186,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.121,
             "busRoute": "Route A"
         },
         {
@@ -818,6 +1019,9 @@
             "to": "state_frances",
             "walkMiles": 0.121,
             "driveMiles": 0.186,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.121,
             "busRoute": "Route A"
         },
         {
@@ -825,6 +1029,9 @@
             "to": "humanities_building",
             "walkMiles": 0.211,
             "driveMiles": 0.313,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.212,
             "busRoute": null
         },
         {
@@ -832,6 +1039,9 @@
             "to": "memorial_library",
             "walkMiles": 0.211,
             "driveMiles": 0.313,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.212,
             "busRoute": null
         },
         {
@@ -839,6 +1049,9 @@
             "to": "science_hall",
             "walkMiles": 0.287,
             "driveMiles": 0.3,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.287,
             "busRoute": null
         },
         {
@@ -846,6 +1059,9 @@
             "to": "memorial_library",
             "walkMiles": 0.287,
             "driveMiles": 0.3,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.287,
             "busRoute": null
         },
         {
@@ -853,6 +1069,9 @@
             "to": "van_hise_hall",
             "walkMiles": 0.36,
             "driveMiles": 0.493,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.408,
             "busRoute": null
         },
         {
@@ -860,6 +1079,9 @@
             "to": "college_library",
             "walkMiles": 0.36,
             "driveMiles": 0.493,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.408,
             "busRoute": null
         },
         {
@@ -867,6 +1089,9 @@
             "to": "van_vleck_hall",
             "walkMiles": 0.305,
             "driveMiles": 0.468,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.322,
             "busRoute": null
         },
         {
@@ -874,6 +1099,9 @@
             "to": "college_library",
             "walkMiles": 0.305,
             "driveMiles": 0.468,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.322,
             "busRoute": null
         },
         {
@@ -881,6 +1109,9 @@
             "to": "discovery_building",
             "walkMiles": 0.223,
             "driveMiles": 0.615,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.24,
             "busRoute": null
         },
         {
@@ -888,6 +1119,9 @@
             "to": "engineering_hall",
             "walkMiles": 0.223,
             "driveMiles": 0.688,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.24,
             "busRoute": null
         },
         {
@@ -895,6 +1129,9 @@
             "to": "nicholas_rec",
             "walkMiles": 0.594,
             "driveMiles": 0.631,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.594,
             "busRoute": null
         },
         {
@@ -902,6 +1139,9 @@
             "to": "union_south",
             "walkMiles": 0.594,
             "driveMiles": 0.631,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.594,
             "busRoute": null
         },
         {
@@ -909,6 +1149,9 @@
             "to": "atmosphere_apts",
             "walkMiles": 0.999,
             "driveMiles": 1.062,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.999,
             "busRoute": null
         },
         {
@@ -916,6 +1159,9 @@
             "to": "camp_randall",
             "walkMiles": 0.999,
             "driveMiles": 1.06,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.999,
             "busRoute": null
         },
         {
@@ -923,6 +1169,9 @@
             "to": "x01_apts",
             "walkMiles": 0.436,
             "driveMiles": 0.578,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.436,
             "busRoute": null
         },
         {
@@ -930,6 +1179,9 @@
             "to": "kohl_center",
             "walkMiles": 0.436,
             "driveMiles": 0.578,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.436,
             "busRoute": null
         },
         {
@@ -937,6 +1189,9 @@
             "to": "lucky_apts",
             "walkMiles": 0.226,
             "driveMiles": 0.405,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.226,
             "busRoute": null
         },
         {
@@ -944,6 +1199,9 @@
             "to": "grainger_hall",
             "walkMiles": 0.226,
             "driveMiles": 0.28,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.226,
             "busRoute": null
         },
         {
@@ -951,6 +1209,9 @@
             "to": "red_gym",
             "walkMiles": 0.105,
             "driveMiles": 0.075,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.105,
             "busRoute": null
         },
         {
@@ -958,6 +1219,9 @@
             "to": "library_mall",
             "walkMiles": 0.105,
             "driveMiles": 0.075,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.105,
             "busRoute": null
         },
         {
@@ -965,6 +1229,9 @@
             "to": "vilas_hall",
             "walkMiles": 0.164,
             "driveMiles": 0.205,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -972,6 +1239,9 @@
             "to": "grainger_hall",
             "walkMiles": 0.164,
             "driveMiles": 0.159,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -979,6 +1249,9 @@
             "to": "target_state_st",
             "walkMiles": 0.019,
             "driveMiles": 0.017,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.019,
             "busRoute": "Route A"
         },
         {
@@ -986,6 +1259,9 @@
             "to": "state_frances",
             "walkMiles": 0.019,
             "driveMiles": 0.017,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.019,
             "busRoute": "Route A"
         },
         {
@@ -993,6 +1269,9 @@
             "to": "chipotle_state_st",
             "walkMiles": 0.063,
             "driveMiles": 0.151,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.063,
             "busRoute": "Route A"
         },
         {
@@ -1000,6 +1279,9 @@
             "to": "state_frances",
             "walkMiles": 0.063,
             "driveMiles": 0.151,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.063,
             "busRoute": "Route A"
         },
         {
@@ -1007,6 +1289,9 @@
             "to": "popeyes_state_st",
             "walkMiles": 0.037,
             "driveMiles": 0.126,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.037,
             "busRoute": "Route A"
         },
         {
@@ -1014,6 +1299,9 @@
             "to": "state_frances",
             "walkMiles": 0.037,
             "driveMiles": 0.126,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.037,
             "busRoute": "Route A"
         },
         {
@@ -1021,6 +1309,9 @@
             "to": "ians_pizza",
             "walkMiles": 0.167,
             "driveMiles": 0.246,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.202,
             "busRoute": "Route A"
         },
         {
@@ -1028,6 +1319,9 @@
             "to": "capitol",
             "walkMiles": 0.167,
             "driveMiles": 0.168,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.202,
             "busRoute": "Route A"
         },
         {
@@ -1035,6 +1329,9 @@
             "to": "middleton_building",
             "walkMiles": 0.172,
             "driveMiles": 0.09,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.245,
             "busRoute": null
         },
         {
@@ -1042,6 +1339,9 @@
             "to": "van_hise_hall",
             "walkMiles": 0.172,
             "driveMiles": 0.09,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.245,
             "busRoute": null
         },
         {
@@ -1049,6 +1349,9 @@
             "to": "vilas_zoo",
             "walkMiles": 0.918,
             "driveMiles": 0.929,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.918,
             "busRoute": null
         },
         {
@@ -1056,6 +1359,9 @@
             "to": "camp_randall",
             "walkMiles": 0.918,
             "driveMiles": 0.878,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.918,
             "busRoute": null
         },
         {
@@ -1063,6 +1369,9 @@
             "to": "elizabeth_waters",
             "walkMiles": 0.254,
             "driveMiles": 0.184,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1070,6 +1379,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.254,
             "driveMiles": 0.184,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1077,6 +1389,9 @@
             "to": "witte_hall",
             "walkMiles": 0.443,
             "driveMiles": 0.483,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.443,
             "busRoute": "Route B"
         },
         {
@@ -1084,6 +1399,9 @@
             "to": "library_mall",
             "walkMiles": 0.443,
             "driveMiles": 0.484,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.443,
             "busRoute": "Route B"
         },
         {
@@ -1091,6 +1409,9 @@
             "to": "elizabeth_waters",
             "walkMiles": 0.419,
             "driveMiles": 0.412,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": "Route 80"
         },
         {
@@ -1098,6 +1419,9 @@
             "to": "memorial_union",
             "walkMiles": 0.419,
             "driveMiles": 0.412,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": "Route 80"
         },
         {
@@ -1105,6 +1429,9 @@
             "to": "slichter_hall",
             "walkMiles": 0.328,
             "driveMiles": 0.477,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": "Route 80"
         },
         {
@@ -1112,6 +1439,9 @@
             "to": "elizabeth_waters",
             "walkMiles": 0.328,
             "driveMiles": 0.477,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": "Route 80"
         },
         {
@@ -1119,6 +1449,9 @@
             "to": "kronshage_halls",
             "walkMiles": 0.211,
             "driveMiles": 0.31,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.211,
             "busRoute": "Route 80"
         },
         {
@@ -1126,6 +1459,9 @@
             "to": "slichter_hall",
             "walkMiles": 0.211,
             "driveMiles": 0.31,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.211,
             "busRoute": "Route 80"
         },
         {
@@ -1133,6 +1469,9 @@
             "to": "bradley_hall",
             "walkMiles": 0.026,
             "driveMiles": 0.026,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.02,
             "busRoute": null
         },
         {
@@ -1140,6 +1479,9 @@
             "to": "kronshage_halls",
             "walkMiles": 0.026,
             "driveMiles": 0.026,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.02,
             "busRoute": null
         },
         {
@@ -1147,6 +1489,9 @@
             "to": "dejope_hall",
             "walkMiles": 0.1,
             "driveMiles": 0.41,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.1,
             "busRoute": null
         },
         {
@@ -1154,6 +1499,9 @@
             "to": "kronshage_halls",
             "walkMiles": 0.1,
             "driveMiles": 0.41,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.1,
             "busRoute": null
         },
         {
@@ -1161,6 +1509,9 @@
             "to": "bakke_rec_center",
             "walkMiles": 0.283,
             "driveMiles": 0.266,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.283,
             "busRoute": null
         },
         {
@@ -1168,6 +1519,9 @@
             "to": "dejope_hall",
             "walkMiles": 0.283,
             "driveMiles": 0.266,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.283,
             "busRoute": null
         },
         {
@@ -1175,6 +1529,9 @@
             "to": "lakeshore_preserve",
             "walkMiles": 0.788,
             "driveMiles": 0.808,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.788,
             "busRoute": "Route 80"
         },
         {
@@ -1182,6 +1539,9 @@
             "to": "bakke_rec_center",
             "walkMiles": 0.788,
             "driveMiles": 0.848,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.788,
             "busRoute": "Route 80"
         },
         {
@@ -1189,6 +1549,9 @@
             "to": "eagle_heights",
             "walkMiles": 0.652,
             "driveMiles": 1.16,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.652,
             "busRoute": "Route 80"
         },
         {
@@ -1196,6 +1559,9 @@
             "to": "lakeshore_preserve",
             "walkMiles": 0.652,
             "driveMiles": 1.151,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.652,
             "busRoute": "Route 80"
         },
         {
@@ -1203,6 +1569,9 @@
             "to": "witte_hall",
             "walkMiles": 0.187,
             "driveMiles": 0.188,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.187,
             "busRoute": null
         },
         {
@@ -1210,6 +1579,9 @@
             "to": "kohl_center",
             "walkMiles": 0.187,
             "driveMiles": 0.188,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.187,
             "busRoute": null
         },
         {
@@ -1217,6 +1589,9 @@
             "to": "morgridge_hall",
             "walkMiles": 0.097,
             "driveMiles": 0.301,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.097,
             "busRoute": null
         },
         {
@@ -1224,6 +1599,9 @@
             "to": "discovery_building",
             "walkMiles": 0.097,
             "driveMiles": 0.453,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.097,
             "busRoute": null
         },
         {
@@ -1231,6 +1609,9 @@
             "to": "chadbourne_hall",
             "walkMiles": 0.152,
             "driveMiles": 0.338,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.152,
             "busRoute": null
         },
         {
@@ -1238,6 +1619,9 @@
             "to": "x01_apts",
             "walkMiles": 0.152,
             "driveMiles": 0.229,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.152,
             "busRoute": null
         },
         {
@@ -1245,6 +1629,9 @@
             "to": "humanities_building",
             "walkMiles": 0.141,
             "driveMiles": 0.067,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.141,
             "busRoute": null
         },
         {
@@ -1252,6 +1639,9 @@
             "to": "chadbourne_hall",
             "walkMiles": 0.141,
             "driveMiles": 0.067,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.141,
             "busRoute": null
         },
         {
@@ -1259,6 +1649,9 @@
             "to": "chazen_museum",
             "walkMiles": 0.075,
             "driveMiles": 0.453,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.075,
             "busRoute": null
         },
         {
@@ -1266,6 +1659,9 @@
             "to": "humanities_building",
             "walkMiles": 0.075,
             "driveMiles": 0.328,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.075,
             "busRoute": null
         },
         {
@@ -1273,6 +1669,9 @@
             "to": "lucky_apts",
             "walkMiles": 0.131,
             "driveMiles": 0.11,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.131,
             "busRoute": null
         },
         {
@@ -1280,6 +1679,9 @@
             "to": "chazen_museum",
             "walkMiles": 0.131,
             "driveMiles": 0.59,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.131,
             "busRoute": null
         },
         {
@@ -1287,6 +1689,9 @@
             "to": "vilas_hall",
             "walkMiles": 0.134,
             "driveMiles": 0.296,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1294,6 +1699,9 @@
             "to": "lucky_apts",
             "walkMiles": 0.134,
             "driveMiles": 0.374,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1301,6 +1709,9 @@
             "to": "science_hall",
             "walkMiles": 0.097,
             "driveMiles": 0.157,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.097,
             "busRoute": null
         },
         {
@@ -1308,6 +1719,9 @@
             "to": "education_building",
             "walkMiles": 0.097,
             "driveMiles": 0.157,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.097,
             "busRoute": null
         },
         {
@@ -1315,6 +1729,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.078,
             "driveMiles": 0.228,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.078,
             "busRoute": null
         },
         {
@@ -1322,6 +1739,9 @@
             "to": "van_vleck_hall",
             "walkMiles": 0.078,
             "driveMiles": 0.228,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.078,
             "busRoute": null
         },
         {
@@ -1329,6 +1749,9 @@
             "to": "witte_hall",
             "walkMiles": 0.253,
             "driveMiles": 0.244,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.253,
             "busRoute": null
         },
         {
@@ -1336,6 +1759,9 @@
             "to": "nicholas_rec",
             "walkMiles": 0.253,
             "driveMiles": 0.244,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.253,
             "busRoute": null
         },
         {
@@ -1343,6 +1769,9 @@
             "to": "kohl_center",
             "walkMiles": 0.307,
             "driveMiles": 0.624,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.307,
             "busRoute": null
         },
         {
@@ -1350,6 +1779,9 @@
             "to": "atmosphere_apts",
             "walkMiles": 0.307,
             "driveMiles": 0.534,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.307,
             "busRoute": null
         },
         {
@@ -1357,6 +1789,9 @@
             "to": "union_south",
             "walkMiles": 0.445,
             "driveMiles": 0.55,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.516,
             "busRoute": null
         },
         {
@@ -1364,6 +1799,9 @@
             "to": "middleton_building",
             "walkMiles": 0.445,
             "driveMiles": 0.548,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.516,
             "busRoute": null
         },
         {
@@ -1371,6 +1809,9 @@
             "to": "sellery_hall",
             "walkMiles": 0.196,
             "driveMiles": 0.22,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.196,
             "busRoute": null
         },
         {
@@ -1378,6 +1819,9 @@
             "to": "grainger_hall",
             "walkMiles": 0.196,
             "driveMiles": 0.503,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.196,
             "busRoute": null
         },
         {
@@ -1385,6 +1829,9 @@
             "to": "college_library",
             "walkMiles": 0.124,
             "driveMiles": 0.201,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.124,
             "busRoute": null
         },
         {
@@ -1392,6 +1839,9 @@
             "to": "education_building",
             "walkMiles": 0.124,
             "driveMiles": 0.201,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.124,
             "busRoute": null
         },
         {
@@ -1399,6 +1849,9 @@
             "to": "college_library",
             "walkMiles": 0.099,
             "driveMiles": 0.108,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.099,
             "busRoute": null
         },
         {
@@ -1406,6 +1859,9 @@
             "to": "science_hall",
             "walkMiles": 0.099,
             "driveMiles": 0.108,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.099,
             "busRoute": null
         },
         {
@@ -1413,6 +1869,9 @@
             "to": "science_hall",
             "walkMiles": 0.209,
             "driveMiles": 0.224,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.209,
             "busRoute": null
         },
         {
@@ -1420,6 +1879,9 @@
             "to": "red_gym",
             "walkMiles": 0.209,
             "driveMiles": 0.224,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.209,
             "busRoute": null
         },
         {
@@ -1427,6 +1889,9 @@
             "to": "regent_park",
             "walkMiles": 0.442,
             "driveMiles": 0.456,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.442,
             "busRoute": null
         },
         {
@@ -1434,6 +1899,9 @@
             "to": "grainger_hall",
             "walkMiles": 0.442,
             "driveMiles": 0.474,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.442,
             "busRoute": null
         },
         {
@@ -1441,6 +1909,9 @@
             "to": "regent_park",
             "walkMiles": 0.291,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.291,
             "busRoute": null
         },
         {
@@ -1448,6 +1919,9 @@
             "to": "ogg_hall",
             "walkMiles": 0.291,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.291,
             "busRoute": null
         },
         {
@@ -1455,6 +1929,9 @@
             "to": "slichter_hall",
             "walkMiles": 0.44,
             "driveMiles": 0.483,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.446,
             "busRoute": null
         },
         {
@@ -1462,6 +1939,9 @@
             "to": "middleton_building",
             "walkMiles": 0.44,
             "driveMiles": 0.483,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.446,
             "busRoute": null
         },
         {
@@ -1469,6 +1949,9 @@
             "to": "grainger_hall",
             "walkMiles": 0.441,
             "driveMiles": 0.506,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.456,
             "busRoute": null
         },
         {
@@ -1476,6 +1959,9 @@
             "to": "van_hise_hall",
             "walkMiles": 0.441,
             "driveMiles": 0.412,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.456,
             "busRoute": null
         },
         {
@@ -1483,6 +1969,9 @@
             "to": "vilas_hall",
             "walkMiles": 0.201,
             "driveMiles": 0.196,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1490,6 +1979,9 @@
             "to": "x01_apts",
             "walkMiles": 0.201,
             "driveMiles": 0.15,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1497,6 +1989,9 @@
             "to": "ogg_hall",
             "walkMiles": 0.121,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.121,
             "busRoute": null
         },
         {
@@ -1504,6 +1999,9 @@
             "to": "nicholas_rec",
             "walkMiles": 0.121,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.121,
             "busRoute": null
         },
         {
@@ -1511,6 +2009,9 @@
             "to": "sellery_hall",
             "walkMiles": 0.166,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.166,
             "busRoute": null
         },
         {
@@ -1518,6 +2019,9 @@
             "to": "ogg_hall",
             "walkMiles": 0.166,
             "driveMiles": null,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.166,
             "busRoute": null
         },
         {
@@ -1525,6 +2029,9 @@
             "to": "x01_apts",
             "walkMiles": 0.057,
             "driveMiles": 0.057,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.057,
             "busRoute": null
         },
         {
@@ -1532,6 +2039,9 @@
             "to": "grainger_hall",
             "walkMiles": 0.057,
             "driveMiles": 0.057,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.057,
             "busRoute": null
         },
         {
@@ -1539,6 +2049,9 @@
             "to": "memorial_library",
             "walkMiles": 0.135,
             "driveMiles": 0.142,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.135,
             "busRoute": null
         },
         {
@@ -1546,6 +2059,9 @@
             "to": "red_gym",
             "walkMiles": 0.135,
             "driveMiles": 0.142,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.135,
             "busRoute": null
         },
         {
@@ -1553,6 +2069,9 @@
             "to": "memorial_library",
             "walkMiles": 0.126,
             "driveMiles": 0.109,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.127,
             "busRoute": null
         },
         {
@@ -1560,6 +2079,9 @@
             "to": "library_mall",
             "walkMiles": 0.126,
             "driveMiles": 0.109,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.127,
             "busRoute": null
         },
         {
@@ -1567,6 +2089,9 @@
             "to": "elizabeth_waters",
             "walkMiles": 0.09,
             "driveMiles": 0.078,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1574,6 +2099,9 @@
             "to": "social_sciences",
             "walkMiles": 0.09,
             "driveMiles": 0.078,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1581,6 +2109,9 @@
             "to": "union_south",
             "walkMiles": 0.11,
             "driveMiles": 0.344,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.11,
             "busRoute": null
         },
         {
@@ -1588,6 +2119,9 @@
             "to": "discovery_building",
             "walkMiles": 0.11,
             "driveMiles": 0.177,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.11,
             "busRoute": null
         },
         {
@@ -1595,6 +2129,9 @@
             "to": "engineering_hall",
             "walkMiles": 0.25,
             "driveMiles": 0.354,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.268,
             "busRoute": null
         },
         {
@@ -1602,6 +2139,9 @@
             "to": "middleton_building",
             "walkMiles": 0.25,
             "driveMiles": 0.354,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.268,
             "busRoute": null
         },
         {
@@ -1609,6 +2149,9 @@
             "to": "lucky_apts",
             "walkMiles": 0.227,
             "driveMiles": 0.238,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.227,
             "busRoute": null
         },
         {
@@ -1616,6 +2159,9 @@
             "to": "witte_hall",
             "walkMiles": 0.227,
             "driveMiles": 0.554,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.227,
             "busRoute": null
         },
         {
@@ -1623,6 +2169,9 @@
             "to": "education_building",
             "walkMiles": 0.118,
             "driveMiles": 0.122,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.203,
             "busRoute": null
         },
         {
@@ -1630,6 +2179,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.118,
             "driveMiles": 0.122,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.203,
             "busRoute": null
         },
         {
@@ -1637,6 +2189,9 @@
             "to": "van_hise_hall",
             "walkMiles": 0.163,
             "driveMiles": 0.208,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1644,6 +2199,9 @@
             "to": "elizabeth_waters",
             "walkMiles": 0.163,
             "driveMiles": 0.208,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1651,6 +2209,9 @@
             "to": "library_mall",
             "walkMiles": 0.117,
             "driveMiles": 0.249,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.117,
             "busRoute": null
         },
         {
@@ -1658,6 +2219,9 @@
             "to": "chazen_museum",
             "walkMiles": 0.117,
             "driveMiles": 0.249,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.117,
             "busRoute": null
         },
         {
@@ -1665,6 +2229,9 @@
             "to": "nicholas_rec",
             "walkMiles": 0.099,
             "driveMiles": 0.282,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.089,
             "busRoute": null
         },
         {
@@ -1672,6 +2239,9 @@
             "to": "kohl_center",
             "walkMiles": 0.099,
             "driveMiles": 0.282,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.089,
             "busRoute": null
         },
         {
@@ -1679,6 +2249,9 @@
             "to": "van_hise_hall",
             "walkMiles": 0.117,
             "driveMiles": 0.176,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.117,
             "busRoute": null
         },
         {
@@ -1686,6 +2259,9 @@
             "to": "social_sciences",
             "walkMiles": 0.117,
             "driveMiles": 0.176,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.117,
             "busRoute": null
         },
         {
@@ -1693,6 +2269,9 @@
             "to": "science_hall",
             "walkMiles": 0.239,
             "driveMiles": 0.215,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.239,
             "busRoute": null
         },
         {
@@ -1700,6 +2279,9 @@
             "to": "humanities_building",
             "walkMiles": 0.239,
             "driveMiles": 0.215,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.239,
             "busRoute": null
         },
         {
@@ -1707,6 +2289,9 @@
             "to": "vilas_hall",
             "walkMiles": 0.189,
             "driveMiles": null,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1714,6 +2299,9 @@
             "to": "ogg_hall",
             "walkMiles": 0.189,
             "driveMiles": null,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": null,
             "busRoute": null
         },
         {
@@ -1721,6 +2309,9 @@
             "to": "science_hall",
             "walkMiles": 0.247,
             "driveMiles": 0.261,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.247,
             "busRoute": null
         },
         {
@@ -1728,6 +2319,9 @@
             "to": "chadbourne_hall",
             "walkMiles": 0.247,
             "driveMiles": 0.261,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.247,
             "busRoute": null
         },
         {
@@ -1735,6 +2329,9 @@
             "to": "van_hise_hall",
             "walkMiles": 0.197,
             "driveMiles": 0.253,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.197,
             "busRoute": null
         },
         {
@@ -1742,6 +2339,9 @@
             "to": "bascom_hill",
             "walkMiles": 0.197,
             "driveMiles": 0.253,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.197,
             "busRoute": null
         },
         {
@@ -1749,6 +2349,9 @@
             "to": "state_gilman",
             "walkMiles": 0.187,
             "driveMiles": 0.539,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.186,
             "busRoute": null
         },
         {
@@ -1756,6 +2359,9 @@
             "to": "ians_pizza",
             "walkMiles": 0.187,
             "driveMiles": 0.445,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.186,
             "busRoute": null
         },
         {
@@ -1763,6 +2369,9 @@
             "to": "lucky_apts",
             "walkMiles": 0.181,
             "driveMiles": 0.248,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.181,
             "busRoute": null
         },
         {
@@ -1770,6 +2379,9 @@
             "to": "chipotle_state_st",
             "walkMiles": 0.181,
             "driveMiles": 0.558,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.181,
             "busRoute": null
         },
         {
@@ -1777,6 +2389,9 @@
             "to": "van_vleck_hall",
             "walkMiles": 0.179,
             "driveMiles": 0.115,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.179,
             "busRoute": null
         },
         {
@@ -1784,6 +2399,9 @@
             "to": "van_hise_hall",
             "walkMiles": 0.179,
             "driveMiles": 0.115,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.179,
             "busRoute": null
         },
         {
@@ -1791,6 +2409,9 @@
             "to": "slichter_hall",
             "walkMiles": 0.243,
             "driveMiles": 0.278,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.256,
             "busRoute": null
         },
         {
@@ -1798,6 +2419,9 @@
             "to": "engineering_hall",
             "walkMiles": 0.243,
             "driveMiles": 0.278,
+            "hasSteps": true,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.256,
             "busRoute": null
         },
         {
@@ -1805,6 +2429,9 @@
             "to": "regent_park",
             "walkMiles": 0.233,
             "driveMiles": 0.248,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.233,
             "busRoute": null
         },
         {
@@ -1812,6 +2439,9 @@
             "to": "atmosphere_apts",
             "walkMiles": 0.233,
             "driveMiles": 0.253,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.233,
             "busRoute": null
         },
         {
@@ -1819,6 +2449,9 @@
             "to": "morgridge_hall",
             "walkMiles": 0.336,
             "driveMiles": 0.334,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.336,
             "busRoute": null
         },
         {
@@ -1826,6 +2459,9 @@
             "to": "middleton_building",
             "walkMiles": 0.336,
             "driveMiles": 0.494,
+            "hasSteps": false,
+            "maxInclinePercent": 0.0,
+            "accessibleMiles": 0.336,
             "busRoute": null
         }
     ]
