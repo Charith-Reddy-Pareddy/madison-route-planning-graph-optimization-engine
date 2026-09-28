@@ -30,6 +30,7 @@ function groupBusTrips(segments) {
 export default function RouteResult({ statusType, statusMessage, route, nodesById }) {
   const nameOf = (id) => nodesById.get(id)?.name ?? id;
   const isDrive = route?.mode === 'drive';
+  const isAccessible = route?.mode === 'accessible';
   const busTrips = !isDrive && route ? groupBusTrips(route.segments) : [];
 
   return (
@@ -48,7 +49,9 @@ export default function RouteResult({ statusType, statusMessage, route, nodesByI
 
       {route && (
         <>
-          <h3 className="section-label">{isDrive ? 'Driving directions' : 'Walking directions'}</h3>
+          <h3 className="section-label">
+            {isDrive ? 'Driving directions' : isAccessible ? 'Accessible walking directions (no stairs, no steep inclines)' : 'Walking directions'}
+          </h3>
           {isDrive && 'live' in route && (
             <p className={route.live ? 'live-status live' : 'live-status'}>
               {route.live

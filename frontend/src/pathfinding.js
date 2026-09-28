@@ -17,7 +17,9 @@ function estimatedMinutes(miles, mode, busRoute) {
 }
 
 function milesFor(edge, mode) {
-  return mode === 'drive' ? edge.driveMiles : edge.walkMiles;
+  if (mode === 'drive') return edge.driveMiles;
+  if (mode === 'accessible') return edge.accessibleMiles;
+  return edge.walkMiles;
 }
 
 // Binary min-heap keyed by priority (path cost), used as computeRoute's
