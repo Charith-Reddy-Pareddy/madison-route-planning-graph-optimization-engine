@@ -2,6 +2,7 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -35,5 +36,13 @@ public class RoadNetworkTest {
         fail("Road references an unknown intersection: " + road);
       }
     }
+  }
+
+  @Test
+  public void accessibleGraphDoesNotRouteAcrossAnInaccessibleGap() {
+    RoadNetwork network = new RoadNetwork();
+
+    assertThrows(NoSuchElementException.class,
+        () -> network.graph(RoadNetwork.Mode.ACCESSIBLE).shortestPathData("grainger_hall", "vilas_hall"));
   }
 }

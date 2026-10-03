@@ -84,6 +84,15 @@ public class PathFinderServerIntegrationTest {
   }
 
   @Test
+  public void routeEndpointReturnsNoRouteForInaccessiblePair() throws Exception {
+    HttpResponse<String> resp = get(
+        "/api/route?start=grainger_hall&end=vilas_hall&mode=accessible");
+
+    assertEquals(404, resp.statusCode());
+    assertTrue(resp.body().contains("no route found between those intersections"));
+  }
+
+  @Test
   public void floatingPointSummationNoiseIsRoundedAway() throws Exception {
     // Dijkstra accumulates cost as a running sum of edge weights, which can
     // land a hair off a "clean" decimal (e.g. 1.7000000000000002 instead of
