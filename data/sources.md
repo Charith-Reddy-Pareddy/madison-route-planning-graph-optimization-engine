@@ -9,17 +9,9 @@ where that data came from.
 
 Columns: `id,name,lat,lon,query,source,retrieved_at`.
 
-Every `lat,lon` is a real geocoded point, not hand-estimated. `query` is
-the exact string sent to the geocoder for that row (via
-[`scripts/geocode.py`](../scripts/geocode.py)); `source` is which service
-answered it (currently always Nominatim); `retrieved_at` is a real UTC
-timestamp from when that query actually ran -- not backfilled or
-estimated. A handful of rows (see "Locations that couldn't be
-independently re-confirmed by name" below) have a `query` but a blank
-`retrieved_at`: that query was attempted and returned no result, so
-there's no real retrieval event to timestamp -- the existing coordinate
-was kept rather than left blank or guessed at.
+Coordinates represent the location itself rather than a door or entrance. When a mapped footprint is available, the point is the geometric center of its shape (area-weighted for multipart shapes). The campus buildings and places matched to the [UW–Madison Campus Map](https://map.wisc.edu/) use its feature geometry; Olbrich Botanical Complex, Tenney Park, and Vilas Zoo use the [City of Madison Parks GIS](https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA/MapServer/24). Eight street intersections use the center of the shared road-intersection nodes in the local OpenStreetMap graph, and Williamson Street uses the length-weighted center of its named road geometry. Capitol Square and Lakeshore Nature Preserve use the geometric centers of their OpenStreetMap feature boundaries. The remaining places use Nominatim (OpenStreetMap) place results.
 
+`query` records the label used to identify the source feature or place. `source` records the map dataset used for the stored coordinate. `retrieved_at` is the UTC time that source result was checked; it is blank only when no result was returned and no replacement could be verified. The current set contains 34 UW map features, 3 Madison Parks GIS features, 11 OSM feature or road-derived points, and 9 Nominatim points. All 57 existing locations were checked against a fresh Nominatim query as a separate cross-check; ambiguous names were resolved using a feature boundary or the road graph where available.
 An earlier pass of this data was hand-estimated from memory and got some
 relative positions wrong -- e.g. placing Dejope Residence Hall (actually
 out near Eagle Heights, on the far west side) close to X01 near the Kohl
@@ -29,10 +21,9 @@ Dayton St. Geocoding against Nominatim caught both errors; the real
 Lakeshore corridor along Observatory Dr that Route 80 runs is Elizabeth
 Waters / Slichter / Kronshage / Bradley / Dejope.
 
-Nominatim doesn't always resolve a street *intersection* precisely (e.g.
-"State St & Gilman St" can land at some other point along State St rather
-than exactly that corner), so a handful of points are approximate to a
-block or so -- but every point is real geocoded data, not invented.
+Nominatim can return a point somewhere along a street rather than at an
+intersection. Those locations use the shared street-crossing nodes from the
+local OpenStreetMap graph instead.
 
 A later check caught a duplicate: "Grainger Hall" and "Wisconsin School
 of Business" were two separate entries only ~40m apart. Re-geocoding
@@ -50,34 +41,21 @@ make this repeatable) caught two real, meaningful errors, both fixed:
   Street. Corrected to the real Education Building at 1000 Observatory
   Drive.
 - **Olbrich Gardens** was 178m off, on Sugar Avenue instead of the real
-  entrance on Atwood Avenue. Corrected.
+  entrance on Atwood Avenue. It was first corrected to that entrance; this
+  location-center pass now uses the center of the official City of Madison
+  botanical-complex boundary.
 
 Both roads connected to these points in `roads.csv` were recomputed from
 the corrected coordinates (real distances, not the old numbers left in
 place): `morgridge_hall<->education_building` 0.05mi -> 0.31mi,
 `atwood_schenks<->olbrich_gardens` 1.03mi -> 0.93mi,
-`olbrich_gardens<->tenney_park` 1.77mi -> 1.67mi.
+`olbrich_gardens<->tenney_park` 1.77mi -> 1.67mi. Those values document that
+earlier correction; the edges were recomputed again after updating their
+endpoints to feature centers.
 
-### Locations that couldn't be independently re-confirmed by name
+### Ambiguous location names
 
-Two different reasons, neither a known error:
-
-- **Street-level and district-level names** (`willy_st` "Williamson St",
-  `atwood_schenks` "Atwood Ave & Schenk's Corners") describe a stretch of
-  street or a named commercial district, not a single address -- Nominatim
-  returns a real but different point each time depending on which segment
-  or landmark it happens to match, and 5 plain street-intersection queries
-  (`king_st`, `john_nolen`, `state_gilman`, `monroe_edgewood`, `east_wash`)
-  don't parse as "X & Y" at all. The stored points all fall in the
-  geographically correct area; there's no single "more correct" point to
-  move them to.
-- **`social_sciences` and `kronshage_halls`** have no distinct point-of-
-  interest node in OSM under any name variant tried, so a forward (name ->
-  coordinate) query can't confirm them independently. Both were already
-  confirmed a different way, in an earlier full audit: reverse-geocoding
-  (coordinate -> address) their exact stored points returned real, plausible
-  Madison addresses in the correct part of campus.
-
+A few entries name a stretch of street or a broad area rather than a single point. The named intersections are centered on the actual mapped street crossings; `willy_st` is centered on the named Williamson Street road geometry. `atmosphere_apts` has no matching result in the fresh Nominatim or UW campus map searches, so its previously stored coordinate remains unchanged. Other named campus buildings and residence areas that did not resolve under the original query were cross-checked under their official map names (for example, Sewell Social Sciences and Kronshage Residence Hall).
 ## roads.csv
 
 Each road has two real, independently-computed distances -- `walkMiles`

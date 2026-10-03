@@ -65,7 +65,7 @@ describe('computeRoute', () => {
   // the bundled network.json is out of sync with the real RoadNetwork.java.
   it('matches the backend exactly for the pinned camp_randall -> bascom_hill case', () => {
     const result = computeRoute(network, 'camp_randall', 'bascom_hill');
-    expect(result.totalMiles).toBe(0.93);
+    expect(result.totalMiles).toBe(1.02);
   });
 });
 

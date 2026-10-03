@@ -1,134 +1,134 @@
 from,to,walkMiles,driveMiles,hasSteps,maxInclinePercent,accessibleMiles,busRoute
-capitol,king_st,0.188,0.509,true,0.0,0.223,
-king_st,capitol,0.188,0.351,true,0.0,0.223,
-capitol,state_frances,0.598,0.81,true,0.0,0.633,Route A
-state_frances,capitol,0.598,0.791,true,0.0,0.633,Route A
-capitol,john_nolen,1.755,1.976,true,0.0,1.793,
-king_st,willy_st,0.387,0.434,false,0.0,0.387,Route C
-willy_st,king_st,0.387,0.395,false,0.0,0.387,Route C
-willy_st,capitol,0.573,0.735,true,0.0,0.61,
-state_frances,state_gilman,0.263,0.904,false,0.0,0.263,Route A
-state_gilman,state_frances,0.263,0.386,false,0.0,0.263,Route A
-state_gilman,library_mall,0.441,0.51,false,0.0,0.441,Route A
-library_mall,state_gilman,0.441,0.827,false,0.0,0.441,Route A
-library_mall,memorial_union,0.168,0.139,true,0.0,0.181,
-memorial_union,library_mall,0.168,0.139,true,0.0,0.181,
-library_mall,regent_park,0.596,0.666,true,0.0,0.596,
-regent_park,library_mall,0.596,0.676,true,0.0,0.596,
-memorial_union,bascom_hill,0.307,0.297,true,0.0,0.333,
-bascom_hill,memorial_union,0.307,0.297,true,0.0,0.333,
-bascom_hill,camp_randall,0.83,0.915,true,0.0,0.83,
-camp_randall,regent_park,0.804,0.809,false,0.0,0.804,
-regent_park,camp_randall,0.804,0.811,false,0.0,0.804,
-camp_randall,monroe_edgewood,1.347,1.343,false,0.0,1.347,Route D
-monroe_edgewood,camp_randall,1.347,1.343,false,0.0,1.347,Route D
-regent_park,monroe_edgewood,1.788,1.784,false,0.0,1.788,
-monroe_edgewood,regent_park,1.788,1.785,false,0.0,1.788,
-regent_park,john_nolen,1.974,1.978,false,0.0,1.974,
-john_nolen,regent_park,1.974,2.035,false,0.0,1.974,
-john_nolen,capitol,1.755,2.25,true,0.0,1.793,
-king_st,east_wash,0.56,0.661,false,0.0,0.56,Route L
-east_wash,king_st,0.56,0.633,false,0.0,0.56,Route L
-east_wash,tenney_park,1.198,1.266,false,0.0,1.198,
-tenney_park,east_wash,1.198,1.269,false,0.0,1.198,
-willy_st,tenney_park,1.557,1.713,false,0.0,1.557,
-tenney_park,willy_st,1.557,1.641,false,0.0,1.557,
-east_wash,atwood_schenks,1.465,1.638,false,0.0,1.465,Route L
-atwood_schenks,olbrich_gardens,1.058,1.09,false,0.0,1.058,Route 38
-olbrich_gardens,atwood_schenks,1.058,1.07,false,0.0,1.058,Route 38
-olbrich_gardens,tenney_park,2.029,2.407,false,0.0,2.029,
-monroe_edgewood,arboretum,2.15,2.169,false,0.0,2.15,
-arboretum,monroe_edgewood,2.15,2.166,false,0.0,2.15,
-bascom_hill,hilldale,2.745,2.848,true,0.0,2.745,
-hilldale,bascom_hill,2.745,2.955,true,0.0,2.745,
-bascom_hill,morgridge_hall,0.339,0.382,true,0.0,0.339,
-morgridge_hall,bascom_hill,0.339,0.542,true,0.0,0.339,
-camp_randall,union_south,0.388,0.594,true,0.0,0.393,
-union_south,camp_randall,0.388,0.588,true,0.0,0.393,
-camp_randall,kohl_center,0.945,1.314,false,0.0,0.945,
-kohl_center,camp_randall,0.945,1.308,false,0.0,0.945,
-union_south,engineering_hall,0.306,0.532,true,0.0,0.323,
-engineering_hall,union_south,0.306,0.75,true,0.0,0.323,
-state_frances,grainger_hall,0.441,0.619,false,0.0,0.441,Route A
-grainger_hall,state_frances,0.441,0.728,false,0.0,0.441,Route A
-state_gilman,chazen_museum,0.475,0.54,false,0.0,0.475,Route A
-chazen_museum,state_gilman,0.475,0.675,false,0.0,0.475,Route A
-memorial_union,college_library,0.14,0.052,false,0.0,0.14,
-college_library,memorial_union,0.14,0.052,false,0.0,0.14,
-witte_hall,sellery_hall,0.274,0.465,false,0.0,0.274,Route B
-sellery_hall,witte_hall,0.274,0.281,false,0.0,0.274,Route B
-witte_hall,ogg_hall,0.2,,false,0.0,0.2,Route B
-ogg_hall,witte_hall,0.2,,false,0.0,0.2,Route B
-bascom_hill,chadbourne_hall,0.246,0.461,true,0.0,0.251,
-chadbourne_hall,bascom_hill,0.246,0.461,true,0.0,0.251,
-bascom_hill,social_sciences,0.207,0.151,false,0.0,0.207,
-social_sciences,bascom_hill,0.207,0.151,false,0.0,0.207,
+capitol,king_st,0.125,0.437,true,0.0,0.162,
+king_st,capitol,0.125,0.294,true,0.0,0.162,
+capitol,state_frances,0.574,0.786,true,0.0,0.609,Route A
+state_frances,capitol,0.574,0.783,true,0.0,0.609,Route A
+capitol,john_nolen,0.5,0.717,true,0.0,0.538,
+king_st,willy_st,0.872,0.872,false,0.0,0.872,Route C
+willy_st,king_st,0.872,0.872,false,0.0,0.872,Route C
+willy_st,capitol,0.996,1.166,true,0.0,1.031,
+state_frances,state_gilman,0.103,0.389,false,0.0,0.103,Route A
+state_gilman,state_frances,0.103,0.389,false,0.0,0.103,Route A
+state_gilman,library_mall,0.315,0.529,false,0.0,0.315,Route A
+library_mall,state_gilman,0.315,0.529,false,0.0,0.315,Route A
+library_mall,memorial_union,0.164,0.125,true,0.0,,
+memorial_union,library_mall,0.164,0.125,true,0.0,,
+library_mall,regent_park,0.608,0.664,true,0.0,0.608,
+regent_park,library_mall,0.608,0.664,true,0.0,0.608,
+memorial_union,bascom_hill,0.279,0.212,true,0.0,,
+bascom_hill,memorial_union,0.279,0.212,true,0.0,,
+bascom_hill,camp_randall,0.912,1.006,true,0.0,0.912,
+camp_randall,regent_park,0.815,0.821,false,0.0,0.815,
+regent_park,camp_randall,0.815,0.823,false,0.0,0.815,
+camp_randall,monroe_edgewood,0.71,0.706,false,0.0,0.71,Route D
+monroe_edgewood,camp_randall,0.71,0.706,false,0.0,0.71,Route D
+regent_park,monroe_edgewood,1.159,1.159,false,0.0,1.159,
+monroe_edgewood,regent_park,1.159,1.159,false,0.0,1.159,
+regent_park,john_nolen,0.982,1.004,false,0.0,0.982,
+john_nolen,regent_park,0.982,1.017,false,0.0,0.982,
+john_nolen,capitol,0.5,0.824,true,0.0,0.538,
+king_st,east_wash,0.37,0.391,false,0.0,0.37,Route L
+east_wash,king_st,0.37,0.382,false,0.0,0.37,Route L
+east_wash,tenney_park,1.34,1.51,false,0.0,1.34,
+tenney_park,east_wash,1.34,1.521,false,0.0,1.34,
+willy_st,tenney_park,1.079,1.331,false,0.0,1.079,
+tenney_park,willy_st,1.079,1.388,false,0.0,1.079,
+east_wash,atwood_schenks,1.63,1.694,false,0.0,1.63,Route L
+atwood_schenks,olbrich_gardens,1.19,1.158,false,0.0,1.19,Route 38
+olbrich_gardens,atwood_schenks,1.19,1.137,false,0.0,1.19,Route 38
+olbrich_gardens,tenney_park,2.136,2.543,false,0.0,2.136,
+monroe_edgewood,arboretum,2.818,3.022,false,0.0,2.818,
+arboretum,monroe_edgewood,2.818,3.019,false,0.0,2.818,
+bascom_hill,hilldale,2.827,2.939,true,0.0,2.827,
+hilldale,bascom_hill,2.827,3.045,true,0.0,2.827,
+bascom_hill,morgridge_hall,0.421,0.472,true,0.0,0.421,
+morgridge_hall,bascom_hill,0.421,0.632,true,0.0,0.421,
+camp_randall,union_south,0.388,0.557,true,0.0,0.393,
+union_south,camp_randall,0.388,0.796,true,0.0,0.393,
+camp_randall,kohl_center,1.057,1.314,true,0.0,1.076,
+kohl_center,camp_randall,1.057,1.308,true,0.0,1.076,
+union_south,engineering_hall,0.306,0.634,true,0.0,0.323,
+engineering_hall,union_south,0.306,0.669,true,0.0,0.323,
+state_frances,grainger_hall,0.454,0.603,false,0.0,0.454,Route A
+grainger_hall,state_frances,0.454,0.712,false,0.0,0.454,Route A
+state_gilman,chazen_museum,0.345,0.605,false,0.0,0.345,Route A
+chazen_museum,state_gilman,0.345,0.446,false,0.0,0.345,Route A
+memorial_union,college_library,0.184,0.084,true,0.0,,
+college_library,memorial_union,0.184,0.084,true,0.0,,
+witte_hall,sellery_hall,0.282,0.465,false,0.0,0.282,Route B
+sellery_hall,witte_hall,0.282,0.281,false,0.0,0.282,Route B
+witte_hall,ogg_hall,0.239,,false,0.0,0.239,Route B
+ogg_hall,witte_hall,0.239,,false,0.0,0.239,Route B
+bascom_hill,chadbourne_hall,0.189,0.445,true,0.0,0.189,
+chadbourne_hall,bascom_hill,0.189,0.654,true,0.0,0.189,
+bascom_hill,social_sciences,0.257,0.242,false,0.0,0.257,
+social_sciences,bascom_hill,0.257,0.242,false,0.0,0.257,
 morgridge_hall,education_building,0.456,0.595,true,0.0,0.533,
 education_building,morgridge_hall,0.456,0.435,true,0.0,0.533,
-state_frances,memorial_library,0.121,0.186,false,0.0,0.121,Route A
-memorial_library,state_frances,0.121,0.186,false,0.0,0.121,Route A
-memorial_library,humanities_building,0.211,0.313,true,0.0,0.212,
-humanities_building,memorial_library,0.211,0.313,true,0.0,0.212,
-memorial_library,science_hall,0.287,0.3,true,0.0,0.287,
-science_hall,memorial_library,0.287,0.3,true,0.0,0.287,
-college_library,van_hise_hall,0.36,0.493,true,0.0,0.408,
-van_hise_hall,college_library,0.36,0.493,true,0.0,0.408,
-college_library,van_vleck_hall,0.305,0.468,true,0.0,0.322,
-van_vleck_hall,college_library,0.305,0.468,true,0.0,0.322,
+state_frances,memorial_library,0.136,0.17,false,0.0,0.136,Route A
+memorial_library,state_frances,0.136,0.17,false,0.0,0.136,Route A
+memorial_library,humanities_building,0.162,0.313,false,0.0,0.162,
+humanities_building,memorial_library,0.162,0.313,false,0.0,0.162,
+memorial_library,science_hall,0.28,0.3,true,0.0,0.28,
+science_hall,memorial_library,0.28,0.3,true,0.0,0.28,
+college_library,van_hise_hall,0.351,0.551,true,0.0,0.399,
+van_hise_hall,college_library,0.351,0.551,true,0.0,0.399,
+college_library,van_vleck_hall,0.305,0.526,true,0.0,0.322,
+van_vleck_hall,college_library,0.305,0.526,true,0.0,0.322,
 engineering_hall,discovery_building,0.223,0.615,true,0.0,0.24,
 discovery_building,engineering_hall,0.223,0.688,true,0.0,0.24,
-union_south,nicholas_rec,0.594,0.631,false,0.0,0.594,
-nicholas_rec,union_south,0.594,0.631,false,0.0,0.594,
+union_south,nicholas_rec,0.594,0.673,false,0.0,0.594,
+nicholas_rec,union_south,0.594,0.848,false,0.0,0.594,
 camp_randall,atmosphere_apts,0.999,1.062,false,0.0,0.999,
 atmosphere_apts,camp_randall,0.999,1.06,false,0.0,0.999,
-kohl_center,x01_apts,0.436,0.578,false,0.0,0.436,
-x01_apts,kohl_center,0.436,0.578,false,0.0,0.436,
+kohl_center,x01_apts,0.545,0.578,true,0.0,0.565,
+x01_apts,kohl_center,0.545,0.578,true,0.0,0.565,
 grainger_hall,lucky_apts,0.226,0.405,false,0.0,0.226,
 lucky_apts,grainger_hall,0.226,0.28,false,0.0,0.226,
-library_mall,red_gym,0.105,0.075,false,0.0,0.105,
-red_gym,library_mall,0.105,0.075,false,0.0,0.105,
+library_mall,red_gym,0.096,0.072,false,0.0,0.096,
+red_gym,library_mall,0.096,0.072,false,0.0,0.096,
 grainger_hall,vilas_hall,0.164,0.205,true,0.0,,
 vilas_hall,grainger_hall,0.164,0.159,true,0.0,,
-state_frances,target_state_st,0.019,0.017,false,0.0,0.019,Route A
-target_state_st,state_frances,0.019,0.017,false,0.0,0.019,Route A
-state_frances,chipotle_state_st,0.063,0.151,false,0.0,0.063,Route A
-chipotle_state_st,state_frances,0.063,0.151,false,0.0,0.063,Route A
-state_frances,popeyes_state_st,0.037,0.126,false,0.0,0.037,Route A
-popeyes_state_st,state_frances,0.037,0.126,false,0.0,0.037,Route A
-capitol,ians_pizza,0.167,0.246,true,0.0,0.202,Route A
-ians_pizza,capitol,0.167,0.168,true,0.0,0.202,Route A
-van_hise_hall,middleton_building,0.172,0.09,true,0.0,0.245,
-middleton_building,van_hise_hall,0.172,0.09,true,0.0,0.245,
-camp_randall,vilas_zoo,0.918,0.929,false,0.0,0.918,
-vilas_zoo,camp_randall,0.918,0.878,false,0.0,0.918,
-bascom_hill,elizabeth_waters,0.254,0.184,true,0.0,,
-elizabeth_waters,bascom_hill,0.254,0.184,true,0.0,,
-library_mall,witte_hall,0.443,0.483,false,0.0,0.443,Route B
-witte_hall,library_mall,0.443,0.484,false,0.0,0.443,Route B
-memorial_union,elizabeth_waters,0.419,0.412,true,0.0,,Route 80
-elizabeth_waters,memorial_union,0.419,0.412,true,0.0,,Route 80
-elizabeth_waters,slichter_hall,0.328,0.477,true,0.0,,Route 80
-slichter_hall,elizabeth_waters,0.328,0.477,true,0.0,,Route 80
-slichter_hall,kronshage_halls,0.211,0.31,false,0.0,0.211,Route 80
-kronshage_halls,slichter_hall,0.211,0.31,false,0.0,0.211,Route 80
-kronshage_halls,bradley_hall,0.026,0.026,false,0.0,0.02,
-bradley_hall,kronshage_halls,0.026,0.026,false,0.0,0.02,
-kronshage_halls,dejope_hall,0.1,0.41,false,0.0,0.1,
-dejope_hall,kronshage_halls,0.1,0.41,false,0.0,0.1,
-dejope_hall,bakke_rec_center,0.283,0.266,false,0.0,0.283,
-bakke_rec_center,dejope_hall,0.283,0.266,false,0.0,0.283,
-bakke_rec_center,lakeshore_preserve,0.788,0.808,false,0.0,0.788,Route 80
-lakeshore_preserve,bakke_rec_center,0.788,0.848,false,0.0,0.788,Route 80
-lakeshore_preserve,eagle_heights,0.652,1.16,false,0.0,0.652,Route 80
-eagle_heights,lakeshore_preserve,0.652,1.151,false,0.0,0.652,Route 80
-kohl_center,witte_hall,0.187,0.188,false,0.0,0.187,
-witte_hall,kohl_center,0.187,0.188,false,0.0,0.187,
+state_frances,target_state_st,0.042,0.039,false,0.0,0.042,Route A
+target_state_st,state_frances,0.042,0.039,false,0.0,0.042,Route A
+state_frances,chipotle_state_st,0.086,0.135,false,0.0,0.086,Route A
+chipotle_state_st,state_frances,0.086,0.135,false,0.0,0.086,Route A
+state_frances,popeyes_state_st,0.06,0.11,false,0.0,0.06,Route A
+popeyes_state_st,state_frances,0.06,0.11,false,0.0,0.06,Route A
+capitol,ians_pizza,0.167,0.238,true,0.0,0.202,Route A
+ians_pizza,capitol,0.167,0.176,true,0.0,0.202,Route A
+van_hise_hall,middleton_building,0.188,0.09,false,0.0,0.188,
+middleton_building,van_hise_hall,0.188,0.09,false,0.0,0.188,
+camp_randall,vilas_zoo,0.945,0.948,false,0.0,0.945,
+vilas_zoo,camp_randall,0.945,0.932,false,0.0,0.945,
+bascom_hill,elizabeth_waters,0.331,0.27,true,0.0,,
+elizabeth_waters,bascom_hill,0.331,0.27,true,0.0,,
+library_mall,witte_hall,0.46,0.483,false,0.0,0.46,Route B
+witte_hall,library_mall,0.46,0.484,false,0.0,0.46,Route B
+memorial_union,elizabeth_waters,0.486,0.393,true,0.0,,Route 80
+elizabeth_waters,memorial_union,0.486,0.393,true,0.0,,Route 80
+elizabeth_waters,slichter_hall,0.316,0.472,true,0.0,,Route 80
+slichter_hall,elizabeth_waters,0.316,0.472,true,0.0,,Route 80
+slichter_hall,kronshage_halls,0.131,0.131,false,0.0,0.124,Route 80
+kronshage_halls,slichter_hall,0.131,0.131,false,0.0,0.124,Route 80
+kronshage_halls,bradley_hall,0.16,0.438,false,0.0,0.16,
+bradley_hall,kronshage_halls,0.16,0.438,false,0.0,0.16,
+kronshage_halls,dejope_hall,0.224,0.645,false,0.0,0.224,
+dejope_hall,kronshage_halls,0.224,0.645,false,0.0,0.224,
+dejope_hall,bakke_rec_center,0.187,0.171,false,0.0,0.187,
+bakke_rec_center,dejope_hall,0.187,0.171,false,0.0,0.187,
+bakke_rec_center,lakeshore_preserve,0.831,1.161,false,0.0,0.831,Route 80
+lakeshore_preserve,bakke_rec_center,0.831,1.201,false,0.0,0.831,Route 80
+lakeshore_preserve,eagle_heights,0.526,0.701,true,0.0,0.527,Route 80
+eagle_heights,lakeshore_preserve,0.526,0.701,true,0.0,0.527,Route 80
+kohl_center,witte_hall,0.202,0.188,false,0.0,0.202,
+witte_hall,kohl_center,0.202,0.188,false,0.0,0.202,
 discovery_building,morgridge_hall,0.097,0.301,false,0.0,0.097,
 morgridge_hall,discovery_building,0.097,0.453,false,0.0,0.097,
-x01_apts,chadbourne_hall,0.152,0.338,false,0.0,0.152,
-chadbourne_hall,x01_apts,0.152,0.229,false,0.0,0.152,
-chadbourne_hall,humanities_building,0.141,0.067,false,0.0,0.141,
-humanities_building,chadbourne_hall,0.141,0.067,false,0.0,0.141,
+x01_apts,chadbourne_hall,0.152,0.262,false,0.0,0.152,
+chadbourne_hall,x01_apts,0.152,0.102,false,0.0,0.152,
+chadbourne_hall,humanities_building,0.141,0.391,false,0.0,0.141,
+humanities_building,chadbourne_hall,0.141,0.1,false,0.0,0.141,
 humanities_building,chazen_museum,0.075,0.453,false,0.0,0.075,
 chazen_museum,humanities_building,0.075,0.328,false,0.0,0.075,
 chazen_museum,lucky_apts,0.131,0.11,false,0.0,0.131,
@@ -137,77 +137,77 @@ lucky_apts,vilas_hall,0.134,0.296,true,0.0,,
 vilas_hall,lucky_apts,0.134,0.374,true,0.0,,
 education_building,science_hall,0.097,0.157,true,0.0,0.097,
 science_hall,education_building,0.097,0.157,true,0.0,0.097,
-van_vleck_hall,bascom_hill,0.078,0.228,false,0.0,0.078,
-bascom_hill,van_vleck_hall,0.078,0.228,false,0.0,0.078,
-nicholas_rec,witte_hall,0.253,0.244,false,0.0,0.253,
-witte_hall,nicholas_rec,0.253,0.244,false,0.0,0.253,
-atmosphere_apts,kohl_center,0.307,0.624,false,0.0,0.307,
-kohl_center,atmosphere_apts,0.307,0.534,false,0.0,0.307,
-middleton_building,union_south,0.445,0.55,true,0.0,0.516,
-union_south,middleton_building,0.445,0.548,true,0.0,0.516,
+van_vleck_hall,bascom_hill,0.16,0.319,false,0.0,0.16,
+bascom_hill,van_vleck_hall,0.16,0.319,false,0.0,0.16,
+nicholas_rec,witte_hall,0.261,0.244,false,0.0,0.261,
+witte_hall,nicholas_rec,0.261,0.244,false,0.0,0.261,
+atmosphere_apts,kohl_center,0.364,0.624,false,0.0,0.364,
+kohl_center,atmosphere_apts,0.364,0.534,false,0.0,0.364,
+middleton_building,union_south,0.445,0.533,true,0.0,0.516,
+union_south,middleton_building,0.445,0.434,true,0.0,0.516,
 grainger_hall,sellery_hall,0.196,0.22,false,0.0,0.196,
 sellery_hall,grainger_hall,0.196,0.503,false,0.0,0.196,
-education_building,college_library,0.124,0.201,true,0.0,0.124,
-college_library,education_building,0.124,0.201,true,0.0,0.124,
-science_hall,college_library,0.099,0.108,false,0.0,0.099,
-college_library,science_hall,0.099,0.108,false,0.0,0.099,
+education_building,college_library,0.124,0.259,true,0.0,0.124,
+college_library,education_building,0.124,0.259,true,0.0,0.124,
+science_hall,college_library,0.099,0.166,false,0.0,0.099,
+college_library,science_hall,0.099,0.166,false,0.0,0.099,
 red_gym,science_hall,0.209,0.224,true,0.0,0.209,
 science_hall,red_gym,0.209,0.224,true,0.0,0.209,
-grainger_hall,regent_park,0.442,0.456,false,0.0,0.442,
-regent_park,grainger_hall,0.442,0.474,false,0.0,0.442,
-ogg_hall,regent_park,0.291,,false,0.0,0.291,
-regent_park,ogg_hall,0.291,,false,0.0,0.291,
+grainger_hall,regent_park,0.454,0.453,false,0.0,0.454,
+regent_park,grainger_hall,0.454,0.462,false,0.0,0.454,
+ogg_hall,regent_park,0.252,,false,0.0,0.252,
+regent_park,ogg_hall,0.252,,false,0.0,0.252,
 middleton_building,slichter_hall,0.44,0.483,true,0.0,0.446,
 slichter_hall,middleton_building,0.44,0.483,true,0.0,0.446,
-van_hise_hall,grainger_hall,0.441,0.506,true,0.0,0.456,
-grainger_hall,van_hise_hall,0.441,0.412,true,0.0,0.456,
+van_hise_hall,grainger_hall,0.399,0.506,true,0.0,0.409,
+grainger_hall,van_hise_hall,0.399,0.412,true,0.0,0.409,
 x01_apts,vilas_hall,0.201,0.196,true,0.0,,
 vilas_hall,x01_apts,0.201,0.15,true,0.0,,
-nicholas_rec,ogg_hall,0.121,,false,0.0,0.121,
-ogg_hall,nicholas_rec,0.121,,false,0.0,0.121,
-ogg_hall,sellery_hall,0.166,,false,0.0,0.166,
-sellery_hall,ogg_hall,0.166,,false,0.0,0.166,
-grainger_hall,x01_apts,0.057,0.057,false,0.0,0.057,
-x01_apts,grainger_hall,0.057,0.057,false,0.0,0.057,
-red_gym,memorial_library,0.135,0.142,false,0.0,0.135,
-memorial_library,red_gym,0.135,0.142,false,0.0,0.135,
-library_mall,memorial_library,0.126,0.109,true,0.0,0.127,
-memorial_library,library_mall,0.126,0.109,true,0.0,0.127,
-social_sciences,elizabeth_waters,0.09,0.078,true,0.0,,
-elizabeth_waters,social_sciences,0.09,0.078,true,0.0,,
-discovery_building,union_south,0.11,0.344,false,0.0,0.11,
-union_south,discovery_building,0.11,0.177,false,0.0,0.11,
+nicholas_rec,ogg_hall,0.158,,false,0.0,0.158,
+ogg_hall,nicholas_rec,0.158,,false,0.0,0.158,
+ogg_hall,sellery_hall,0.13,,false,0.0,0.13,
+sellery_hall,ogg_hall,0.13,,false,0.0,0.13,
+grainger_hall,x01_apts,0.061,0.061,false,0.0,0.057,
+x01_apts,grainger_hall,0.061,0.061,false,0.0,0.057,
+red_gym,memorial_library,0.181,0.142,false,0.0,0.181,
+memorial_library,red_gym,0.181,0.142,false,0.0,0.181,
+library_mall,memorial_library,0.086,0.109,false,0.0,0.086,
+memorial_library,library_mall,0.086,0.109,false,0.0,0.086,
+social_sciences,elizabeth_waters,0.118,0.088,true,0.0,,
+elizabeth_waters,social_sciences,0.118,0.088,true,0.0,,
+discovery_building,union_south,0.11,0.072,false,0.0,0.11,
+union_south,discovery_building,0.11,0.393,false,0.0,0.11,
 middleton_building,engineering_hall,0.25,0.354,true,0.0,0.268,
 engineering_hall,middleton_building,0.25,0.354,true,0.0,0.268,
-witte_hall,lucky_apts,0.227,0.238,false,0.0,0.227,
-lucky_apts,witte_hall,0.227,0.554,false,0.0,0.227,
-bascom_hill,education_building,0.118,0.122,true,0.0,0.203,
-education_building,bascom_hill,0.118,0.122,true,0.0,0.203,
-elizabeth_waters,van_hise_hall,0.163,0.208,true,0.0,,
-van_hise_hall,elizabeth_waters,0.163,0.208,true,0.0,,
-chazen_museum,library_mall,0.117,0.249,false,0.0,0.117,
-library_mall,chazen_museum,0.117,0.249,false,0.0,0.117,
-kohl_center,nicholas_rec,0.099,0.282,false,0.0,0.089,
-nicholas_rec,kohl_center,0.099,0.282,false,0.0,0.089,
-social_sciences,van_hise_hall,0.117,0.176,false,0.0,0.117,
-van_hise_hall,social_sciences,0.117,0.176,false,0.0,0.117,
+witte_hall,lucky_apts,0.235,0.238,false,0.0,0.235,
+lucky_apts,witte_hall,0.235,0.554,false,0.0,0.235,
+bascom_hill,education_building,0.112,0.041,true,0.0,0.112,
+education_building,bascom_hill,0.112,0.041,true,0.0,0.112,
+elizabeth_waters,van_hise_hall,0.187,0.204,true,0.0,,
+van_hise_hall,elizabeth_waters,0.187,0.204,true,0.0,,
+chazen_museum,library_mall,0.126,0.249,false,0.0,0.126,
+library_mall,chazen_museum,0.126,0.249,false,0.0,0.126,
+kohl_center,nicholas_rec,0.232,0.282,true,0.0,0.314,
+nicholas_rec,kohl_center,0.232,0.282,true,0.0,0.314,
+social_sciences,van_hise_hall,0.113,0.176,false,0.0,0.113,
+van_hise_hall,social_sciences,0.113,0.176,false,0.0,0.113,
 humanities_building,science_hall,0.239,0.215,true,0.0,0.239,
 science_hall,humanities_building,0.239,0.215,true,0.0,0.239,
-ogg_hall,vilas_hall,0.189,,true,0.0,,
-vilas_hall,ogg_hall,0.189,,true,0.0,,
-chadbourne_hall,science_hall,0.247,0.261,false,0.0,0.247,
-science_hall,chadbourne_hall,0.247,0.261,false,0.0,0.247,
-bascom_hill,van_hise_hall,0.197,0.253,false,0.0,0.197,
-van_hise_hall,bascom_hill,0.197,0.253,false,0.0,0.197,
-ians_pizza,state_gilman,0.187,0.539,false,0.0,0.186,
-state_gilman,ians_pizza,0.187,0.445,false,0.0,0.186,
+ogg_hall,vilas_hall,0.22,,true,0.0,,
+vilas_hall,ogg_hall,0.22,,true,0.0,,
+chadbourne_hall,science_hall,0.247,0.606,false,0.0,0.247,
+science_hall,chadbourne_hall,0.247,0.315,false,0.0,0.247,
+bascom_hill,van_hise_hall,0.237,0.343,false,0.0,0.237,
+van_hise_hall,bascom_hill,0.237,0.343,false,0.0,0.237,
+ians_pizza,state_gilman,0.314,0.462,false,0.0,0.313,
+state_gilman,ians_pizza,0.314,0.463,false,0.0,0.313,
 chipotle_state_st,lucky_apts,0.181,0.248,false,0.0,0.181,
 lucky_apts,chipotle_state_st,0.181,0.558,false,0.0,0.181,
-van_hise_hall,van_vleck_hall,0.179,0.115,true,0.0,0.179,
-van_vleck_hall,van_hise_hall,0.179,0.115,true,0.0,0.179,
+van_hise_hall,van_vleck_hall,0.139,0.111,true,0.0,0.139,
+van_vleck_hall,van_hise_hall,0.139,0.111,true,0.0,0.139,
 engineering_hall,slichter_hall,0.243,0.278,true,0.0,0.256,
 slichter_hall,engineering_hall,0.243,0.278,true,0.0,0.256,
-atmosphere_apts,regent_park,0.233,0.248,false,0.0,0.233,
-regent_park,atmosphere_apts,0.233,0.253,false,0.0,0.233,
+atmosphere_apts,regent_park,0.225,0.236,false,0.0,0.225,
+regent_park,atmosphere_apts,0.225,0.241,false,0.0,0.225,
 middleton_building,morgridge_hall,0.336,0.334,false,0.0,0.336,
 morgridge_hall,middleton_building,0.336,0.494,false,0.0,0.336,
