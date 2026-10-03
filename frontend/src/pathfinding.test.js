@@ -38,6 +38,26 @@ describe('computeRoute', () => {
     expect(() => computeRoute(disconnected, 'a', 'c')).toThrow('no route found');
   });
 
+  it('does not invent an accessible route across the known inaccessible pair', () => {
+    expect(() => computeRoute(network, 'grainger_hall', 'vilas_hall', 'accessible'))
+      .toThrow('no route found between those intersections');
+    expect(() => computeRoute(network, 'vilas_hall', 'grainger_hall', 'accessible'))
+      .toThrow('no route found between those intersections');
+  });
+
+  it('uses only available accessible distances for every leg of an accessible route', () => {
+    const result = computeRoute(network, 'grainger_hall', 'state_frances', 'accessible');
+
+    expect(result.mode).toBe('accessible');
+    for (const segment of result.segments) {
+      const edge = network.edges.find((candidate) =>
+        candidate.from === segment.from && candidate.to === segment.to);
+      expect(edge).toBeDefined();
+      expect(edge.accessibleMiles).not.toBeNull();
+      expect(segment.miles).toBe(Math.round(edge.accessibleMiles * 100) / 100);
+    }
+  });
+
   // Regression guard matching the backend's own pinned case
   // (PathFinderServerIntegrationTest#floatingPointSummationNoiseIsRoundedAway):
   // camp_randall -> bascom_hill is one-way, so the reverse trip is forced
