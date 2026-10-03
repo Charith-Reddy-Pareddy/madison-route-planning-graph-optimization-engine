@@ -160,7 +160,7 @@ export default function App() {
             <li><span className="legend-swatch start" /> Start</li>
             <li><span className="legend-swatch end" /> End</li>
             <li><span className="legend-arrow">&#8594;</span> One-way (arrow points the allowed direction)</li>
-            <li><span className="legend-step">1</span> Stop order along the route</li>
+            <li><span className="legend-swatch route-point" /> Along route</li>
           </ul>
         </section>
       </main>

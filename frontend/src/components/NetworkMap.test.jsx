@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import NetworkMap from './NetworkMap';
+import network from '../data/network.json';
 
 const nodes = [
   { id: 'a', name: 'A', lat: 43.07, lon: -89.4 },
@@ -36,6 +37,14 @@ describe('NetworkMap', () => {
     expect(endpointTitles[1]).toContain('C');
   });
 
+  it('shows route junctions as route points, not numbered stops', () => {
+    const { container } = render(<NetworkMap nodes={nodes} edges={edges} path={['a', 'b', 'c']} />);
+    expect(container.querySelectorAll('.map-step')).toHaveLength(0);
+    expect(container.querySelector('g.map-node:not(.endpoint) title').textContent).toBe('B — along route');
+    expect(container.querySelector('g.map-node.start title').textContent).toBe('A — start');
+    expect(container.querySelector('g.map-node.end title').textContent).toBe('C — destination');
+  });
+
   it('labels every node when none of them are close enough to overlap', () => {
     // a/b/c are spread across the whole viewBox in this fixture, so nothing
     // collides and every label shows -- this is the common case for the real
@@ -45,17 +54,20 @@ describe('NetworkMap', () => {
     expect(labels).toEqual(['A', 'B', 'C']);
   });
 
-  it('drops an overlapping label in favor of the on-path node sharing its spot', () => {
-    // Two nodes placed on top of each other guarantee a label collision --
-    // the on-path one should win and the other should be dropped, not just
-    // whichever happened to be processed first.
+  it('places nearby labels on different sides instead of overlapping them', () => {
+    // Two coincident nodes compete for the same label space. The layout
+    // moves the labels to different sides so both remain readable.
     const overlapping = [
+      { id: 'northwest', name: 'Northwest', lat: 43.08, lon: -89.41 },
+      { id: 'southeast', name: 'Southeast', lat: 43.06, lon: -89.39 },
       { id: 'x', name: 'Off-path Building', lat: 43.07, lon: -89.4 },
       { id: 'y', name: 'On-path Building', lat: 43.07, lon: -89.4 },
     ];
     const { container } = render(<NetworkMap nodes={overlapping} edges={[]} path={['y']} />);
-    const labels = [...container.querySelectorAll('.map-labels text.map-node-label')].map((t) => t.textContent);
-    expect(labels).toEqual(['On-path Building']);
+    const labelElements = [...container.querySelectorAll('.map-labels text.map-node-label')];
+    const buildingLabels = labelElements.filter((label) => label.textContent.endsWith('Building'));
+    expect(buildingLabels.map((label) => label.textContent)).toEqual(['On-path Building', 'Off-path Building']);
+    expect(buildingLabels[0].getAttribute('text-anchor')).not.toBe(buildingLabels[1].getAttribute('text-anchor'));
   });
 
   it('renders nothing crash-worthy with an empty network', () => {
@@ -169,6 +181,23 @@ describe('NetworkMap', () => {
     };
   }
 
+  it('keeps Nicholas Recreation Center near its geographic center relative to Ogg', () => {
+    const { container } = render(<NetworkMap nodes={network.nodes} edges={network.edges} path={null} />);
+    const nodeById = new Map(network.nodes.map((node) => [node.id, node]));
+    const bounds = computeBounds(network.nodes);
+    const rawNicholas = project(nodeById.get('nicholas_rec').lat, nodeById.get('nicholas_rec').lon, bounds);
+    const rawOgg = project(nodeById.get('ogg_hall').lat, nodeById.get('ogg_hall').lon, bounds);
+    const circleFor = (id) => [...container.querySelectorAll('g.map-node')].find((g) => g.querySelector('title').textContent.startsWith(nodeById.get(id).name)).querySelector('circle');
+    const nicholas = circleFor('nicholas_rec');
+    const ogg = circleFor('ogg_hall');
+    const drift = Math.hypot(Number(nicholas.getAttribute('cx')) - rawNicholas.x, Number(nicholas.getAttribute('cy')) - rawNicholas.y);
+    const rawGap = Math.hypot(rawNicholas.x - rawOgg.x, rawNicholas.y - rawOgg.y);
+    const renderedGap = Math.hypot(Number(nicholas.getAttribute('cx')) - Number(ogg.getAttribute('cx')), Number(nicholas.getAttribute('cy')) - Number(ogg.getAttribute('cy')));
+
+    expect(drift).toBeLessThan(15);
+    expect(renderedGap).toBeLessThan(rawGap + 25);
+  });
+
   it('never drifts a node far from its true position, even with many neighbors on one side', () => {
     // Two far-apart anchors give computeBounds() a realistic overall span
     // (like the real ~0.09-degree-tall network), so the tight cluster below
@@ -206,11 +235,8 @@ describe('NetworkMap', () => {
     const targetFinal = byName.get(target.name);
     const drift = Math.hypot(targetFinal.x - targetRaw.x, targetFinal.y - targetRaw.y);
 
-    // The component's own drift cap is 100px; before that fix existed, this
-    // exact shape (many one-sided close neighbors) drifted the real
-    // "Social Science Building" node ~200px off its true position. A
-    // generous margin above the cap (not equal to it) keeps this test from
-    // being just a restatement of the constant.
-    expect(drift).toBeLessThan(120);
+    // The layout may space points apart modestly, but should preserve their
+    // real locations within a small map-scale tolerance.
+    expect(drift).toBeLessThan(15);
   });
 });

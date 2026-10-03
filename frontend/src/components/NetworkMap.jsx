@@ -20,52 +20,50 @@ function rectsOverlap(a, b, pad) {
 }
 
 /**
- * Greedy label placement: on-path stops always get a label (those are what
- * the user is actually looking at); everything else gets one only if it
- * doesn't collide with an already-placed label. This is why isolated nodes
- * (most of the map) stay labeled at any zoom, while only the genuinely
- * crowded campus-core cluster thins out -- a flat "hide until zoomed in"
- * rule would've hidden far-apart names too, for no reason.
+ * Greedy label placement prioritizes route locations, then other locations.
+ * Each label tries several sides of its marker and is omitted if it cannot
+ * fit without colliding with a label already placed.
  */
-function layoutLabels(nodes, positions, toScreen, pathSet, viewWidth, viewHeight) {
-  const ordered = [...nodes].sort((a, b) => {
-    const aFirst = pathSet.has(a.id) ? 0 : 1;
-    const bFirst = pathSet.has(b.id) ? 0 : 1;
-    return aFirst - bFirst;
-  });
-
+function layoutLabels(nodes, positions, toScreen, pathSet, endpointSet, viewWidth, viewHeight) {
+  const priority = (node) => endpointSet.has(node.id) ? 2 : pathSet.has(node.id) ? 1 : 0;
+  const ordered = [...nodes].sort((a, b) => priority(b) - priority(a));
   const placedRects = [];
   const labels = [];
+
   for (const node of ordered) {
     const pos = positions.get(node.id);
     if (!pos) continue;
     const screen = toScreen(pos);
     if (screen.x < -20 || screen.x > viewWidth + 20 || screen.y < -20 || screen.y > viewHeight + 20) continue;
 
-    const isOnPath = pathSet.has(node.id);
-    const nearRightEdge = screen.x > viewWidth - 120;
-    const anchorX = screen.x + (nearRightEdge ? -10 : 10);
-    const y = clamp(screen.y + 4, 12, viewHeight - 6);
     const width = node.name.length * CHAR_WIDTH;
-    const rect = nearRightEdge
-      ? { x0: anchorX - width, x1: anchorX, y0: y - LABEL_HEIGHT, y1: y + 3 }
-      : { x0: anchorX, x1: anchorX + width, y0: y - LABEL_HEIGHT, y1: y + 3 };
+    const candidates = [
+      { x: screen.x + 10, y: screen.y + 4, textAnchor: 'start' },
+      { x: screen.x - 10, y: screen.y + 4, textAnchor: 'end' },
+      { x: screen.x, y: screen.y - 10, textAnchor: 'middle' },
+      { x: screen.x, y: screen.y + 22, textAnchor: 'middle' },
+    ];
 
-    if (!isOnPath && placedRects.some((r) => rectsOverlap(rect, r, 2))) continue;
-
-    placedRects.push(rect);
-    labels.push({ id: node.id, name: node.name, x: anchorX, y, textAnchor: nearRightEdge ? 'end' : 'start' });
+    for (const candidate of candidates) {
+      if (candidate.y < 12 || candidate.y > viewHeight - 6) continue;
+      const rect = {
+        x0: candidate.textAnchor === 'end' ? candidate.x - width : candidate.textAnchor === 'middle' ? candidate.x - width / 2 : candidate.x,
+        x1: candidate.textAnchor === 'end' ? candidate.x : candidate.textAnchor === 'middle' ? candidate.x + width / 2 : candidate.x + width,
+        y0: candidate.y - LABEL_HEIGHT,
+        y1: candidate.y + 3,
+      };
+      if (rect.x0 < 4 || rect.x1 > viewWidth - 4) continue;
+      if (placedRects.some((placed) => rectsOverlap(rect, placed, 3))) continue;
+      placedRects.push(rect);
+      labels.push({ id: node.id, name: node.name, ...candidate });
+      break;
+    }
   }
   return labels;
 }
 
-// The node cluster alone spans a narrow latitude range, so a lake shape
-// drawn north/south of it in real degrees lands almost entirely outside
-// that range -- and outside the canvas, since project() maps the node
-// bounds straight onto the viewBox with no margin to spare. Padding the
-// bounds reserves real on-canvas room at the north and south edges for
-// water, at the cost of compressing the nodes slightly further toward the
-// middle (negligible next to what declump() already does to them).
+// The node cluster alone spans a narrow latitude range, so reserve
+// on-canvas room at the north and south edges for the lake shapes.
 const NORTH_WATER_MARGIN = 0.022;
 const SOUTH_WATER_MARGIN = 0.033;
 
@@ -95,28 +93,11 @@ function project(lat, lon, bounds) {
 // apart away from each other, a few passes at a time, while leaving nodes
 // that are already far apart untouched (like real force-directed graph
 // layouts do for decluttering, e.g. subway-map-style distortion).
-const MIN_SEPARATION = 62;
+const MIN_SEPARATION = 30;
 const REPULSION_PASSES = 200;
-// Pairwise repulsion alone has no restoring force: a node with several
-// close neighbors concentrated mostly on one side (common at the edge of a
-// dense cluster, e.g. the campus core) gets nudged the same direction by
-// each of them in turn and can walk dozens of nodes' worth of distance
-// away from its real position before every pair finally clears
-// MIN_SEPARATION -- nothing pulls it back, and in a genuinely dense pocket
-// (~20 buildings within a few real-world blocks) that drift can run for
-// hundreds of pixels, landing a node somewhere absurd like inside a lake.
-// A hard cap on total displacement from the true projected position
-// bounds that: repulsion can still spread out a locally crowded pocket,
-// but never at the cost of a node ending up somewhere else on the map
-// entirely. Applied every pass so later passes react to the clamped
-// position, not just at the end. The tradeoff: the single densest real
-// pocket (~20 campus buildings within a few blocks of each other) can't
-// fully reach MIN_SEPARATION within this bound -- a handful of nodes
-// there stay closer than that. That's an accepted tradeoff (a few nearby
-// circles, and layoutLabels() already drops a colliding label rather than
-// overlapping it) against the alternative of a node silently teleporting
-// somewhere geographically nonsensical, like into a lake.
-const MAX_DRIFT = 100;
+// Keep marker spacing local to the building's projected position. In dense
+// clusters, some circles stay close together rather than moving far away.
+const MAX_DRIFT = 10;
 
 function clampDrift(pos, home) {
   const dx = pos.x - home.x;
@@ -502,7 +483,8 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
     roadSegments.push({ ...edge, oneWay });
   }
 
-  const labels = layoutLabels(nodes, positions, toScreen, pathSet, VIEW_WIDTH, VIEW_HEIGHT);
+  const endpointSet = new Set(pathIds.length ? [pathIds[0], pathIds[pathIds.length - 1]] : []);
+  const labels = layoutLabels(nodes, positions, toScreen, pathSet, endpointSet, VIEW_WIDTH, VIEW_HEIGHT);
 
   return (
     <div className="map-wrap">
@@ -574,9 +556,6 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
             const isStart = pathIds.length > 0 && node.id === pathIds[0];
             const isEnd = pathIds.length > 0 && node.id === pathIds[pathIds.length - 1];
             const isEndpoint = isStart || isEnd;
-            // 1-based position of this stop along the route, so the map itself
-            // shows the same step order as the turn-by-turn list beside it.
-            const stepNumber = isOnPath ? pathIds.indexOf(node.id) + 1 : null;
             const radius = isEndpoint ? 10 : isOnPath ? 9 : 6;
             return (
               <g
@@ -597,20 +576,13 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
                 }
               >
                 <circle cx={pos.x} cy={pos.y} r={radius} />
-                {stepNumber && (
-                  <text x={pos.x} y={pos.y} textAnchor="middle" dominantBaseline="central" className="map-step">
-                    {stepNumber}
-                  </text>
-                )}
-                <title>{stepNumber ? `${node.name} — stop ${stepNumber} of ${pathIds.length}` : node.name}</title>
+                <title>{isStart ? `${node.name} — start` : isEnd ? `${node.name} — destination` : isOnPath ? `${node.name} — along route` : node.name}</title>
               </g>
             );
           })}
         </g>
-        {/* Labels live outside the pan/zoom group and are positioned by hand from
-            the same transform, so their text stays a constant on-screen size while
-            zooming spreads the nodes apart -- growing that spacing is what lets
-            layoutLabels place more of them without collisions. */}
+        {/* Keep labels at a constant screen size while positioning them from
+            the same pan/zoom transform as the map. */}
         <g className="map-labels">
           {bounds && (
             <>
@@ -641,7 +613,7 @@ export default function NetworkMap({ nodes, edges, path, onNodeClick }) {
         </button>
       </div>
       <p className="map-zoom-hint">
-        Scroll, pinch, or use the +/&minus; buttons to zoom, drag to pan &mdash; labels appear as you zoom in.
+        Scroll, pinch, or use the +/&minus; buttons to zoom, drag to pan. Crowded labels appear as space allows.
       </p>
     </div>
   );
